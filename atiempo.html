@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATiempo &mdash; L'Elisette Rivadeneira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --blue: #1B6EF3; --blue-soft: #E8F0FE; --green: #1DBF73; --ink: #0A0E1A; --ink-mid: #3D4259; --ink-soft: #8B90A7; --bg: #F7F9FF; --white: #FFFFFF; --border: #E2E8F8; --font-display: 'DM Serif Display', Georgia, serif; --font-body: 'DM Sans', sans-serif; --font-mono: 'Space Mono', monospace; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--font-display); font-size: 18px; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--blue); }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+  .nav-back { font-size: 13px; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--blue); }
+  .lang-toggle { display: flex; align-items: center; gap: 2px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 3px; }
+  .lang-btn { font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 16px; border: none; background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; }
+  .lang-btn.active { background: var(--blue); color: white; }
+  .case-hero { padding: 120px 48px 80px; background: #021a3a; position: relative; overflow: hidden; }
+  .case-hero::before { content: ''; position: absolute; top: -200px; right: -150px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(27,110,243,0.2) 0%, transparent 65%); pointer-events: none; }
+  .case-hero-inner { max-width: 860px; position: relative; z-index: 1; }
+  .case-breadcrumb { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .case-number-big { font-family: var(--font-mono); font-size: 11px; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 20px; display: block; }
+  .case-hero-title { font-family: var(--font-display); font-size: clamp(40px, 5vw, 72px); color: white; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .case-hero-title em { color: var(--green); font-style: italic; }
+  .case-hero-sub { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 620px; margin-bottom: 48px; }
+  .case-meta-bar { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .case-meta-label { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .case-meta-value { font-size: 15px; color: rgba(255,255,255,0.85); }
+  .metrics-strip { background: var(--green); padding: 40px 48px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; }
+  .metric-block { text-align: center; padding: 0 24px; }
+  .metric-block + .metric-block { border-left: 1px solid rgba(255,255,255,0.25); }
+  .metric-big { font-family: var(--font-mono); font-size: 44px; font-weight: 700; color: white; line-height: 1; display: block; }
+  .metric-sub { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 6px; display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+  .case-content { max-width: 760px; margin: 0 auto; padding: 80px 48px; }
+  .showcase { background: var(--bg); border-radius: 8px; padding: 40px; margin-bottom: 72px; border-left: 3px solid var(--green); }
+  .showcase-label { font-family: var(--font-mono); font-size: 10px; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+  .showcase-text { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--ink); line-height: 1.55; }
+  .cs-section { margin-bottom: 64px; }
+  .cs-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .cs-tag::before { content: ''; display: block; width: 16px; height: 1px; background: var(--blue); }
+  .cs-title { font-family: var(--font-display); font-size: 32px; color: var(--ink); margin-bottom: 20px; line-height: 1.15; }
+  .cs-body { font-size: 16px; color: var(--ink-mid); line-height: 1.8; margin-bottom: 20px; }
+  .cs-body strong { color: var(--ink); font-weight: 500; }
+  .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .finding-card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px; position: relative; overflow: hidden; }
+  .finding-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--green); }
+  .finding-text { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+  .finding-text strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 4px; font-size: 13px; font-family: var(--font-mono); }
+  .callout { background: #021a3a; border-radius: 8px; padding: 36px 40px; margin: 32px 0; }
+  .callout-text { font-family: var(--font-display); font-style: italic; font-size: 22px; color: white; line-height: 1.5; }
+  .callout-text em { color: var(--green); font-style: normal; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .result-card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 24px; text-align: center; }
+  .result-num { font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--green); display: block; line-height: 1; margin-bottom: 8px; }
+  .result-label { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .confidential-note { background: var(--blue-soft); border: 1px solid rgba(27,110,243,0.2); border-radius: 6px; padding: 20px 24px; margin: 24px 0; display: flex; align-items: flex-start; gap: 12px; }
+  .confidential-text { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+  .confidential-text strong { color: var(--ink); font-weight: 500; }
+  .cs-divider { height: 1px; background: var(--border); margin: 48px 0; }
+  .next-case { background: var(--bg); padding: 64px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+  .next-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .next-title { font-family: var(--font-display); font-size: 28px; color: var(--ink); }
+  .next-arrow { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: white; padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+  .next-arrow:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(27,110,243,0.3); }
+  /* IMAGE SLOTS */
+  .img-slot { width: 100%; margin: 32px 0; border-radius: 8px; overflow: hidden; background: var(--bg); border: 2px dashed var(--border); min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; transition: border-color 0.2s; }
+  .img-slot:hover { border-color: var(--blue); }
+  .img-slot img { width: 100%; height: auto; display: block; min-height: unset; border-radius: 6px; }
+  .img-slot-icon { font-size: 28px; opacity: 0.4; }
+  .img-slot-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 0 20px; line-height: 1.6; }
+  .img-slot-hint { font-family: var(--font-mono); font-size: 11px; color: var(--border); padding: 4px 12px; background: var(--white); border: 1px solid var(--border); border-radius: 4px; }
+  .img-caption { font-size: 13px; color: var(--ink-soft); margin-top: -20px; margin-bottom: 32px; font-style: italic; }
+  .img-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0; }
+  .img-pair .img-slot { margin: 0; min-height: 200px; }
+  .img-full { width: calc(100% + 96px); margin-left: -48px; border-radius: 0; border-left: none; border-right: none; }
+  .img-has-photo { border-style: solid; border-color: var(--border); min-height: unset; padding: 0; background: var(--white); cursor: zoom-in; }
+  .img-full.img-has-photo { border-left: none; border-right: none; }
+  /* EVIDENCE CHAIN */
+  .chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 28px 0; }
+  .chain-step { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 18px; position: relative; }
+  .chain-step::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--blue); border-radius: 6px 6px 0 0; }
+  .chain-step:last-child::before { background: var(--green); }
+  .chain-id { font-family: var(--font-mono); font-size: 10px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; display: block; }
+  .chain-step:last-child .chain-id { color: var(--green); }
+  .chain-text { font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
+  /* FUNNEL */
+  .funnel { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 28px 0; }
+  .funnel-step { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px 12px; text-align: center; }
+  .funnel-num { font-family: var(--font-mono); font-size: 30px; font-weight: 700; color: var(--ink); display: block; line-height: 1; }
+  .funnel-step.is-drop .funnel-num { color: var(--green); }
+  .funnel-label { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; display: block; }
+  /* PILOT TABLE */
+  .ptable { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14px; }
+  .ptable th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 12px; border-bottom: 1px solid var(--border); font-weight: 400; }
+  .ptable td { padding: 14px 12px; border-bottom: 1px solid var(--border); color: var(--ink-mid); }
+  .ptable tr:last-child td { border-bottom: none; background: var(--bg); color: var(--ink); font-weight: 500; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .lang-es [data-en] { display: none; }
+  .lang-en [data-es] { display: none; }
+  @media (max-width: 768px) { nav { padding: 0 20px; } .case-hero { padding: 100px 24px 60px; } .metrics-strip { padding: 32px 24px; } .metric-block + .metric-block { border-left: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 24px; } .case-content { padding: 48px 24px; } .findings-grid, .results-grid, .img-pair, .chain { grid-template-columns: 1fr; } .funnel { grid-template-columns: repeat(5, 1fr); gap: 4px; } .funnel-step { padding: 12px 4px; } .funnel-num { font-size: 18px; } .funnel-label { font-size: 8px; } .img-full { width: 100%; margin-left: 0; border-radius: 8px; border: 2px dashed var(--border); } .img-full.img-has-photo { border: 1px solid var(--border); } .next-case { flex-direction: column; gap: 24px; padding: 40px 24px; } .ptable { font-size: 12px; } .ptable th, .ptable td { padding: 10px 6px; } }
+</style>
+</head>
+<body class="lang-en">
+<nav>
+  <a href="index.html" class="nav-logo">L<span>'</span>Elisette</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back" data-en>&larr; All work</a>
+    <a href="index.html" class="nav-back" data-es>&larr; Proyectos</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+<div class="case-hero">
+  <div class="case-hero-inner">
+    <div class="case-breadcrumb" data-en>Work / ATiempo &middot; Logistics &middot; Peru</div>
+    <div class="case-breadcrumb" data-es>Proyectos / ATiempo &middot; Log&iacute;stica &middot; Per&uacute;</div>
+    <span class="case-number-big" data-en>Case 01</span>
+    <span class="case-number-big" data-es>Caso 01</span>
+    <h1 class="case-hero-title" data-en>Designing the conditions of a service &mdash;<br>not just <em>its interface.</em></h1>
+    <h1 class="case-hero-title" data-es>Dise&ntilde;ar las condiciones de un servicio &mdash;<br>no solo <em>su interfaz.</em></h1>
+    <p class="case-hero-sub" data-en>A new intercity air-freight company hired me to validate its digital platform. Four weeks of Discovery showed the critical information didn't live in any system. It lived in specific people &mdash; and you retrieved it by asking them on WhatsApp.</p>
+    <p class="case-hero-sub" data-es>Una nueva empresa de env&iacute;os a&eacute;reos interurbanos me contrat&oacute; para validar su plataforma digital. Cuatro semanas de Discovery mostraron que la informaci&oacute;n cr&iacute;tica no viv&iacute;a en ning&uacute;n sistema. Viv&iacute;a en personas espec&iacute;ficas &mdash; y se recuperaba pregunt&aacute;ndoles por WhatsApp.</p>
+    <div class="case-meta-bar">
+      <div><div class="case-meta-label" data-en>My Role</div><div class="case-meta-label" data-es>Mi Rol</div><div class="case-meta-value">Strategic Researcher</div></div>
+      <div><div class="case-meta-label" data-en>Industry</div><div class="case-meta-label" data-es>Industria</div><div class="case-meta-value" data-en>Logistics &middot; Peru &middot; 2026</div><div class="case-meta-value" data-es>Log&iacute;stica &middot; Per&uacute; &middot; 2026</div></div>
+      <div><div class="case-meta-label" data-en>Methods</div><div class="case-meta-label" data-es>M&eacute;todos</div><div class="case-meta-value" data-en>Atomic Research &middot; Shadowing &middot; Ride-along &middot; Mystery shopping &middot; Concept testing &middot; HTML prototyping</div><div class="case-meta-value" data-es>Atomic Research &middot; Shadowing &middot; Ride along &middot; Mystery shopping &middot; Concept testing &middot; Prototipado en HTML</div></div>
+    </div>
+  </div>
+</div>
+<div class="metrics-strip">
+  <div class="metric-block"><span class="metric-big">31</span><span class="metric-sub" data-en>Participants studied</span><span class="metric-sub" data-es>Participantes estudiados</span></div>
+  <div class="metric-block"><span class="metric-big">103</span><span class="metric-sub" data-en>Traceable facts</span><span class="metric-sub" data-es>Facts trazables</span></div>
+  <div class="metric-block"><span class="metric-big">90%</span><span class="metric-sub" data-en>Of calls asked one question</span><span class="metric-sub" data-es>De las llamadas, una pregunta</span></div>
+  <div class="metric-block"><span class="metric-big">6.9/7</span><span class="metric-sub" data-en>Concept validation</span><span class="metric-sub" data-es>Validaci&oacute;n de concepto</span></div>
+</div>
+<div class="case-content">
+  <div class="showcase reveal">
+    <div class="showcase-label" data-en>The short version</div><div class="showcase-label" data-es>La versi&oacute;n corta</div>
+    <p class="showcase-text" data-en>I was hired to validate the screens of a new air-freight service. Four weeks of Discovery showed the problem wasn't missing features &mdash; it was that the service's critical information didn't live in any system. The deliverable stopped being a list of screens and became the design of the conditions a distributed service needs in order to run without someone holding it together by hand.</p>
+    <p class="showcase-text" data-es>Me contrataron para validar las pantallas de un nuevo servicio de env&iacute;os a&eacute;reos. Cuatro semanas de Discovery mostraron que el problema no era la falta de funcionalidades: era que la informaci&oacute;n cr&iacute;tica del servicio no viv&iacute;a en ning&uacute;n sistema. El entregable dej&oacute; de ser una lista de pantallas y pas&oacute; a ser el dise&ntilde;o de las condiciones para que un servicio distribuido funcione sin que alguien lo sostenga a mano.</p>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Context</div><div class="cs-tag" data-es>Contexto</div>
+
+    <h2 class="cs-title" data-en>The brief said platform. The problem was a service.</h2>
+    <h2 class="cs-title" data-es>El brief dec&iacute;a plataforma. El problema era un servicio.</h2>
+
+    <p class="cs-body" data-en>An executive from Peruvian logistics was building a new intercity air-freight company. He knew first-hand where the traditional operation broke, and he wasn't obliged to inherit its model &mdash; the partner operator he'd start with contributed lessons, not a mould.</p>
+    <p class="cs-body" data-es>Un ejecutivo del sector log&iacute;stico peruano estaba montando una empresa nueva de env&iacute;os a&eacute;reos entre ciudades. Conoc&iacute;a de primera mano d&oacute;nde se romp&iacute;a la operaci&oacute;n tradicional, y no estaba obligado a heredar su modelo: el operador aliado con el que arrancar&iacute;a aportaba aprendizajes, no un molde.</p>
+
+    <p class="cs-body" data-en>From kickoff, the ambition was declared. The company wasn't conceived as a carrier with its own fleet but as a <strong>multi-provider freight agent</strong>, able to operate with different warehouses, drivers and airlines. That defined the real challenge &mdash; the service would run across a distributed chain: <strong>customer &rarr; the company &rarr; own fleet and provider drivers &rarr; provider warehouses &rarr; air transport &rarr; destination.</strong></p>
+    <p class="cs-body" data-es>Desde el kickoff la ambici&oacute;n estaba declarada. La empresa no se conceb&iacute;a como un transportista con flota propia sino como <strong>agente de carga multi-proveedor</strong>, capaz de operar con distintos almacenes, conductores y l&iacute;neas a&eacute;reas. Eso defini&oacute; el reto real: el servicio correr&iacute;a sobre una cadena distribuida: <strong>cliente &rarr; la empresa &rarr; flota propia y conductores de proveedor &rarr; almacenes de proveedor &rarr; transporte a&eacute;reo &rarr; destino.</strong></p>
+
+    <p class="cs-body" data-en>Every handoff could introduce a delay, an information loss, or a diffuse responsibility. And if the company wasn't going to own all the assets, the product couldn't be the front-end of its own operation.</p>
+    <p class="cs-body" data-es>Cada traspaso pod&iacute;a introducir una demora, una p&eacute;rdida de informaci&oacute;n o una responsabilidad difusa. Y si la empresa no iba a ser due&ntilde;a de todos los activos, el producto no pod&iacute;a ser el front-end de una operaci&oacute;n propia.</p>
+
+    <p class="cs-body" data-en>The challenge is not designing a web page or a new application, but identifying what we learn from customers and from the existing operation so the service can <strong>scale without friction.</strong></p>
+    <p class="cs-body" data-es>El reto no es dise&ntilde;ar una p&aacute;gina web o una nueva aplicaci&oacute;n, sino identificar qu&eacute; aprendizajes tomamos de los clientes y de la operaci&oacute;n existente para que el servicio <strong>escale sin fricciones.</strong></p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>INFORMATION</strong>Where does shipment information break, and who repairs it manually?</p>
+        <p class="finding-text" data-es><strong>INFORMACI&Oacute;N</strong>&iquest;D&oacute;nde se rompe la informaci&oacute;n del env&iacute;o, y qui&eacute;n la repara a mano?</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>TRUST</strong>What does a customer need in order to trust a shipment they cannot see?</p>
+        <p class="finding-text" data-es><strong>CONFIANZA</strong>&iquest;Qu&eacute; necesita un cliente para confiar en un env&iacute;o que no puede ver?</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>AUTOMATION</strong>How much coordination work can a product absorb before the answer becomes contractual?</p>
+        <p class="finding-text" data-es><strong>AUTOMATIZACI&Oacute;N</strong>&iquest;Cu&aacute;nto trabajo de coordinaci&oacute;n puede absorber un producto antes de que la respuesta sea contractual?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Discovery</div><div class="cs-tag" data-es>Descubrimiento</div>
+
+    <h2 class="cs-title" data-en>I didn't only study the customer. I studied the system that had to deliver the service.</h2>
+    <h2 class="cs-title" data-es>No estudi&eacute; solamente al cliente. Estudi&eacute; el sistema que deb&iacute;a entregar el servicio.</h2>
+
+    <p class="cs-body" data-en>If the failure lived in the handoffs, interviews alone wouldn't be enough. I structured the evidence with <strong>Atomic Research</strong>, so every recommendation could be traced back to the observation that produced it: <strong>31 participants &rarr; 103 facts &rarr; 35 insights &rarr; 28 job stories &rarr; 32 conclusions.</strong></p>
+    <p class="cs-body" data-es>Si la falla viv&iacute;a en los traspasos, las entrevistas solas no alcanzaban. Estructur&eacute; la evidencia con <strong>Atomic Research</strong>, de modo que cada recomendaci&oacute;n fuera trazable hasta la observaci&oacute;n que la origin&oacute;: <strong>31 participantes &rarr; 103 facts &rarr; 35 insights &rarr; 28 job stories &rarr; 32 conclusiones.</strong></p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>CUSTOMERS &middot; 15</strong>In-depth interviews plus A/B testing. Decision criteria by business profile.</p>
+        <p class="finding-text" data-es><strong>CLIENTES &middot; 15</strong>Entrevistas en profundidad m&aacute;s A/B testing. Criterios de decisi&oacute;n por perfil de negocio.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>OPERATION &middot; 16</strong>Warehouse, air cargo, X-ray, finance, coordination, drivers. The operational reality and where it breaks.</p>
+        <p class="finding-text" data-es><strong>OPERACI&Oacute;N &middot; 16</strong>Almac&eacute;n, carga a&eacute;rea, rayos X, finanzas, coordinaci&oacute;n, conductores. La realidad operacional y sus quiebres.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>MARKET</strong>National, regional and international operators benchmarked, plus mystery shopping.</p>
+        <p class="finding-text" data-es><strong>MERCADO</strong>Operadores nacionales, regionales e internacionales, m&aacute;s mystery shopping.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>OBSERVATION</strong>Shadowing of the origin operation &mdash; receiving, weighing, documentation, X-ray, dispatch &mdash; and a full ride-along with a driver.</p>
+        <p class="finding-text" data-es><strong>OBSERVACI&Oacute;N</strong>Shadowing de la operaci&oacute;n de origen &mdash;recepci&oacute;n, pesaje, documentaci&oacute;n, rayos X, embarque&mdash; y un ride along completo con un conductor.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>Every finding recorded three things: how much evidence supported it, which profiles supported it, and <strong>what evidence contradicted it</strong>. Counter-evidence wasn't discarded &mdash; it marked the finding as open. That forced a separation between what people said, what we observed, what we inferred, and what was still a business decision.</p>
+    <p class="cs-body" data-es>Cada hallazgo registraba tres cosas: cu&aacute;nta evidencia lo sosten&iacute;a, qu&eacute; perfiles lo sosten&iacute;an y <strong>qu&eacute; evidencia lo contradec&iacute;a</strong>. La contra-evidencia no se descartaba: marcaba el hallazgo como abierto. Eso oblig&oacute; a separar lo que la gente dijo, lo que observamos, lo que inferimos y lo que segu&iacute;a siendo una decisi&oacute;n de negocio.</p>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/atiempo-atomic-research.jpg" alt="Atomic Research repository" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>Atomic Research repository &mdash; every conclusion traceable back to the interview it came from</p>
+    <p class="img-caption" data-es>Repositorio de Atomic Research &mdash; cada conclusi&oacute;n trazable hasta la entrevista de la que sali&oacute;</p>
+
+    <div class="chain">
+      <div class="chain-step">
+        <span class="chain-id">Fact &middot; SF41</span>
+        <p class="chain-text" data-en>&ldquo;The app was left outside the operating unit. Its owner was dismissed. Today it's inherited by whoever builds the routes.&rdquo;</p>
+        <p class="chain-text" data-es>&ldquo;La app qued&oacute; fuera de la unidad operativa. Su due&ntilde;o fue desvinculado. Hoy la hereda quien arma las rutas.&rdquo;</p>
+      </div>
+      <div class="chain-step">
+        <span class="chain-id">Insight &middot; S10</span>
+        <p class="chain-text" data-en>The app is an ownerless island. This is the operational root of the abandoned integrations.</p>
+        <p class="chain-text" data-es>La app es una isla sin due&ntilde;o. Esta es la ra&iacute;z operacional de las integraciones abandonadas.</p>
+      </div>
+      <div class="chain-step">
+        <span class="chain-id">Job story &middot; SJ10</span>
+        <p class="chain-text" data-en>When I use the product, I want it to have an owner who evolves it, so it doesn't depend on each area's goodwill.</p>
+        <p class="chain-text" data-es>Cuando uso el producto, quiero que tenga un due&ntilde;o que lo evolucione, para que no dependa del favor de cada &aacute;rea.</p>
+      </div>
+      <div class="chain-step">
+        <span class="chain-id">Conclusion &middot; SC16</span>
+        <p class="chain-text" data-en>The company needs product ownership, a multi-provider logistics coordinator, and customer support beyond tracking.</p>
+        <p class="chain-text" data-es>La empresa necesita ownership de producto, un coordinador log&iacute;stico multi-proveedor y soporte al cliente m&aacute;s all&aacute; del tracking.</p>
+      </div>
+    </div>
+
+    <div class="confidential-note">
+      <span>&#9878;</span>
+      <p class="confidential-text" data-en><strong>Counter-evidence retained:</strong> Finance had integrated successfully. Same technology, different ownership.</p>
+      <p class="confidential-text" data-es><strong>Contra-evidencia registrada:</strong> Finanzas s&iacute; hab&iacute;a integrado con &eacute;xito. La misma tecnolog&iacute;a, distinto ownership.</p>
+    </div>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Finding 01 &middot; Tracking</div><div class="cs-tag" data-es>Hallazgo 01 &middot; Tracking</div>
+
+    <h2 class="cs-title" data-en>The data is born by hand &mdash; so the tracking lies.</h2>
+    <h2 class="cs-title" data-es>El dato nace a mano, y por eso el tracking miente.</h2>
+
+    <p class="cs-body" data-en>I mapped the full journey of a single shipment and found <strong>ten information breaks</strong>. The root cause wasn't the tracking itself: the &ldquo;departure&rdquo; status was <strong>entered manually every morning</strong>, so the information the customer saw was already out of date the moment it was born. Nobody owned the accuracy of that data &mdash; it lived outside the system, in people and in WhatsApp. Not because the technology was missing, but because no one was accountable for the integration.</p>
+    <p class="cs-body" data-es>Mape&eacute; el recorrido completo de un env&iacute;o y encontr&eacute; <strong>diez quiebres de informaci&oacute;n</strong>. La causa ra&iacute;z no era el tracking en s&iacute;: el estado de &ldquo;salida&rdquo; se <strong>registraba manualmente cada ma&ntilde;ana</strong>, as&iacute; que la informaci&oacute;n que ve&iacute;a el cliente ya nac&iacute;a desfasada. Nadie era due&ntilde;o de la exactitud de ese dato &mdash; viv&iacute;a fuera del sistema, en personas y en WhatsApp. No por falta de tecnolog&iacute;a, sino porque nadie respond&iacute;a por esa integraci&oacute;n.</p>
+
+    <div class="img-slot img-has-photo reveal img-full">
+      <img src="img/atiempo-journey-asis.jpg" alt="Journey map of a shipment" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>The journey of one shipment today &mdash; ten information breaks across a single trip</p>
+    <p class="img-caption" data-es>El recorrido de un env&iacute;o hoy &mdash; diez quiebres de informaci&oacute;n en un solo viaje</p>
+
+    <div class="callout">
+      <p class="callout-text" data-en>&ldquo;<em>90% of the calls</em> to the coordination centre were asking one thing: where is my shipment.&rdquo;</p>
+      <p class="callout-text" data-es>&ldquo;<em>El 90% de las llamadas</em> al centro de coordinaci&oacute;n eran para preguntar una sola cosa: d&oacute;nde est&aacute; mi env&iacute;o.&rdquo;</p>
+    </div>
+
+    <p class="cs-body" data-en>Tracking stopped being a feature inside the product and became a central piece of the value proposition. Visibility affects the whole chain: <strong>uncertainty &rarr; queries &rarr; manual coordination &rarr; operational load.</strong> The problem wasn't showing more information. It was getting the service status to be born correctly and circulate between actors.</p>
+    <p class="cs-body" data-es>El tracking dej&oacute; de ser una funcionalidad dentro del producto y pas&oacute; a ser una pieza central de la propuesta de valor. La visibilidad afecta la cadena completa: <strong>incertidumbre &rarr; consultas &rarr; coordinaci&oacute;n manual &rarr; carga operacional.</strong> El problema no era mostrar m&aacute;s informaci&oacute;n. Era conseguir que el estado del servicio naciera correctamente y circulara entre los actores.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Finding 02 &middot; Trust</div><div class="cs-tag" data-es>Hallazgo 02 &middot; Confianza</div>
+
+    <h2 class="cs-title" data-en>Trust lives in a person, not in the platform.</h2>
+    <h2 class="cs-title" data-es>La confianza vive en una persona, no en la plataforma.</h2>
+
+    <p class="cs-body" data-en>When the system doesn't have the answer, a human does. It works in the short term, but it turns that person into the only breaking point: if they're unavailable, the service loses its ability to respond.</p>
+    <p class="cs-body" data-es>Cuando el sistema no tiene la respuesta, responde un humano. Funciona en el corto plazo, pero convierte a esa persona en el &uacute;nico punto de quiebre: si no est&aacute; disponible, el servicio pierde capacidad de respuesta.</p>
+
+    <p class="cs-body" data-en>Incidents were resolved informally too. Customers described that when their cargo arrived damaged they got a <em>&ldquo;we'll take it into account&rdquo;</em> &mdash; and the conversation ended there. The organisation didn't log the incident, didn't investigate the cause, and didn't learn from it.</p>
+    <p class="cs-body" data-es>Los incidentes tambi&eacute;n se resolv&iacute;an informalmente. Los clientes contaban que cuando su carga llegaba da&ntilde;ada rec&iacute;b&iacute;an un <em>&ldquo;lo vamos a tomar en cuenta&rdquo;</em> y ah&iacute; terminaba la conversaci&oacute;n. La organizaci&oacute;n no registraba el incidente, no investigaba la causa y no aprend&iacute;a de &eacute;l.</p>
+
+    <p class="cs-body" data-en>An account lost during the research showed it precisely: <strong>it didn't leave because of the logistics &mdash; it left because of the silence.</strong> They complained, got no real answer, and reduced volume until they disappeared. An immediate acknowledgement could have changed that path.</p>
+    <p class="cs-body" data-es>Una cuenta perdida durante la investigaci&oacute;n lo mostr&oacute; con precisi&oacute;n: <strong>no se fue por el servicio log&iacute;stico, se fue por el silencio.</strong> Reclam&oacute;, no obtuvo respuesta real y fue reduciendo volumen hasta desaparecer. Un acuse de recibo inmediato habr&iacute;a podido cambiar ese recorrido.</p>
+
+    <p class="cs-body" data-en>Losing a B2B customer doesn't arrive as a complaint. It arrives as a <strong>silent reduction in volume.</strong></p>
+    <p class="cs-body" data-es>La p&eacute;rdida de un cliente B2B no aparece como una queja. Aparece como una <strong>reducci&oacute;n silenciosa de volumen.</strong></p>
+
+    <p class="cs-body" data-en>The problem wasn't resolving claims. It was designing a service capable of <strong>learning from its own incidents.</strong></p>
+    <p class="cs-body" data-es>El problema no era resolver reclamos. Era dise&ntilde;ar un servicio capaz de <strong>aprender de sus propios incidentes.</strong></p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Finding 03 &middot; Certainty</div><div class="cs-tag" data-es>Hallazgo 03 &middot; Certeza</div>
+
+    <h2 class="cs-title" data-en>The real competitor was uncertainty.</h2>
+    <h2 class="cs-title" data-es>El competidor real era la incertidumbre.</h2>
+
+    <p class="cs-body" data-en>On time-sensitive routes, air freight was losing to the intercity bus. But what users asked for spontaneously in the A/B test wasn't speed &mdash; it was <strong>certainty.</strong> Knowing exactly what day the shipment arrives. None of the operators studied offered it clearly.</p>
+    <p class="cs-body" data-es>En rutas sensibles al tiempo, el env&iacute;o a&eacute;reo perd&iacute;a frente al bus interprovincial. Pero lo que los usuarios ped&iacute;an espont&aacute;neamente en el A/B test no era velocidad: era <strong>certeza.</strong> Saber qu&eacute; d&iacute;a exactamente llega el env&iacute;o. Ninguno de los operadores estudiados la ofrec&iacute;a con claridad.</p>
+
+    <p class="cs-body" data-en>To check it, I ran a first-hand benchmark: I went to quote with the largest operator in the market and asked for a price for <strong>100 kg of canned goods by air.</strong> Instead of resolving it with their own rate table, they ended up asking on WhatsApp. <strong>The same behaviour I had observed inside my client's operation.</strong> The customer asks &rarr; someone checks &rarr; someone answers &rarr; the customer waits.</p>
+    <p class="cs-body" data-es>Para comprobarlo hice un benchmark de primera mano: fui a cotizar al operador m&aacute;s grande del mercado y ped&iacute; precio para <strong>100 kg de conservas por v&iacute;a a&eacute;rea.</strong> En lugar de resolverlo con su tarifario, terminaron consultando por WhatsApp. <strong>El mismo comportamiento que hab&iacute;a observado dentro de la operaci&oacute;n del cliente.</strong> El cliente pregunta &rarr; alguien consulta &rarr; alguien responde &rarr; el cliente espera.</p>
+
+    <p class="cs-body" data-en>It wasn't one company's problem. It was a feature of the <strong>sector's operating model.</strong></p>
+    <p class="cs-body" data-es>No era el problema de una empresa. Era una caracter&iacute;stica del <strong>modelo operativo del sector.</strong></p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Strategy</div><div class="cs-tag" data-es>Estrategia</div>
+
+    <h2 class="cs-title" data-en>From findings to how the service attracts, converts and retains</h2>
+    <h2 class="cs-title" data-es>De los hallazgos a c&oacute;mo el servicio atrae, convierte y retiene</h2>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>HOOK &middot; ATTRACTS</strong>Visible delivery date.</p>
+        <p class="finding-text" data-es><strong>GANCHO &middot; ATRAE</strong>Fecha de entrega visible.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>HABIT &middot; CONVERTS</strong>Automatic tracking, saved data, recurring pickups.</p>
+        <p class="finding-text" data-es><strong>H&Aacute;BITO &middot; CONVIERTE</strong>Tracking autom&aacute;tico, datos guardados, recojos recurrentes.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>LOCK-IN &middot; RETAINS</strong>B2B credit, multi-destination, saved addresses.</p>
+        <p class="finding-text" data-es><strong>LOCK-IN &middot; RETIENE</strong>Cr&eacute;dito B2B, multidestino, direcciones guardadas.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The delivery date was the most powerful lever, because users asked for it themselves and it was cheap to build. It became the product's main promise.</p>
+    <p class="cs-body" data-es>La fecha de entrega era la palanca m&aacute;s potente porque los usuarios la ped&iacute;an por s&iacute; mismos y su costo de construcci&oacute;n era bajo. Termin&oacute; siendo la promesa principal del producto.</p>
+
+    <p class="cs-body" data-en><strong>I also recommended repositioning the flagship service.</strong> The business assumed door-to-door pickup was a speed accelerator; the evidence showed negative perception on speed and positive perception on convenience. There <em>was</em> willingness to pay &mdash; but for avoiding the trip, not for arriving sooner. I recommended selling it as a <strong>premium convenience service</strong>: segmented and complementary. That separated two propositions the business was mixing &mdash; speed and convenience &mdash; and made it possible to charge for the second without promising a speed the operation couldn't guarantee.</p>
+    <p class="cs-body" data-es><strong>Y recomend&eacute; reposicionar el servicio estrella.</strong> El negocio asum&iacute;a que el recojo puerta a puerta era un acelerador de velocidad; la evidencia mostraba percepci&oacute;n negativa en rapidez y positiva en comodidad. S&iacute; hab&iacute;a disposici&oacute;n a pagar, pero por evitar el desplazamiento, no por llegar antes. Recomend&eacute; venderlo como <strong>servicio premium de conveniencia</strong>, segmentado y complementario. Eso separaba dos propuestas que el negocio estaba mezclando &mdash;velocidad y conveniencia&mdash; y permit&iacute;a cobrar por la segunda sin prometer una velocidad que la operaci&oacute;n no pod&iacute;a garantizar.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>The hard part</div><div class="cs-tag" data-es>La parte dif&iacute;cil</div>
+
+    <h2 class="cs-title" data-en>A business decision I challenged &mdash; and lost</h2>
+    <h2 class="cs-title" data-es>Una decisi&oacute;n de negocio que cuestion&eacute; &mdash; y no cambi&oacute;</h2>
+
+    <p class="cs-body" data-en>In an in-person workshop with management, it was decided that the driver would be the central actor of the service: he would weigh, measure, count and label the cargo at the pickup point.</p>
+    <p class="cs-body" data-es>En un workshop presencial con gerencia se decidi&oacute; que el conductor ser&iacute;a el actor central del servicio: pesar&iacute;a, medir&iacute;a, contar&iacute;a y etiquetar&iacute;a la carga en el punto de recojo.</p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>SIGNAL 01</strong>Drivers rejected the task because of the time it took from their route.</p>
+        <p class="finding-text" data-es><strong>SE&Ntilde;AL 01</strong>Los conductores rechazaban la tarea por el tiempo que le quitaba a su ruta.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>SIGNAL 02</strong>The warehouse already validated the weight later in the flow.</p>
+        <p class="finding-text" data-es><strong>SE&Ntilde;AL 02</strong>El almac&eacute;n ya validaba el peso m&aacute;s adelante en el flujo.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>SIGNAL 03</strong>No observed competitor made the driver weigh. Those activities live in the warehouse or at the counter.</p>
+        <p class="finding-text" data-es><strong>SE&Ntilde;AL 03</strong>Ning&uacute;n competidor observado hac&iacute;a pesar al conductor. Esas actividades viven en el almac&eacute;n o el mostrador.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>Management held the decision. And there was a difference that mattered: <strong>an in-house, salaried driver can take on these responsibilities as part of the job.</strong> No argument there. The provider's driver is another matter. He has other clients and can't be assumed available just because the flow needs him. <strong>The risk wasn't that he'd say &ldquo;I won't do it.&rdquo; It was that he'd say &ldquo;I'm busy&rdquo;</strong> &mdash; no conflict, no signal, not registered in any metric, until the day there's no driver for the return trip that makes the flight cutoff.</p>
+    <p class="cs-body" data-es>La gerencia mantuvo la decisi&oacute;n. Y hab&iacute;a una diferencia que importaba: <strong>un conductor propio, contratado, puede recibir estas responsabilidades como parte de su trabajo.</strong> Ah&iacute; no hay discusi&oacute;n. El conductor de proveedor es otra cosa. Tiene otros clientes y no se le puede asumir disponible solo porque el flujo lo necesita. <strong>El riesgo no era que dijera &ldquo;no lo hago&rdquo;. Era que dijera &ldquo;estoy ocupado&rdquo;</strong> &mdash; sin conflicto, sin se&ntilde;al, sin quedar registrado en ninguna m&eacute;trica, hasta el d&iacute;a en que no hubiera conductor para la vuelta que alcanzaba el corte del vuelo.</p>
+
+    <p class="cs-body" data-en>My recommendation was <strong>contractual, not product</strong>: exclusivity or guaranteed availability conditions for provider drivers. The problem wasn't going to be solved with a better screen, because it was a dependency of the operating model.</p>
+    <p class="cs-body" data-es>Mi recomendaci&oacute;n fue <strong>contractual, no de producto</strong>: condiciones de exclusividad o disponibilidad garantizada para los conductores de proveedor. El problema no se resolv&iacute;a con una mejor pantalla, porque era una dependencia del modelo operativo.</p>
+
+    <p class="cs-body" data-en>Then I opened the business's rate table. <strong>The model assumed an average parcel of 50 kg and set its break-even point there.</strong> The driver's complaint was <em>&ldquo;they say 10 kg and it's 40 or 50.&rdquo;</em> But that didn't describe an anomaly: <strong>it described exactly the parcel the business itself expected to handle.</strong></p>
+    <p class="cs-body" data-es>Despu&eacute;s abr&iacute; el tarifario del negocio. <strong>El modelo asum&iacute;a un bulto promedio de 50 kg y pon&iacute;a ah&iacute; su punto de equilibrio.</strong> La queja del conductor era <em>&ldquo;dicen 10 kg y son 40 o 50&rdquo;</em>. Pero eso no describ&iacute;a una anomal&iacute;a: <strong>describ&iacute;a exactamente el bulto que el propio negocio esperaba manejar.</strong></p>
+
+    <p class="cs-body" data-en>The question stopped being <strong>are customers declaring weight incorrectly?</strong> and became <strong>how do we capture actual weight without creating disproportionate friction in the operation?</strong></p>
+    <p class="cs-body" data-es>La pregunta dej&oacute; de ser <strong>&iquest;el cliente est&aacute; declarando mal?</strong> y pas&oacute; a ser <strong>&iquest;c&oacute;mo capturamos el peso real sin crear una fricci&oacute;n desproporcionada en la operaci&oacute;n?</strong></p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Design response</div><div class="cs-tag" data-es>Respuesta de dise&ntilde;o</div>
+
+    <h2 class="cs-title" data-en>With the decision fixed, my job was to reduce its risks through design</h2>
+    <h2 class="cs-title" data-es>Con la decisi&oacute;n firme, mi trabajo fue reducir sus riesgos desde el dise&ntilde;o</h2>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>REMOVED &middot; DAILY COUNTER</strong>Measuring &ldquo;how many did you do today&rdquo; without accounting for weighing time creates a structural incentive to skip the step.</p>
+        <p class="finding-text" data-es><strong>QUIT&Eacute; &middot; CONTADOR DE SERVICIOS</strong>Medir &ldquo;cu&aacute;ntos hiciste hoy&rdquo; sin considerar el tiempo de pesar crea el incentivo estructural para saltarse el paso.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>REMOVED &middot; WEIGHT ALERT</strong>With a 50 kg average it would fire on almost every pickup, lose informational value, and become noise.</p>
+        <p class="finding-text" data-es><strong>QUIT&Eacute; &middot; ALERTA ERGON&Oacute;MICA</strong>Con un promedio de 50 kg aparecer&iacute;a en casi todos los recojos, perder&iacute;a valor informativo y se volver&iacute;a ruido.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>ADDED &middot; PERMISSIONS CHANNEL</strong>Loader, expense authorisation, operational support &mdash; with the answer attributed to a person and a time. One of the few parts of the model that <em>removed</em> friction from the driver instead of adding it.</p>
+        <p class="finding-text" data-es><strong>AGREGU&Eacute; &middot; CANAL DE PERMISOS</strong>Estibador, autorizaci&oacute;n de gasto, apoyo operacional &mdash; con la respuesta atribuida a una persona y a una hora. Era de las pocas partes del modelo que le <em>quitaban</em> fricci&oacute;n al conductor en lugar de agregarle.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>PROPOSED &middot; MEASURE IT</strong>Measure the real weighing time. The driver said it cost him time, the business said training would solve it, and nobody had the number.</p>
+        <p class="finding-text" data-es><strong>PROPUSE &middot; MEDIRLO</strong>Medir el tiempo real de pesaje. El conductor dec&iacute;a que le quitaba tiempo, el negocio dec&iacute;a que se resolv&iacute;a con capacitaci&oacute;n, y nadie ten&iacute;a el n&uacute;mero.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>When the evidence isn't enough to close a decision, <strong>designing the experiment that will close it</strong> is also strategic work.</p>
+    <p class="cs-body" data-es>Cuando la evidencia no alcanza para cerrar una decisi&oacute;n, <strong>dise&ntilde;ar el experimento que la va a cerrar</strong> tambi&eacute;n es trabajo estrat&eacute;gico.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Build &amp; validate</div><div class="cs-tag" data-es>Construcci&oacute;n y validaci&oacute;n</div>
+
+    <h2 class="cs-title" data-en>Four products. One data model.</h2>
+    <h2 class="cs-title" data-es>Cuatro productos. Un mismo modelo de datos.</h2>
+
+    <p class="cs-body" data-en>To validate the service I didn't build a single mockup. I built <strong>four functional HTML products.</strong> Each answered to a different actor, but all four shared the same data model, the same rules and the same shipment statuses.</p>
+    <p class="cs-body" data-es>Para validar el servicio no constru&iacute; una maqueta &uacute;nica. Constru&iacute; <strong>cuatro productos funcionales en HTML.</strong> Cada uno respond&iacute;a a un actor distinto, pero los cuatro compart&iacute;an el mismo modelo de datos, las mismas reglas y los mismos estados del env&iacute;o.</p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>01 &middot; CUSTOMER WEB</strong>Quote &rarr; create shipment &rarr; pay &rarr; track the status.</p>
+        <p class="finding-text" data-es><strong>01 &middot; WEB DEL CLIENTE</strong>Cotizar &rarr; crear env&iacute;o &rarr; pagar &rarr; seguir el estado.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>02 &middot; DRIVER APP</strong>Receive assignment &rarr; execute pickup &rarr; capture the data &rarr; close the trip.</p>
+        <p class="finding-text" data-es><strong>02 &middot; APP DEL CONDUCTOR</strong>Recibir asignaci&oacute;n &rarr; ejecutar recojo &rarr; capturar el dato &rarr; cerrar la vuelta.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>03 &middot; ADMINISTRATION</strong>Monitor statuses, assign, resolve exceptions.</p>
+        <p class="finding-text" data-es><strong>03 &middot; ADMINISTRACI&Oacute;N</strong>Monitorear estados, asignar, resolver excepciones.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>04 &middot; PARAMETERS BACK OFFICE</strong>The rules the other three obey.</p>
+        <p class="finding-text" data-es><strong>04 &middot; BACK OFFICE DE PAR&Aacute;METROS</strong>Las reglas que los otros tres obedecen.</p>
+      </div>
+    </div>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/atiempo-admin.jpg" alt="Administration prototype" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>Functional HTML prototypes built as research instruments &mdash; not demos</p>
+    <p class="img-caption" data-es>Prototipos funcionales en HTML construidos como instrumentos de investigaci&oacute;n &mdash; no como demos</p>
+
+    <div class="img-slot reveal">
+      <div class="img-slot-icon">&#128241;</div>
+      <div class="img-slot-label" data-en>Customer web and driver app &mdash; export from the prototype</div>
+      <div class="img-slot-label" data-es>Web del cliente y app del conductor &mdash; exportar del prototipo</div>
+      <div class="img-slot-hint">img/atiempo-web-cliente.jpg &middot; img/atiempo-app-chofer.jpg</div>
+    </div>
+
+    <p class="cs-body" data-en>The shipment the customer creates is the same one the driver picks up, the same one administration monitors, and the same one that obeys the back office rules. <strong>The first mile stopped being the end of a form and became the place where the service's digital data is born.</strong> The HTML files weren't the visual deliverable &mdash; they were functional validation artefacts, and the base the UX/UI team continued from towards the final execution in Figma.</p>
+    <p class="cs-body" data-es>El env&iacute;o que crea el cliente es el mismo que recoge el conductor, el mismo que monitorea administraci&oacute;n y el mismo que obedece las reglas del back office. <strong>La primera milla dej&oacute; de ser el final de un formulario y pas&oacute; a ser el lugar donde nace el dato digital del servicio.</strong> Los HTML no eran el entregable visual: eran artefactos funcionales de validaci&oacute;n y la base sobre la cual el equipo de UX/UI continu&oacute; hacia la ejecuci&oacute;n final en Figma.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Scope</div><div class="cs-tag" data-es>Alcance</div>
+
+    <h2 class="cs-title" data-en>Discovery is also for deciding what not to build</h2>
+    <h2 class="cs-title" data-es>Discovery tambi&eacute;n sirve para decidir qu&eacute; no construir</h2>
+
+    <p class="cs-body" data-en>The original brief included a product for the warehouse operation. Discovery showed that operation belonged to the provider, so <strong>it left the scope.</strong> It wasn't an omission. Building a warehouse interface inside the product would have meant reproducing, in the new platform, a responsibility the model wanted to keep in the provider's hands.</p>
+    <p class="cs-body" data-es>El brief original contemplaba un producto para la operaci&oacute;n de almac&eacute;n. El Discovery mostr&oacute; que esa operaci&oacute;n pertenec&iacute;a al proveedor, as&iacute; que <strong>sali&oacute; del alcance.</strong> No fue una omisi&oacute;n. Construir una interfaz de almac&eacute;n dentro del producto habr&iacute;a significado reproducir en la plataforma nueva una responsabilidad que el modelo quer&iacute;a mantener en manos del proveedor.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Governance</div><div class="cs-tag" data-es>Gobernanza</div>
+
+    <h2 class="cs-title" data-en>Two products couldn't be validated &mdash; and that was the finding</h2>
+    <h2 class="cs-title" data-es>Dos productos no se pudieron validar &mdash; y eso fue el hallazgo</h2>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>CUSTOMER WEB</strong>10 participants, customers and non-customers &mdash; <strong style='display:inline'>100% task completion, 6.9/7 satisfaction.</strong></p>
+        <p class="finding-text" data-es><strong>WEB DEL CLIENTE</strong>10 participantes, clientes y no clientes &mdash; <strong style='display:inline'>100% de tareas completadas, 6.9/7 de satisfacci&oacute;n.</strong></p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>DRIVER APP</strong>Validated with the driver who would use it.</p>
+        <p class="finding-text" data-es><strong>APP DEL CONDUCTOR</strong>Validada con el conductor que la utilizar&iacute;a.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>ADMINISTRATION</strong>Not validated.</p>
+        <p class="finding-text" data-es><strong>ADMINISTRACI&Oacute;N</strong>No validada.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>BACK OFFICE</strong>Not validated.</p>
+        <p class="finding-text" data-es><strong>BACK OFFICE</strong>No validado.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The last two weren't left unvalidated for lack of time. <strong>Nobody had defined who was going to operate them</strong> &mdash; and you can't recruit an administrator the organisation hasn't decided to appoint yet.</p>
+    <p class="cs-body" data-es>Los dos &uacute;ltimos no quedaron sin validar por falta de tiempo. <strong>Nadie hab&iacute;a definido qui&eacute;n los iba a operar</strong>, y no se puede reclutar a un administrador que la organizaci&oacute;n todav&iacute;a no ha decidido nombrar.</p>
+
+    <p class="cs-body" data-en>That ended up demonstrating another pattern of the system. Several pending integrations and manual processes from the previous model weren't technical failures but <strong>governance failures</strong>: where there was a clear owner, things moved; where responsibility was shared, the problem stayed. The impossibility of validating two products was that same pattern, happening inside the Discovery itself.</p>
+    <p class="cs-body" data-es>Eso termin&oacute; demostrando otro patr&oacute;n del sistema. Varias integraciones pendientes y procesos manuales del modelo anterior no eran fallas t&eacute;cnicas sino de <strong>gobernanza</strong>: donde hab&iacute;a un responsable claro, las cosas avanzaban; donde la responsabilidad estaba repartida, el problema permanec&iacute;a. La imposibilidad de validar dos productos fue ese mismo patr&oacute;n, ocurriendo dentro del propio Discovery.</p>
+
+    <p class="cs-body" data-en>Every critical dependency of a service needs an <strong>explicit owner.</strong></p>
+    <p class="cs-body" data-es>Cada dependencia cr&iacute;tica del servicio necesita un <strong>owner expl&iacute;cito.</strong></p>
+
+    <p class="cs-body" data-en>With a nuance that matters: the back office had been assumed operable by someone from systems because &ldquo;it only configures parameters.&rdquo; But that's where the thresholds that determine indicators live, the definitions that condition measurements, and the rules that affect the behaviour of the whole service. <strong>The product that looked most technical was the one that required the most business judgment.</strong></p>
+    <p class="cs-body" data-es>Con un matiz que importa: el back office se hab&iacute;a asumido operable por alguien de sistemas porque &ldquo;solo configura par&aacute;metros&rdquo;. Pero all&iacute; viven los umbrales que determinan indicadores, las definiciones que condicionan mediciones y las reglas que afectan el comportamiento de todo el servicio. <strong>El producto que parec&iacute;a m&aacute;s t&eacute;cnico era el que m&aacute;s criterio de negocio requer&iacute;a.</strong></p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Results</div><div class="cs-tag" data-es>Resultados</div>
+
+    <h2 class="cs-title" data-en>The brief itself changed</h2>
+    <h2 class="cs-title" data-es>El brief mismo cambi&oacute;</h2>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>BEFORE</strong>&ldquo;Build a self-service logistics platform.&rdquo;</p>
+        <p class="finding-text" data-es><strong>ANTES</strong>&ldquo;Construir una plataforma log&iacute;stica de autoservicio.&rdquo;</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>AFTER</strong>&ldquo;Design the conditions for a distributed logistics service to work with the least manual coordination possible.&rdquo;</p>
+        <p class="finding-text" data-es><strong>DESPU&Eacute;S</strong>&ldquo;Dise&ntilde;ar las condiciones para que un servicio log&iacute;stico distribuido funcione con la menor coordinaci&oacute;n manual posible.&rdquo;</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The service wasn't live at the close of Discovery, so I don't attribute business metrics that couldn't exist yet.</p>
+    <p class="cs-body" data-es>El servicio no estaba lanzado al cierre del Discovery, as&iacute; que no atribuyo m&eacute;tricas de negocio que todav&iacute;a no pod&iacute;an existir.</p>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <span class="result-num">1 of 5</span>
+        <span class="result-label" data-en>Planned products cancelled before design</span>
+        <span class="result-label" data-es>Productos cancelados antes de dise&ntilde;ar</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">100%</span>
+        <span class="result-label" data-en>Task completion &middot; n=10</span>
+        <span class="result-label" data-es>Tareas completadas &middot; n=10</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">6.9/7</span>
+        <span class="result-label" data-en>Satisfaction in concept validation</span>
+        <span class="result-label" data-es>Satisfacci&oacute;n en validaci&oacute;n de concepto</span>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en><strong>14+ executive and operational stakeholders aligned in a 4-week Discovery.</strong> The change happened across four layers &mdash; <strong>product</strong> (tracking, notifications, quoting, statuses, operational flows), <strong>service</strong> (handoffs, responsibilities, exceptions, providers), <strong>business</strong> (value proposition, adoption levers, B2B credit, provider model) and <strong>governance</strong> (ownership of integrations, parameters and critical processes). The main result wasn't an interface. It was a clearer definition of how the service had to work before building it.</p>
+    <p class="cs-body" data-es><strong>14+ stakeholders ejecutivos y operativos alineados en un Discovery de 4 semanas.</strong> El cambio ocurri&oacute; en cuatro capas &mdash; <strong>producto</strong> (tracking, notificaciones, cotizaci&oacute;n, estados y flujos operativos), <strong>servicio</strong> (handoffs, responsabilidades, excepciones y proveedores), <strong>negocio</strong> (propuesta de valor, palancas de adopci&oacute;n, cr&eacute;dito B2B y modelo de proveedores) y <strong>gobernanza</strong> (ownership de integraciones, par&aacute;metros y procesos cr&iacute;ticos). El resultado principal no fue una interfaz. Fue una definici&oacute;n m&aacute;s clara de c&oacute;mo deb&iacute;a funcionar el servicio antes de construirlo.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>What I learned</div><div class="cs-tag" data-es>Lo que aprend&iacute;</div>
+
+    <h2 class="cs-title" data-en>A service is only as strong as the system that delivers it</h2>
+    <h2 class="cs-title" data-es>Un servicio vale lo que vale el sistema que lo entrega</h2>
+
+    <p class="cs-body" data-en>Designing an excellent experience isn't enough if the organisation and its providers don't have the conditions to sustain it. This project forced me to move across four levels at once: <strong>experience &rarr; operation &rarr; business &rarr; governance.</strong> The interface is only one of those layers.</p>
+    <p class="cs-body" data-es>Dise&ntilde;ar una experiencia excelente no alcanza si la organizaci&oacute;n y sus proveedores no tienen las condiciones para sostenerla. Este proyecto me oblig&oacute; a moverme entre cuatro niveles a la vez: <strong>experiencia &rarr; operaci&oacute;n &rarr; negocio &rarr; gobernanza.</strong> La interfaz es solo una de esas capas.</p>
+
+    <p class="cs-body" data-en>When a business decision doesn't change, the work doesn't end. You separate what part of the risk is real, where exactly it lives, what design can mitigate &mdash; and <strong>what evidence is missing</strong> to reopen the decision.</p>
+    <p class="cs-body" data-es>Cuando una decisi&oacute;n de negocio no cambia, el trabajo no termina. Hay que separar qu&eacute; parte del riesgo es real, d&oacute;nde exactamente vive, qu&eacute; se puede mitigar desde el dise&ntilde;o y <strong>qu&eacute; dato falta</strong> para volver a abrir la decisi&oacute;n con evidencia.</p>
+
+    <div class="confidential-note">
+      <span>&#128274;</span>
+      <p class="confidential-text" data-en><strong>Note on confidentiality:</strong> This case omits the names of providers and interview participants, as well as volumes, rates, margins, routes and launch dates. Findings are presented as patterns observed during Discovery.</p>
+      <p class="confidential-text" data-es><strong>Nota de confidencialidad:</strong> Este caso omite los nombres de los proveedores y de las personas entrevistadas, as&iacute; como vol&uacute;menes, tarifas, m&aacute;rgenes, rutas y fechas de lanzamiento. Los hallazgos se presentan como patrones observados durante el Discovery.</p>
+    </div>
+  </div>
+</div>
+<div class="next-case">
+  <div>
+    <div class="next-label" data-en>Next case</div>
+    <div class="next-label" data-es>Siguiente caso</div>
+    <div class="next-title" data-en>FTL TRACE TX &mdash; Turning a European regulation into a Latin American product</div>
+    <div class="next-title" data-es>FTL TRACE TX &mdash; Convertir una regulaci&oacute;n europea en un producto latinoamericano</div>
+  </div>
+  <a href="ftl.html" class="next-arrow" data-en>Read case study &rarr;</a>
+  <a href="ftl.html" class="next-arrow" data-es>Ver caso completo &rarr;</a>
+</div>
+<script>
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelector('.lang-btn[onclick*="' + lang + '"]').classList.add('active');
+  try { localStorage.setItem('lang', lang); } catch (e) {}
+}
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) {}
+  if (saved === 'es') { setLang('es'); }
+})();
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+</script>
+</body>
+</html>
