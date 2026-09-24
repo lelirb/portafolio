@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco Pichincha &mdash; L'Elisette Rivadeneira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --blue: #1B6EF3; --blue-soft: #E8F0FE; --green: #1DBF73; --ink: #0A0E1A; --ink-mid: #3D4259; --ink-soft: #8B90A7; --bg: #F7F9FF; --white: #FFFFFF; --border: #E2E8F8; --font-display: 'DM Serif Display', Georgia, serif; --font-body: 'DM Sans', sans-serif; --font-mono: 'Space Mono', monospace; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--font-display); font-size: 18px; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--blue); }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+  .nav-back { font-size: 13px; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--blue); }
+  .lang-toggle { display: flex; align-items: center; gap: 2px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 3px; }
+  .lang-btn { font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 16px; border: none; background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; }
+  .lang-btn.active { background: var(--blue); color: white; }
+  .case-hero { padding: 120px 48px 80px; background: #021a3a; position: relative; overflow: hidden; }
+  .case-hero::before { content: ''; position: absolute; top: -200px; right: -150px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(27,110,243,0.2) 0%, transparent 65%); pointer-events: none; }
+  .case-hero-inner { max-width: 860px; position: relative; z-index: 1; }
+  .case-breadcrumb { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .case-number-big { font-family: var(--font-mono); font-size: 11px; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 20px; display: block; }
+  .case-hero-title { font-family: var(--font-display); font-size: clamp(40px, 5vw, 72px); color: white; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .case-hero-title em { color: var(--green); font-style: italic; }
+  .case-hero-sub { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 620px; margin-bottom: 48px; }
+  .case-meta-bar { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .case-meta-label { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .case-meta-value { font-size: 15px; color: rgba(255,255,255,0.85); }
+  .metrics-strip { background: var(--green); padding: 40px 48px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; }
+  .metric-block { text-align: center; padding: 0 24px; }
+  .metric-block + .metric-block { border-left: 1px solid rgba(255,255,255,0.25); }
+  .metric-big { font-family: var(--font-mono); font-size: 44px; font-weight: 700; color: white; line-height: 1; display: block; }
+  .metric-sub { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 6px; display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+  .case-content { max-width: 760px; margin: 0 auto; padding: 80px 48px; }
+  .showcase { background: var(--bg); border-radius: 8px; padding: 40px; margin-bottom: 72px; border-left: 3px solid var(--green); }
+  .showcase-label { font-family: var(--font-mono); font-size: 10px; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+  .showcase-text { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--ink); line-height: 1.55; }
+  .cs-section { margin-bottom: 64px; }
+  .cs-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .cs-tag::before { content: ''; display: block; width: 16px; height: 1px; background: var(--blue); }
+  .cs-title { font-family: var(--font-display); font-size: 32px; color: var(--ink); margin-bottom: 20px; line-height: 1.15; }
+  .cs-body { font-size: 16px; color: var(--ink-mid); line-height: 1.8; margin-bottom: 20px; }
+  .cs-body strong { color: var(--ink); font-weight: 500; }
+  .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .finding-card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px; position: relative; overflow: hidden; }
+  .finding-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--green); }
+  .finding-text { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+  .finding-text strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 4px; font-size: 13px; font-family: var(--font-mono); }
+  .callout { background: #021a3a; border-radius: 8px; padding: 36px 40px; margin: 32px 0; }
+  .callout-text { font-family: var(--font-display); font-style: italic; font-size: 22px; color: white; line-height: 1.5; }
+  .callout-text em { color: var(--green); font-style: normal; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .result-card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 24px; text-align: center; }
+  .result-num { font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--green); display: block; line-height: 1; margin-bottom: 8px; }
+  .result-label { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .confidential-note { background: var(--blue-soft); border: 1px solid rgba(27,110,243,0.2); border-radius: 6px; padding: 20px 24px; margin: 24px 0; display: flex; align-items: flex-start; gap: 12px; }
+  .confidential-text { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+  .confidential-text strong { color: var(--ink); font-weight: 500; }
+  .cs-divider { height: 1px; background: var(--border); margin: 48px 0; }
+  .next-case { background: var(--bg); padding: 64px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+  .next-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .next-title { font-family: var(--font-display); font-size: 28px; color: var(--ink); }
+  .next-arrow { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: white; padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+  .next-arrow:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(27,110,243,0.3); }
+  /* IMAGE SLOTS */
+  .img-slot { width: 100%; margin: 32px 0; border-radius: 8px; overflow: hidden; background: var(--bg); border: 2px dashed var(--border); min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; transition: border-color 0.2s; }
+  .img-slot:hover { border-color: var(--blue); }
+  .img-slot img { width: 100%; height: auto; display: block; min-height: unset; border-radius: 6px; }
+  .img-slot-icon { font-size: 28px; opacity: 0.4; }
+  .img-slot-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 0 20px; line-height: 1.6; }
+  .img-slot-hint { font-family: var(--font-mono); font-size: 11px; color: var(--border); padding: 4px 12px; background: var(--white); border: 1px solid var(--border); border-radius: 4px; }
+  .img-caption { font-size: 13px; color: var(--ink-soft); margin-top: -20px; margin-bottom: 32px; font-style: italic; }
+  .img-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0; }
+  .img-pair .img-slot { margin: 0; min-height: 200px; }
+  .img-full { width: calc(100% + 96px); margin-left: -48px; border-radius: 0; border-left: none; border-right: none; }
+  .img-has-photo { border-style: solid; border-color: var(--border); min-height: unset; padding: 0; background: var(--white); cursor: zoom-in; }
+  .img-full.img-has-photo { border-left: none; border-right: none; }
+  /* EVIDENCE CHAIN */
+  .chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 28px 0; }
+  .chain-step { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 18px; position: relative; }
+  .chain-step::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--blue); border-radius: 6px 6px 0 0; }
+  .chain-step:last-child::before { background: var(--green); }
+  .chain-id { font-family: var(--font-mono); font-size: 10px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; display: block; }
+  .chain-step:last-child .chain-id { color: var(--green); }
+  .chain-text { font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
+  /* FUNNEL */
+  .funnel { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 28px 0; }
+  .funnel-step { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px 12px; text-align: center; }
+  .funnel-num { font-family: var(--font-mono); font-size: 30px; font-weight: 700; color: var(--ink); display: block; line-height: 1; }
+  .funnel-step.is-drop .funnel-num { color: var(--green); }
+  .funnel-label { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; display: block; }
+  /* PILOT TABLE */
+  .ptable { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14px; }
+  .ptable th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 12px; border-bottom: 1px solid var(--border); font-weight: 400; }
+  .ptable td { padding: 14px 12px; border-bottom: 1px solid var(--border); color: var(--ink-mid); }
+  .ptable tr:last-child td { border-bottom: none; background: var(--bg); color: var(--ink); font-weight: 500; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .lang-es [data-en] { display: none; }
+  .lang-en [data-es] { display: none; }
+  @media (max-width: 768px) { nav { padding: 0 20px; } .case-hero { padding: 100px 24px 60px; } .metrics-strip { padding: 32px 24px; } .metric-block + .metric-block { border-left: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 24px; } .case-content { padding: 48px 24px; } .findings-grid, .results-grid, .img-pair, .chain { grid-template-columns: 1fr; } .funnel { grid-template-columns: repeat(5, 1fr); gap: 4px; } .funnel-step { padding: 12px 4px; } .funnel-num { font-size: 18px; } .funnel-label { font-size: 8px; } .img-full { width: 100%; margin-left: 0; border-radius: 8px; border: 2px dashed var(--border); } .img-full.img-has-photo { border: 1px solid var(--border); } .next-case { flex-direction: column; gap: 24px; padding: 40px 24px; } .ptable { font-size: 12px; } .ptable th, .ptable td { padding: 10px 6px; } }
+</style>
+</head>
+<body class="lang-en">
+<script src="lang.js"></script>
+<nav>
+  <a href="index.html" class="nav-logo">L<span>'</span>Elisette</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back" data-en>&larr; All work</a>
+    <a href="index.html" class="nav-back" data-es>&larr; Proyectos</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+<div class="case-hero">
+  <div class="case-hero-inner">
+    <div class="case-breadcrumb" data-en>Work / Banco Pichincha &middot; Ecuador</div>
+    <div class="case-breadcrumb" data-es>Proyectos / Banco Pichincha &middot; Ecuador</div>
+    <span class="case-number-big" data-en>Case 03</span>
+    <span class="case-number-big" data-es>Caso 03</span>
+    <h1 class="case-hero-title" data-en>Of 100 prospects,<br><em>three</em> reached the product.</h1>
+    <h1 class="case-hero-title" data-es>De 100 prospectos,<br><em>tres</em> llegaban al producto.</h1>
+    <p class="case-hero-sub" data-en>Supply chain financing existed for corporations. Ecuador's SMEs had nothing like it. The bank thought it had a product for them. The journey showed the product was filtering out the very segment it was supposed to serve.</p>
+    <p class="case-hero-sub" data-es>El financiamiento de cadenas de valor exist&iacute;a para grandes empresas. Las pymes ecuatorianas no ten&iacute;an nada parecido. El banco cre&iacute;a tener un producto para ellas. El journey mostr&oacute; que el producto estaba filtrando justo al segmento que dec&iacute;a servir.</p>
+    <div class="case-meta-bar">
+      <div><div class="case-meta-label" data-en>My Role</div><div class="case-meta-label" data-es>Mi Rol</div><div class="case-meta-value">UX Designer</div></div>
+      <div><div class="case-meta-label" data-en>Industry</div><div class="case-meta-label" data-es>Industria</div><div class="case-meta-value" data-en>Banking &middot; Ecuador</div><div class="case-meta-value" data-es>Banca &middot; Ecuador</div></div>
+      <div><div class="case-meta-label" data-en>Methods</div><div class="case-meta-label" data-es>M&eacute;todos</div><div class="case-meta-value" data-en>In-depth interviews &middot; Survey &middot; Stakeholder co-creation &middot; Journey mapping &middot; Rapid prototyping &middot; Pilot</div><div class="case-meta-value" data-es>Entrevistas en profundidad &middot; Encuesta &middot; Co-creaci&oacute;n con stakeholders &middot; Journey mapping &middot; Prototipado r&aacute;pido &middot; Piloto</div></div>
+    </div>
+  </div>
+</div>
+<div class="metrics-strip">
+  <div class="metric-block"><span class="metric-big">100&rarr;3</span><span class="metric-sub" data-en>Prospects reaching the product</span><span class="metric-sub" data-es>Prospectos que llegaban</span></div>
+  <div class="metric-block"><span class="metric-big">4h</span><span class="metric-sub" data-en>Internal processing, from 15 days</span><span class="metric-sub" data-es>Tr&aacute;mite interno, antes 15 d&iacute;as</span></div>
+  <div class="metric-block"><span class="metric-big">78%</span><span class="metric-sub" data-en>SME affiliation in pilot</span><span class="metric-sub" data-es>Afiliaci&oacute;n pyme en el piloto</span></div>
+  <div class="metric-block"><span class="metric-big">300</span><span class="metric-sub" data-en>Survey responses from 732</span><span class="metric-sub" data-es>Respuestas sobre 732 clientes</span></div>
+</div>
+<div class="case-content">
+  <div class="showcase reveal">
+    <div class="showcase-label" data-en>The short version</div><div class="showcase-label" data-es>La versi&oacute;n corta</div>
+    <p class="showcase-text" data-en>Banco Pichincha had supply chain financing for large corporations. No Ecuadorian bank had built it for SMEs. We interviewed clients and stakeholders, surveyed the base, and mapped the journey &mdash; which revealed that of every 100 prospects, only three ever used the product. We redesigned affiliation as a digital flow: internal processing went from 15 days to 4 hours. In the pilot, 78% of invited SMEs affiliated.</p>
+    <p class="showcase-text" data-es>Banco Pichincha ten&iacute;a cadenas de valor para grandes corporaciones. Ning&uacute;n banco ecuatoriano lo hab&iacute;a construido para pymes. Entrevistamos a clientes y stakeholders, encuestamos a la base y mapeamos el journey &mdash; que revel&oacute; que de cada 100 prospectos, solo tres llegaban a usar el producto. Redise&ntilde;amos la afiliaci&oacute;n como flujo digital: el tr&aacute;mite interno pas&oacute; de 15 d&iacute;as a 4 horas. En el piloto, el 78% de las pymes invitadas se afili&oacute;.</p>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Context</div><div class="cs-tag" data-es>Contexto</div>
+
+    <h2 class="cs-title" data-en>A product that forgot an entire segment existed</h2>
+    <h2 class="cs-title" data-es>Un producto que olvid&oacute; que exist&iacute;a un segmento entero</h2>
+
+    <p class="cs-body" data-en>Cadenas de Valor lets a company pay its suppliers and distributors using an approved credit line: invoices are uploaded to a system, the bank pays them against the credit, and the company later repays the bank. Banco Pichincha ran it well with multinationals and large corporations &mdash; but <strong>no Ecuadorian bank had built this product for SMEs.</strong></p>
+    <p class="cs-body" data-es>Cadenas de Valor permite a una empresa pagar a sus proveedores y distribuidores usando una l&iacute;nea de cr&eacute;dito aprobada: se cargan las facturas a un sistema, el banco las paga contra el cr&eacute;dito, y luego la empresa repone el cr&eacute;dito al banco. Banco Pichincha lo manejaba bien con transnacionales y grandes empresas &mdash; pero <strong>ning&uacute;n banco ecuatoriano lo hab&iacute;a construido para pymes.</strong></p>
+
+    <p class="cs-body" data-en>The goal was to take an existing product to an underserved segment, quickly and digitally. My work was the research and definition that had to happen before anyone could design a screen.</p>
+    <p class="cs-body" data-es>El objetivo era llevar un producto existente a un segmento desatendido, r&aacute;pido y de forma digital. Mi trabajo fue la investigaci&oacute;n y definici&oacute;n que ten&iacute;a que ocurrir antes de que alguien dise&ntilde;ara una pantalla.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Discovery</div><div class="cs-tag" data-es>Descubrimiento</div>
+
+    <h2 class="cs-title" data-en>What we found when we actually asked</h2>
+    <h2 class="cs-title" data-es>Lo que encontramos cuando preguntamos de verdad</h2>
+
+    <p class="cs-body" data-en><strong>15 in-depth interviews with active clients</strong>, 8 stakeholders relevant to the product, and a survey to the full 2021 client base &mdash; 732 clients, 300 responses &mdash; plus co-creation workshops with internal teams.</p>
+    <p class="cs-body" data-es><strong>15 entrevistas en profundidad con clientes activos</strong>, 8 stakeholders relevantes al producto, y una encuesta a toda la base de clientes 2021 &mdash; 732 clientes, 300 respuestas &mdash; m&aacute;s talleres de co-creaci&oacute;n con equipos internos.</p>
+
+    <div class="img-slot img-has-photo reveal img-full">
+      <img src="img/pichincha-journey-asis.jpg" alt="AS-IS journey map" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>The AS-IS journey map. The top row is the one that reordered the project.</p>
+    <p class="img-caption" data-es>El journey map AS-IS. La fila de arriba es la que reorden&oacute; el proyecto.</p>
+
+    <p class="cs-body" data-en>We mapped the client journey across its five stages. The row that mattered wasn't the pain points &mdash; it was the client count.</p>
+    <p class="cs-body" data-es>Mapeamos el journey del cliente en sus cinco etapas. La fila que importaba no era la de pain points: era la cantidad de clientes.</p>
+
+    <div class="funnel">
+      <div class="funnel-step">
+        <span class="funnel-num">100</span>
+        <span class="funnel-label" data-en>Prospecting</span>
+        <span class="funnel-label" data-es>Prospecci&oacute;n</span>
+      </div>
+      <div class="funnel-step">
+        <span class="funnel-num">70</span>
+        <span class="funnel-label" data-en>Sale</span>
+        <span class="funnel-label" data-es>Venta</span>
+      </div>
+      <div class="funnel-step">
+        <span class="funnel-num">21</span>
+        <span class="funnel-label" data-en>Qualification</span>
+        <span class="funnel-label" data-es>Calificaci&oacute;n</span>
+      </div>
+      <div class="funnel-step is-drop">
+        <span class="funnel-num">3</span>
+        <span class="funnel-label" data-en>Affiliation</span>
+        <span class="funnel-label" data-es>Afiliaci&oacute;n</span>
+      </div>
+      <div class="funnel-step is-drop">
+        <span class="funnel-num">3</span>
+        <span class="funnel-label" data-en>Use</span>
+        <span class="funnel-label" data-es>Uso</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p class="callout-text" data-en>&ldquo;Of every 100 prospects, <em>three</em> reached the product. The bank didn't have a slow product for SMEs. It had a product that filtered them out.&rdquo;</p>
+      <p class="callout-text" data-es>&ldquo;De cada 100 prospectos, <em>tres</em> llegaban al producto. El banco no ten&iacute;a un producto lento para pymes. Ten&iacute;a un producto que las filtraba.&rdquo;</p>
+    </div>
+
+    <p class="cs-body" data-en>The biggest drop is between qualification and affiliation: 21 becomes 3. And the journey said why &mdash; <strong>SMEs rarely qualified unless a larger company acted as guarantor.</strong> That isn't UX friction. It's a structural exclusion built into the product's own rules: the same requirements applied to an SME and to a multinational.</p>
+    <p class="cs-body" data-es>La mayor ca&iacute;da est&aacute; entre calificaci&oacute;n y afiliaci&oacute;n: 21 se convierte en 3. Y el journey dec&iacute;a por qu&eacute; &mdash; <strong>las pymes rara vez calificaban, a menos que una empresa m&aacute;s grande actuara como garante.</strong> Eso no es fricci&oacute;n de UX. Es una exclusi&oacute;n estructural escrita en las reglas del propio producto: los mismos requisitos aplicaban a una pyme y a una transnacional.</p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>+30 DAYS TO AFFILIATE</strong>Up to 4 months in the worst cases. Documents queue through 8 areas for review and approval; if one expires, the process restarts.</p>
+        <p class="finding-text" data-es><strong>+30 D&Iacute;AS PARA AFILIARSE</strong>Hasta 4 meses en el peor de los casos. Los documentos pasan por 8 &aacute;reas para revisi&oacute;n y aprobaci&oacute;n; si uno vence, el proceso se reinicia.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>+20% MONTHLY COST</strong>Delays generated cascading financial consequences for SMEs waiting to pay their suppliers.</p>
+        <p class="finding-text" data-es><strong>+20% DE COSTOS MENSUALES</strong>Las demoras generaban consecuencias financieras en cascada para las pymes esperando pagar a sus proveedores.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>ONE PROCESS FOR EVERYONE</strong>The same requirements regardless of company size &mdash; which is precisely why SMEs didn't qualify.</p>
+        <p class="finding-text" data-es><strong>UN PROCESO PARA TODOS</strong>Los mismos requisitos sin importar el tama&ntilde;o de la empresa &mdash; que es justamente por lo que las pymes no calificaban.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>AN OBSOLETE CORE</strong>The system went down at moments of peak criticality. When a client wanted to pay suppliers, they couldn't &mdash; the payment slipped, creating arrears and broken trust.</p>
+        <p class="finding-text" data-es><strong>UN CORE OBSOLETO</strong>El sistema se ca&iacute;a en momentos de mayor criticidad. Cuando el cliente quer&iacute;a pagar a sus proveedores, no pod&iacute;a &mdash; el pago se dilataba, creando mora e inconformidad.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>AMOUNTS THAT DIDN'T MATCH</strong>Approved credit wasn't necessarily what the client had requested &mdash; frustration from day one.</p>
+        <p class="finding-text" data-es><strong>MONTOS QUE NO COINCID&Iacute;AN</strong>El monto aprobado no era necesariamente el solicitado por el cliente &mdash; frustraci&oacute;n desde el primer d&iacute;a.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>PROSPECTING BY HAND</strong>Finding which clients might qualify was manual and took the advisor around two weeks per quarter.</p>
+        <p class="finding-text" data-es><strong>PROSPECCI&Oacute;N A MANO</strong>Encontrar qu&eacute; clientes pod&iacute;an calificar era manual y le tomaba al asesor cerca de dos semanas por trimestre.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The journey's emotion row reads like a descent: overwhelmed &rarr; frustration &rarr; exhaustion &rarr; <strong>anger.</strong></p>
+    <p class="cs-body" data-es>La fila de emociones del journey se lee como un descenso: abrumado &rarr; frustraci&oacute;n &rarr; cansancio &rarr; <strong>enojo.</strong></p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Definition</div><div class="cs-tag" data-es>Definici&oacute;n</div>
+
+    <h2 class="cs-title" data-en>From an ideal 360&deg; experience to something we could actually ship</h2>
+    <h2 class="cs-title" data-es>De una experiencia ideal 360&deg; a algo que se pudiera construir</h2>
+
+    <p class="cs-body" data-en>With the journey mapped, we designed the ideal To-Be flow across every touchpoint &mdash; prospecting by scoring model, pre-qualified offers, immediate affiliation with digital contract generation, supplier self-service, and self-managed tracking of invoices and available credit.</p>
+    <p class="cs-body" data-es>Con el journey mapeado, dise&ntilde;amos el flujo To-Be ideal abarcando todos los touchpoints &mdash; prospecci&oacute;n por modelo de scoring, ofertas precalificadas, afiliaci&oacute;n inmediata con generaci&oacute;n de contrato digital, autogesti&oacute;n de proveedores, y seguimiento autogestionado de facturas y cupo disponible.</p>
+
+    <div class="img-slot img-has-photo reveal img-full">
+      <img src="img/pichincha-flujo-tobe.jpg" alt="To-Be flow" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>To-Be flow for Cadenas de Valor &mdash; proposed solutions marked in green</p>
+    <p class="img-caption" data-es>Flujo To-Be de Cadenas de Valor &mdash; soluciones propuestas marcadas en verde</p>
+
+    <p class="cs-body" data-en>Then, with stakeholders, we ran ideation and prioritisation to get from the ideal flow to an MVP. Everything went onto an impact/effort matrix &mdash; quick wins, big bets, nice-to-haves, and an explicitly discarded quadrant.</p>
+    <p class="cs-body" data-es>Despu&eacute;s, con los stakeholders, corrimos ideaci&oacute;n y priorizaci&oacute;n para pasar del flujo ideal a un MVP. Todo fue a una matriz de impacto/esfuerzo &mdash; quickwins, grandes apuestas, deseables, y un cuadrante expl&iacute;citamente descartado.</p>
+
+    <div class="img-pair">
+      <div class="img-slot img-has-photo"><img src="img/pichincha-ideacion.jpg" alt="" loading="lazy"></div>
+      <div class="img-slot img-has-photo"><img src="img/pichincha-priorizacion.jpg" alt="" loading="lazy"></div>
+    </div>
+    <p class="img-caption" data-en>Left: co-creation workshop boards. Right: impact/effort prioritisation &mdash; including what we chose to discard</p>
+    <p class="img-caption" data-es>Izquierda: muros de los talleres de co-creaci&oacute;n. Derecha: priorizaci&oacute;n por impacto/esfuerzo &mdash; incluyendo lo que decidimos descartar</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Build</div><div class="cs-tag" data-es>Construcci&oacute;n</div>
+
+    <h2 class="cs-title" data-en>15 days of internal processing &rarr; 4 hours</h2>
+    <h2 class="cs-title" data-es>15 d&iacute;as de tr&aacute;mite interno &rarr; 4 horas</h2>
+
+    <p class="cs-body" data-en>Affiliation took more than 30 days end to end, and up to four months in the worst cases. Inside that, <strong>15 days were the bank's own internal processing.</strong> That's the part the MVP digitised, and it went to 4 hours.</p>
+    <p class="cs-body" data-es>La afiliaci&oacute;n tomaba m&aacute;s de 30 d&iacute;as de punta a punta, y hasta cuatro meses en el peor de los casos. Dentro de eso, <strong>15 d&iacute;as eran tr&aacute;mite interno del propio banco.</strong> Esa es la parte que el MVP digitaliz&oacute;, y pas&oacute; a 4 horas.</p>
+
+    <p class="cs-body" data-en>The experience starts with an email that redirects to an affiliation site. The client provides the required data, downloads a pre-filled affiliation contract, and sends it to the branch. Only approval remains &mdash; and it should now come back within hours. A second phase adds digital signature, making the process 100% automated.</p>
+    <p class="cs-body" data-es>La experiencia empieza con un email que redirige al site de afiliaci&oacute;n. El cliente proporciona la data necesaria, descarga el contrato de afiliaci&oacute;n pre-rellenado y lo env&iacute;a a oficinas. Solo queda pendiente la aprobaci&oacute;n &mdash; que ahora deber&iacute;a darse en horas. Una segunda etapa incorpora la firma digital, automatizando el proceso al 100%.</p>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/pichincha-mockups.jpg" alt="Digital affiliation flow" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>The digital affiliation flow &mdash; desktop and mobile</p>
+    <p class="img-caption" data-es>El flujo de afiliaci&oacute;n digital &mdash; escritorio y m&oacute;vil</p>
+
+    <div class="confidential-note">
+      <span>&#128274;</span>
+      <p class="confidential-text" data-en><strong>Note on screens:</strong> These mockups were created for Banco Pichincha as part of a confidential project. To protect client privacy and the integrity of the work, full screens are available on direct request.</p>
+      <p class="confidential-text" data-es><strong>Nota sobre pantallas:</strong> Estos mockups fueron creados para Banco Pichincha como parte de un proyecto confidencial. Para proteger la privacidad del cliente y la integridad del trabajo, las pantallas completas est&aacute;n disponibles solo bajo solicitud directa.</p>
+    </div>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Results</div><div class="cs-tag" data-es>Resultados</div>
+
+    <h2 class="cs-title" data-en>The pilot worked &mdash; and the 25% told us what still didn't</h2>
+    <h2 class="cs-title" data-es>El piloto funcion&oacute; &mdash; y el 25% nos dijo qu&eacute; segu&iacute;a sin funcionar</h2>
+
+    <p class="cs-body" data-en>The pilot ran across the three stages we'd redesigned, not just affiliation:</p>
+    <p class="cs-body" data-es>El piloto corri&oacute; sobre las tres etapas que hab&iacute;amos redise&ntilde;ado, no solo la afiliaci&oacute;n:</p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>PROSPECTING</strong>An analytical model pre-qualified SMEs, saving time for both the advisor and the client &mdash; who now had an offer in hand from the start.</p>
+        <p class="finding-text" data-es><strong>PROSPECCI&Oacute;N</strong>Un modelo anal&iacute;tico precalificaba a las pymes, ahorrando tiempo al asesor y al cliente, que ahora ten&iacute;a una oferta en mano desde el inicio.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>SALE</strong>Conditions were rebuilt to fit the segment, for faster assimilation.</p>
+        <p class="finding-text" data-es><strong>VENTA</strong>Se crearon condiciones m&aacute;s adecuadas para el segmento, para su r&aacute;pida asimilaci&oacute;n.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>AFFILIATION</strong>From 15 days to 4 hours through the digital flow.</p>
+        <p class="finding-text" data-es><strong>AFILIACI&Oacute;N</strong>De 15 d&iacute;as a 4 horas mediante el flujo digital.</p>
+      </div>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <span class="result-num">19</span>
+        <span class="result-label" data-en>SMEs in the pilot</span>
+        <span class="result-label" data-es>Pymes en el piloto</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">78%</span>
+        <span class="result-label" data-en>Affiliated</span>
+        <span class="result-label" data-es>Se afiliaron</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">25%</span>
+        <span class="result-label" data-en>Got the amount they wanted</span>
+        <span class="result-label" data-es>Obtuvieron el monto deseado</span>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The 78% says the affiliation redesign worked. <strong>The 25% says the credit scoring didn't.</strong> Approved amounts still weren't what SMEs had asked for &mdash; the same finding from discovery, now measured. Calibrating scoring for the segment was flagged as the clear next step on the roadmap, because no amount of interface work fixes a model that was calibrated for a different kind of company.</p>
+    <p class="cs-body" data-es>El 78% dice que el redise&ntilde;o de la afiliaci&oacute;n funcion&oacute;. <strong>El 25% dice que el scoring no.</strong> Los montos aprobados segu&iacute;an sin ser los que las pymes ped&iacute;an &mdash; el mismo hallazgo del discovery, ahora medido. Calibrar el scoring para el segmento qued&oacute; marcado como el paso claro del roadmap, porque ninguna cantidad de trabajo de interfaz arregla un modelo que fue calibrado para otro tipo de empresa.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>What I learned</div><div class="cs-tag" data-es>Lo que aprend&iacute;</div>
+
+    <h2 class="cs-title" data-en>Copying a product isn't the same as adapting it</h2>
+    <h2 class="cs-title" data-es>Copiar un producto no es lo mismo que adaptarlo</h2>
+
+    <p class="cs-body" data-en>The bank knew how to copy. But <strong>a product that works for a corporation doesn't work for an SME</strong> &mdash; the resources, risk tolerance and administrative capacity are completely different. The design challenge was to preserve the financial logic while rebuilding the experience around a different user. And the funnel showed that &ldquo;different user&rdquo; wasn't a nuance: it was the difference between 100 and 3.</p>
+    <p class="cs-body" data-es>El banco sab&iacute;a copiar. Pero <strong>un producto que funciona para una corporaci&oacute;n no funciona para una pyme</strong> &mdash; los recursos, la tolerancia al riesgo y la capacidad administrativa son completamente distintos. El reto fue preservar la l&oacute;gica financiera mientras se reconstru&iacute;a la experiencia alrededor de un usuario diferente. Y el embudo mostr&oacute; que ese &ldquo;usuario diferente&rdquo; no era un matiz: era la diferencia entre 100 y 3.</p>
+
+    <p class="cs-body" data-en>Working in Ecuador also showed me how rigidity at the top creates invisible ceilings. You can research well, propose the right thing and build it &mdash; but if the chief doesn't approve it, it doesn't happen.</p>
+    <p class="cs-body" data-es>Trabajar en Ecuador tambi&eacute;n me mostr&oacute; c&oacute;mo la rigidez en la cima crea techos invisibles. Puedes investigar bien, proponer lo correcto y construirlo &mdash; pero si el chief no lo aprueba, no pasa.</p>
+  </div>
+</div>
+<div class="next-case">
+  <div>
+    <div class="next-label" data-en>Next case</div>
+    <div class="next-label" data-es>Siguiente caso</div>
+    <div class="next-title" data-en>Movistar Total &mdash; Fixing a product without touching the systems breaking it</div>
+    <div class="next-title" data-es>Movistar Total &mdash; Arreglar un producto sin poder tocar los sistemas que lo romp&iacute;an</div>
+  </div>
+  <a href="movistar.html" class="next-arrow" data-en>Read case study &rarr;</a>
+  <a href="movistar.html" class="next-arrow" data-es>Ver caso completo &rarr;</a>
+</div>
+<script>
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+</script>
+</body>
+</html>

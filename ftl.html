@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FTL TRACE TX &mdash; L'Elisette Rivadeneira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --blue: #1B6EF3; --blue-soft: #E8F0FE; --green: #1DBF73; --ink: #0A0E1A; --ink-mid: #3D4259; --ink-soft: #8B90A7; --bg: #F7F9FF; --white: #FFFFFF; --border: #E2E8F8; --font-display: 'DM Serif Display', Georgia, serif; --font-body: 'DM Sans', sans-serif; --font-mono: 'Space Mono', monospace; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--font-display); font-size: 18px; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--blue); }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+  .nav-back { font-size: 13px; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--blue); }
+  .lang-toggle { display: flex; align-items: center; gap: 2px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 3px; }
+  .lang-btn { font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 16px; border: none; background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; }
+  .lang-btn.active { background: var(--blue); color: white; }
+  .case-hero { padding: 120px 48px 80px; background: #021a3a; position: relative; overflow: hidden; }
+  .case-hero::before { content: ''; position: absolute; top: -200px; right: -150px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(27,110,243,0.2) 0%, transparent 65%); pointer-events: none; }
+  .case-hero-inner { max-width: 860px; position: relative; z-index: 1; }
+  .case-breadcrumb { font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px; }
+  .case-number-big { font-family: var(--font-mono); font-size: 11px; color: var(--blue); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 20px; display: block; }
+  .case-hero-title { font-family: var(--font-display); font-size: clamp(40px, 5vw, 72px); color: white; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .case-hero-title em { color: var(--green); font-style: italic; }
+  .case-hero-sub { font-size: 18px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 620px; margin-bottom: 48px; }
+  .case-meta-bar { display: flex; gap: 40px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .case-meta-label { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+  .case-meta-value { font-size: 15px; color: rgba(255,255,255,0.85); }
+  .metrics-strip { background: var(--green); padding: 40px 48px; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; }
+  .metric-block { text-align: center; padding: 0 24px; }
+  .metric-block + .metric-block { border-left: 1px solid rgba(255,255,255,0.25); }
+  .metric-big { font-family: var(--font-mono); font-size: 44px; font-weight: 700; color: white; line-height: 1; display: block; }
+  .metric-sub { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 6px; display: block; text-transform: uppercase; letter-spacing: 0.06em; }
+  .case-content { max-width: 760px; margin: 0 auto; padding: 80px 48px; }
+  .showcase { background: var(--bg); border-radius: 8px; padding: 40px; margin-bottom: 72px; border-left: 3px solid var(--green); }
+  .showcase-label { font-family: var(--font-mono); font-size: 10px; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+  .showcase-text { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--ink); line-height: 1.55; }
+  .cs-section { margin-bottom: 64px; }
+  .cs-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+  .cs-tag::before { content: ''; display: block; width: 16px; height: 1px; background: var(--blue); }
+  .cs-title { font-family: var(--font-display); font-size: 32px; color: var(--ink); margin-bottom: 20px; line-height: 1.15; }
+  .cs-body { font-size: 16px; color: var(--ink-mid); line-height: 1.8; margin-bottom: 20px; }
+  .cs-body strong { color: var(--ink); font-weight: 500; }
+  .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .finding-card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px; position: relative; overflow: hidden; }
+  .finding-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--green); }
+  .finding-text { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+  .finding-text strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 4px; font-size: 13px; font-family: var(--font-mono); }
+  .callout { background: #021a3a; border-radius: 8px; padding: 36px 40px; margin: 32px 0; }
+  .callout-text { font-family: var(--font-display); font-style: italic; font-size: 22px; color: white; line-height: 1.5; }
+  .callout-text em { color: var(--green); font-style: normal; }
+  .results-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .result-card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 24px; text-align: center; }
+  .result-num { font-family: var(--font-mono); font-size: 36px; font-weight: 700; color: var(--green); display: block; line-height: 1; margin-bottom: 8px; }
+  .result-label { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .confidential-note { background: var(--blue-soft); border: 1px solid rgba(27,110,243,0.2); border-radius: 6px; padding: 20px 24px; margin: 24px 0; display: flex; align-items: flex-start; gap: 12px; }
+  .confidential-text { font-size: 14px; color: var(--ink-mid); line-height: 1.6; }
+  .confidential-text strong { color: var(--ink); font-weight: 500; }
+  .cs-divider { height: 1px; background: var(--border); margin: 48px 0; }
+  .next-case { background: var(--bg); padding: 64px 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); }
+  .next-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .next-title { font-family: var(--font-display); font-size: 28px; color: var(--ink); }
+  .next-arrow { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: white; padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; }
+  .next-arrow:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(27,110,243,0.3); }
+  /* IMAGE SLOTS */
+  .img-slot { width: 100%; margin: 32px 0; border-radius: 8px; overflow: hidden; background: var(--bg); border: 2px dashed var(--border); min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; transition: border-color 0.2s; }
+  .img-slot:hover { border-color: var(--blue); }
+  .img-slot img { width: 100%; height: auto; display: block; min-height: unset; border-radius: 6px; }
+  .img-slot-icon { font-size: 28px; opacity: 0.4; }
+  .img-slot-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 0 20px; line-height: 1.6; }
+  .img-slot-hint { font-family: var(--font-mono); font-size: 11px; color: var(--border); padding: 4px 12px; background: var(--white); border: 1px solid var(--border); border-radius: 4px; }
+  .img-caption { font-size: 13px; color: var(--ink-soft); margin-top: -20px; margin-bottom: 32px; font-style: italic; }
+  .img-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 32px 0; }
+  .img-pair .img-slot { margin: 0; min-height: 200px; }
+  .img-full { width: calc(100% + 96px); margin-left: -48px; border-radius: 0; border-left: none; border-right: none; }
+  .img-has-photo { border-style: solid; border-color: var(--border); min-height: unset; padding: 0; background: var(--white); cursor: zoom-in; }
+  .img-full.img-has-photo { border-left: none; border-right: none; }
+  /* EVIDENCE CHAIN */
+  .chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 28px 0; }
+  .chain-step { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 18px; position: relative; }
+  .chain-step::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--blue); border-radius: 6px 6px 0 0; }
+  .chain-step:last-child::before { background: var(--green); }
+  .chain-id { font-family: var(--font-mono); font-size: 10px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; display: block; }
+  .chain-step:last-child .chain-id { color: var(--green); }
+  .chain-text { font-size: 13px; color: var(--ink-mid); line-height: 1.55; }
+  /* FUNNEL */
+  .funnel { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 28px 0; }
+  .funnel-step { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 20px 12px; text-align: center; }
+  .funnel-num { font-family: var(--font-mono); font-size: 30px; font-weight: 700; color: var(--ink); display: block; line-height: 1; }
+  .funnel-step.is-drop .funnel-num { color: var(--green); }
+  .funnel-label { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; display: block; }
+  /* PILOT TABLE */
+  .ptable { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 14px; }
+  .ptable th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft); text-align: left; padding: 12px; border-bottom: 1px solid var(--border); font-weight: 400; }
+  .ptable td { padding: 14px 12px; border-bottom: 1px solid var(--border); color: var(--ink-mid); }
+  .ptable tr:last-child td { border-bottom: none; background: var(--bg); color: var(--ink); font-weight: 500; }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .lang-es [data-en] { display: none; }
+  .lang-en [data-es] { display: none; }
+  @media (max-width: 768px) { nav { padding: 0 20px; } .case-hero { padding: 100px 24px 60px; } .metrics-strip { padding: 32px 24px; } .metric-block + .metric-block { border-left: none; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 24px; } .case-content { padding: 48px 24px; } .findings-grid, .results-grid, .img-pair, .chain { grid-template-columns: 1fr; } .funnel { grid-template-columns: repeat(5, 1fr); gap: 4px; } .funnel-step { padding: 12px 4px; } .funnel-num { font-size: 18px; } .funnel-label { font-size: 8px; } .img-full { width: 100%; margin-left: 0; border-radius: 8px; border: 2px dashed var(--border); } .img-full.img-has-photo { border: 1px solid var(--border); } .next-case { flex-direction: column; gap: 24px; padding: 40px 24px; } .ptable { font-size: 12px; } .ptable th, .ptable td { padding: 10px 6px; } }
+</style>
+</head>
+<body class="lang-en">
+<script src="lang.js"></script>
+<nav>
+  <a href="index.html" class="nav-logo">L<span>'</span>Elisette</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back" data-en>&larr; All work</a>
+    <a href="index.html" class="nav-back" data-es>&larr; Proyectos</a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</nav>
+<div class="case-hero">
+  <div class="case-hero-inner">
+    <div class="case-breadcrumb" data-en>Work / FTL TRACE TX &middot; Textile &middot; Peru</div>
+    <div class="case-breadcrumb" data-es>Proyectos / FTL TRACE TX &middot; Textil &middot; Per&uacute;</div>
+    <span class="case-number-big" data-en>Case 02</span>
+    <span class="case-number-big" data-es>Caso 02</span>
+    <h1 class="case-hero-title" data-en>Turning a European regulation<br>into a <em>Latin American product.</em></h1>
+    <h1 class="case-hero-title" data-es>Convertir una regulaci&oacute;n europea<br>en un <em>producto latinoamericano.</em></h1>
+    <p class="case-hero-sub" data-en>The Digital Product Passport will be mandatory for textiles sold in Europe. Around 40% of Peru's textile exports go to that market. For an exporter, that isn't a process improvement &mdash; it's the condition for continuing to sell.</p>
+    <p class="case-hero-sub" data-es>El Pasaporte Digital de Producto ser&aacute; obligatorio para los textiles que se vendan en Europa. Alrededor del 40% de las exportaciones textiles peruanas van a ese mercado. Para una exportadora, eso no es una mejora de proceso: es la condici&oacute;n para seguir vendiendo.</p>
+    <div class="case-meta-bar">
+      <div><div class="case-meta-label" data-en>My Role</div><div class="case-meta-label" data-es>Mi Rol</div><div class="case-meta-value" data-en>Strategic Designer &amp; Product Strategy Lead</div><div class="case-meta-value" data-es>Strategic Designer y Product Strategy Lead</div></div>
+      <div><div class="case-meta-label" data-en>Industry</div><div class="case-meta-label" data-es>Industria</div><div class="case-meta-value" data-en>Textile &middot; B2B SaaS &middot; Peru &rarr; EU</div><div class="case-meta-value" data-es>Textil &middot; SaaS B2B &middot; Per&uacute; &rarr; UE</div></div>
+      <div><div class="case-meta-label" data-en>Methods</div><div class="case-meta-label" data-es>M&eacute;todos</div><div class="case-meta-value" data-en>Executive workshops &middot; Field validation &middot; Interface design &middot; Usability testing (SUS) &middot; In-plant validation</div><div class="case-meta-value" data-es>Workshops con direcci&oacute;n &middot; Validaci&oacute;n en campo &middot; Dise&ntilde;o de interfaz &middot; Prueba de usabilidad con SUS &middot; Validaci&oacute;n en planta</div></div>
+    </div>
+  </div>
+</div>
+<div class="metrics-strip">
+  <div class="metric-block"><span class="metric-big">9</span><span class="metric-sub" data-en>Traceability checkpoints</span><span class="metric-sub" data-es>Checkpoints de trazabilidad</span></div>
+  <div class="metric-block"><span class="metric-big">5</span><span class="metric-sub" data-en>Workshops with the board</span><span class="metric-sub" data-es>Workshops con el directorio</span></div>
+  <div class="metric-block"><span class="metric-big">8</span><span class="metric-sub" data-en>Fixes from research</span><span class="metric-sub" data-es>Ajustes desde research</span></div>
+  <div class="metric-block"><span class="metric-big">60&ndash;70%</span><span class="metric-sub" data-en>DPP coverage reached</span><span class="metric-sub" data-es>Cobertura DPP alcanzada</span></div>
+</div>
+<div class="case-content">
+  <div class="showcase reveal">
+    <div class="showcase-label" data-en>The short version</div><div class="showcase-label" data-es>La versi&oacute;n corta</div>
+    <p class="showcase-text" data-en>The brief looked like &ldquo;design a traceability system.&rdquo; The real problem was deciding which part of a regulation that phases in over time should become product now, understanding who could contribute each piece of data, and checking whether the people who had to feed the system could actually do it in plant conditions.</p>
+    <p class="showcase-text" data-es>El encargo parec&iacute;a ser &ldquo;dise&ntilde;ar un sistema de trazabilidad&rdquo;. El problema real era decidir qu&eacute; parte de una regulaci&oacute;n que entra en vigor por etapas deb&iacute;a convertirse en producto ahora, entender qui&eacute;n pod&iacute;a aportar cada dato, y comprobar si las personas que ten&iacute;an que alimentar el sistema pod&iacute;an hacerlo en condiciones de planta.</p>
+  </div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Context</div><div class="cs-tag" data-es>Contexto</div>
+
+    <h2 class="cs-title" data-en>The problem wasn't missing environmental data. It was that nobody believes it.</h2>
+    <h2 class="cs-title" data-es>El problema no era la falta de informaci&oacute;n ambiental. Era que nadie la cree.</h2>
+
+    <p class="cs-body" data-en>The studies we reviewed at the start showed the gap clearly: the vast majority of consumers say they value brand transparency, three out of four distrust what labels say, and only a small minority consider brands trustworthy.</p>
+    <p class="cs-body" data-es>Los estudios que revisamos al inicio mostraban el desfase con claridad: la gran mayor&iacute;a de consumidores dice valorar la transparencia de las marcas, tres de cada cuatro desconf&iacute;a de lo que dicen las etiquetas, y apenas una minor&iacute;a considera confiables a las marcas.</p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>97% &middot; TRANSPARENCY</strong>Value brand transparency.</p>
+        <p class="finding-text" data-es><strong>97% &middot; TRANSPARENCIA</strong>Valoran la transparencia de las marcas.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>75% &middot; CREDIBILITY</strong>Don't trust what labels say.</p>
+        <p class="finding-text" data-es><strong>75% &middot; VERACIDAD</strong>No conf&iacute;an en la veracidad de las etiquetas.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>16% &middot; TRUST</strong>Believe brands are trustworthy.</p>
+        <p class="finding-text" data-es><strong>16% &middot; CONFIABILIDAD</strong>Creen que las marcas son confiables.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>40% &middot; THE STAKE</strong>Of Peru's textile exports go to Europe.</p>
+        <p class="finding-text" data-es><strong>40% &middot; LO QUE EST&Aacute; EN JUEGO</strong>De las exportaciones textiles peruanas van a Europa.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>That's where the business opportunity is. If sustainability claims aren't credible on their own, the value isn't in declaring &mdash; it's in <strong>being able to prove where each piece of data comes from and how reliable it is.</strong> That's what the European regulation makes mandatory, and what turns traceability into a market.</p>
+    <p class="cs-body" data-es>Ah&iacute; est&aacute; la oportunidad de negocio. Si las declaraciones de sostenibilidad no son cre&iacute;bles por s&iacute; solas, el valor no est&aacute; en declarar: est&aacute; en <strong>poder demostrar de d&oacute;nde viene cada dato y qu&eacute; tan confiable es.</strong> Eso es lo que la regulaci&oacute;n europea vuelve obligatorio y lo que convierte la trazabilidad en un mercado.</p>
+
+    <p class="cs-body" data-en>The platform had to connect information generated across a fragmented chain &mdash; fibre and fabric suppliers, external processes like laundry, manufacturing, and finally the brand &mdash; while serving two different needs at once. The <strong>startup</strong> needed a scalable product, sellable to many companies. The <strong>pilot exporter</strong> needed to solve its real operation and get ready for the European market. <strong>The same design had to serve both without becoming a bespoke solution for one company.</strong></p>
+    <p class="cs-body" data-es>La plataforma ten&iacute;a que conectar informaci&oacute;n generada a lo largo de una cadena fragmentada &mdash;proveedores de fibra y de tela, procesos externos como lavander&iacute;a, fabricaci&oacute;n y finalmente la marca&mdash; y responder a la vez a dos necesidades distintas. La <strong>startup</strong> necesitaba un producto escalable, vendible a muchas empresas. La <strong>exportadora piloto</strong> necesitaba resolver su operaci&oacute;n real y prepararse para el mercado europeo. <strong>El mismo dise&ntilde;o ten&iacute;a que servir a ambos sin convertirse en una soluci&oacute;n a la medida de una sola empresa.</strong></p>
+
+    <div class="img-slot img-has-photo reveal img-full">
+      <img src="img/ftl-cadena-trazabilidad.jpg" alt="Textile chain and data breaks" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>The textile chain and where data transmission breaks &mdash; each lightning bolt is a point where traceability is lost today</p>
+    <p class="img-caption" data-es>La cadena textil y d&oacute;nde se interrumpe la transmisi&oacute;n de datos &mdash; cada rayo es un punto donde hoy se pierde la trazabilidad</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Scope</div><div class="cs-tag" data-es>Alcance</div>
+
+    <h2 class="cs-title" data-en>I built the instrument that made the scope argument visible</h2>
+    <h2 class="cs-title" data-es>Constru&iacute; el instrumento que hizo visible la discusi&oacute;n de alcance</h2>
+
+    <p class="cs-body" data-en>The client arrived wanting to cover the full passport from day one. It's a reasonable reaction to an intimidating regulation, but it made the scope unviable: the standard phases in progressively, and not all information carries the same level of requirement at each stage.</p>
+    <p class="cs-body" data-es>El cliente lleg&oacute; con la ambici&oacute;n de cubrir el pasaporte completo desde el d&iacute;a uno. Es una reacci&oacute;n razonable frente a una regulaci&oacute;n que intimida, pero hac&iacute;a inviable el alcance: la norma se implementa progresivamente y no toda la informaci&oacute;n tiene el mismo nivel de exigencia en cada etapa.</p>
+
+    <p class="cs-body" data-en>Instead of arguing about scope from opinions, I built a view of the complete passport with a <strong>toggle between legal minimum and full.</strong> Each block of information &mdash; composition, supply chain, packaging, environmental impact, end of life, durability, care, repairability, social conditions, certifications, documentation, manufacturer, technical specifications and interoperability &mdash; was classified by its level of requirement and its stage.</p>
+    <p class="cs-body" data-es>En lugar de discutir el alcance desde opiniones, constru&iacute; una vista del pasaporte completo con un <strong>interruptor entre m&iacute;nimo legal y completo.</strong> Cada bloque de informaci&oacute;n &mdash;composici&oacute;n, cadena de suministro, embalaje, impacto ambiental, fin de vida, durabilidad, cuidado, reparabilidad, condiciones sociales, certificaciones, documentaci&oacute;n, fabricante, especificaciones t&eacute;cnicas e interoperabilidad&mdash; quedaba clasificado seg&uacute;n su nivel de exigencia y su etapa.</p>
+
+    <p class="cs-body" data-en>With that, the conversation changed on its own. It was no longer <em>&ldquo;do we build everything?&rdquo;</em> but <em>&ldquo;what do we need to solve now and what can wait?&rdquo;</em> The instrument turned an abstract discussion about regulation into a concrete conversation about scope and priorities.</p>
+    <p class="cs-body" data-es>Con eso, la conversaci&oacute;n cambi&oacute; sola. Ya no era <em>&ldquo;&iquest;construimos todo?&rdquo;</em> sino <em>&ldquo;&iquest;qu&eacute; necesitamos resolver ahora y qu&eacute; puede esperar?&rdquo;</em>. El instrumento convirti&oacute; una discusi&oacute;n abstracta sobre regulaci&oacute;n en una conversaci&oacute;n concreta sobre alcance y prioridades.</p>
+
+    <p class="cs-body" data-en>A roadmap grounded in the <strong>standard,</strong> not in anyone's opinion.</p>
+    <p class="cs-body" data-es>Un roadmap fundamentado en la <strong>norma,</strong> no en la opini&oacute;n de nadie.</p>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/ftl-alcance-mvp.jpg" alt="MVP scope" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>MVP scope vs. explicitly out of scope &mdash; the artefact that closed the discussion</p>
+    <p class="img-caption" data-es>Alcance MVP vs. fuera de alcance, expl&iacute;cito &mdash; el artefacto que cerr&oacute; la discusi&oacute;n</p>
+
+    <p class="cs-body" data-en>And one decision I held: the links in the chain that weren't identified yet were marked as <strong>&ldquo;to be defined,&rdquo; visible.</strong> A map that declares its gaps is useful for planning. A complete, invented one isn't.</p>
+    <p class="cs-body" data-es>Y una decisi&oacute;n que mantuve: los eslabones de la cadena que todav&iacute;a no estaban identificados quedaron marcados como <strong>&ldquo;por definir&rdquo;, visibles.</strong> Un mapa que declara sus huecos sirve para planificar; uno completo e inventado, no.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Discovery</div><div class="cs-tag" data-es>Descubrimiento</div>
+
+    <h2 class="cs-title" data-en>Research didn't end as documentation. It became product architecture.</h2>
+    <h2 class="cs-title" data-es>El research no termin&oacute; como documentaci&oacute;n. Se convirti&oacute; en arquitectura de producto.</h2>
+
+    <p class="cs-body" data-en>Discovery ran as <strong>five sequential workshops</strong> with the leadership team &mdash; buyer personas, actor map, empathy map, customer journey, business model canvas, service blueprint and OKRs &mdash; complemented by <strong>field validation interviews.</strong> The goal wasn't to produce artefacts. It was to understand who takes part in the chain, what information each actor generates, and at what point in the process it appears.</p>
+    <p class="cs-body" data-es>El descubrimiento se hizo en <strong>cinco workshops secuenciales</strong> con el equipo directivo &mdash;buyer personas, mapa de actores, mapa de empat&iacute;a, customer journey, business model canvas, service blueprint y OKRs&mdash; complementados con <strong>entrevistas de validaci&oacute;n en campo.</strong> El objetivo no era producir artefactos. Era entender qui&eacute;n participa en la cadena, qu&eacute; informaci&oacute;n genera cada actor y en qu&eacute; momento del proceso aparece.</p>
+
+    <p class="cs-body" data-en>But the highest-impact artefact was the <strong>actor map</strong>, because it allowed one concrete translation: <strong>actor &rarr; process &rarr; responsibility &rarr; data &rarr; checkpoint.</strong> That chain became the structure of the <strong>nine checkpoints</strong> that organise capture today, from raw material reception through to packing.</p>
+    <p class="cs-body" data-es>Pero el artefacto de mayor impacto fue el <strong>mapa de actores</strong>, porque permiti&oacute; hacer una traducci&oacute;n concreta: <strong>actor &rarr; proceso &rarr; responsabilidad &rarr; dato &rarr; checkpoint.</strong> Esa cadena termin&oacute; siendo la estructura de los <strong>nueve checkpoints</strong> que hoy organizan la captura, desde la recepci&oacute;n de materia prima hasta el empaque.</p>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/ftl-buyer-persona.jpg" alt="Buyer persona" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>One of three buyer personas &mdash; note the gap: zero of her clients demand environmental metrics today, but all of them expect transparency</p>
+    <p class="img-caption" data-es>Una de las tres buyer personas &mdash; n&oacute;tese el desfase: cero de sus clientes exige m&eacute;tricas ambientales hoy, pero todos esperan transparencia</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Product</div><div class="cs-tag" data-es>Producto</div>
+
+    <h2 class="cs-title" data-en>Not one company's internal system &mdash; a coordination layer between organisations</h2>
+    <h2 class="cs-title" data-es>No el sistema interno de una empresa &mdash; una capa de coordinaci&oacute;n entre organizaciones</h2>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>PUBLIC SITE</strong>The product proposition and the front door.</p>
+        <p class="finding-text" data-es><strong>SITIO P&Uacute;BLICO</strong>La propuesta del producto y la puerta de entrada.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>ROLE-BASED ACCESS</strong>Manufacturer, suppliers and brand come in through different doors.</p>
+        <p class="finding-text" data-es><strong>ACCESO POR ROL</strong>Fabricante, proveedores y marca entran por puertas distintas.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>CHECKPOINT MOBILE APP</strong>Capturing the data at the point where the process happens.</p>
+        <p class="finding-text" data-es><strong>APP M&Oacute;VIL DE CHECKPOINTS</strong>La captura del dato en el punto donde ocurre el proceso.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>WEB PLATFORM</strong>Traceability, carbon footprint, waste management, documentation.</p>
+        <p class="finding-text" data-es><strong>PLATAFORMA WEB</strong>Trazabilidad, huella de carbono, gesti&oacute;n de residuos, documentaci&oacute;n.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>THE PASSPORT</strong>The verifiable output the brand &mdash; and eventually the consumer &mdash; consumes.</p>
+        <p class="finding-text" data-es><strong>EL PASAPORTE</strong>La salida verificable que consume la marca y, eventualmente, el consumidor.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The textile chain involves different organisations that don't share systems. <strong>Checkpoint 3, for example, happens in an external laundry</strong> &mdash; the app accompanies the process even though whoever captures the data sits outside the main organisation.</p>
+    <p class="cs-body" data-es>La cadena textil involucra organizaciones distintas que no comparten sistemas. <strong>El checkpoint 3, por ejemplo, ocurre en una lavander&iacute;a externa</strong> &mdash; la app acompa&ntilde;a el proceso aunque quien captura el dato est&eacute; fuera de la organizaci&oacute;n principal.</p>
+
+    <p class="cs-body" data-en>The footprint and waste modules aren't independent dashboards with environmental metrics bolted on. Their structure follows the categories of information the passport requires: the first is calculated under the European product footprint methodology, the second classifies according to the European waste directive.</p>
+    <p class="cs-body" data-es>Los m&oacute;dulos de huella y de residuos no son dashboards independientes a los que se les pusieron m&eacute;tricas ambientales. Su estructura responde a las categor&iacute;as de informaci&oacute;n que el pasaporte obliga a reunir: el primero se calcula bajo la metodolog&iacute;a europea de huella de producto, el segundo clasifica seg&uacute;n la directiva europea de residuos.</p>
+
+    <p class="cs-body" data-en>When a requirement changes, it's possible to identify <strong>exactly which part of the system</strong> is affected.</p>
+    <p class="cs-body" data-es>Cuando cambia un requisito, es posible identificar <strong>exactamente qu&eacute; parte del sistema</strong> est&aacute; afectada.</p>
+
+    <div class="img-pair">
+      <div class="img-slot img-has-photo"><img src="img/ftl-huella-pef.jpg" alt="" loading="lazy"></div>
+      <div class="img-slot img-has-photo"><img src="img/ftl-residuos-wfd.jpg" alt="" loading="lazy"></div>
+    </div>
+    <p class="img-caption" data-en>Left: carbon footprint under PEF methodology. Right: waste classified under the EU Waste Framework Directive</p>
+    <p class="img-caption" data-es>Izquierda: huella de carbono bajo metodolog&iacute;a PEF. Derecha: residuos clasificados seg&uacute;n la EU Waste Framework Directive</p>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/ftl-track360-lote.jpg" alt="360 view of a batch" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>360&deg; view of a production batch &mdash; location, operational traceability, supply chain and metrics in one place</p>
+    <p class="img-caption" data-es>Vista 360&deg; de un lote de producci&oacute;n &mdash; ubicaci&oacute;n, trazabilidad operativa, cadena de suministro y m&eacute;tricas en un solo lugar</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Field design</div><div class="cs-tag" data-es>Dise&ntilde;o en planta</div>
+
+    <h2 class="cs-title" data-en>The mobile app is used standing up, in a plant, with an industrial terminal</h2>
+    <h2 class="cs-title" data-es>La app m&oacute;vil se usa de pie, en planta, con un terminal industrial</h2>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>NO CHOOSING</strong>The operator doesn't pick the checkpoint. The batch QR sets the context and the system opens the right step. One less decision for someone physically handling the product.</p>
+        <p class="finding-text" data-es><strong>NO ELIGE</strong>El operario no elige el checkpoint. El QR del lote determina el contexto y el sistema abre el paso que corresponde. Una decisi&oacute;n menos para alguien que est&aacute; manipulando f&iacute;sicamente el producto.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>ONE PATTERN</strong>Scan &rarr; verify &rarr; complete. Learned once, carried across all nine checkpoints.</p>
+        <p class="finding-text" data-es><strong>UN SOLO PATR&Oacute;N</strong>Escanear &rarr; verificar &rarr; completar. Se aprende una vez y se traslada a los nueve checkpoints.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>VERIFY, DON'T TYPE</strong>Data arrives preloaded from company systems and sensors; the operator confirms and completes only what's needed. Large buttons, numeric keypad where it applies, minimal text entry.</p>
+        <p class="finding-text" data-es><strong>VERIFICAR, NO ESCRIBIR</strong>Los datos llegan precargados desde los sistemas de la empresa y desde los sensores; el operario confirma y completa solo lo necesario. Botones grandes, teclado num&eacute;rico donde aplica, m&iacute;nima entrada de texto.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>A WAY TO SAY IT'S WRONG</strong>Every checkpoint allows reporting an error in the preloaded data. In a system whose value depends on data quality, whoever spots the problem has to be able to flag it instead of being forced to accept it.</p>
+        <p class="finding-text" data-es><strong>UNA SALIDA PARA DECIR QUE EST&Aacute; MAL</strong>Cada checkpoint permite reportar un error en los datos precargados. En un sistema cuyo valor depende de la calidad de la informaci&oacute;n, quien detecta el problema tiene que poder se&ntilde;alarlo en vez de verse obligado a aceptarlo.</p>
+      </div>
+    </div>
+
+    <div class="img-slot reveal">
+      <div class="img-slot-icon">&#128241;</div>
+      <div class="img-slot-label" data-en>Checkpoint mobile app screens &mdash; export from Figma</div>
+      <div class="img-slot-label" data-es>Pantallas de la app m&oacute;vil de checkpoints &mdash; exportar de Figma</div>
+      <div class="img-slot-hint">img/ftl-app-checkpoints.jpg</div>
+    </div>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>The uncomfortable number</div><div class="cs-tag" data-es>La medici&oacute;n inc&oacute;moda</div>
+
+    <h2 class="cs-title" data-en>44.5 out of 100. The only criterion that came back red.</h2>
+    <h2 class="cs-title" data-es>44.5 sobre 100. El &uacute;nico criterio que qued&oacute; en rojo.</h2>
+
+    <p class="cs-body" data-en>In April we ran a formal usability test in the plant with <strong>six client representatives</strong>, covering logistics, operations, quality, planning, sustainability and commercial, across two parallel tracks. The result was <strong>44.5 out of 100 on the SUS scale. The target defined for the MVP was 70.</strong></p>
+    <p class="cs-body" data-es>En abril corrimos una prueba de usabilidad formal en planta con <strong>seis representantes del cliente</strong>, cubriendo log&iacute;stica, operaciones, calidad, planeamiento, sostenibilidad y comercial, en dos tracks paralelos. El resultado fue <strong>44.5 sobre 100 en la escala SUS. La meta definida para el MVP era 70.</strong></p>
+
+    <p class="cs-body" data-en><strong>The measurement has one imputed item.</strong> One of the ten questions wasn't applied and was completed with the neutral value to preserve the instrument. The score is made up of nine real responses and one imputed.</p>
+    <p class="cs-body" data-es><strong>La medici&oacute;n tiene un &iacute;tem imputado.</strong> Una de las diez preguntas no lleg&oacute; a aplicarse y se complet&oacute; con el valor neutral para conservar el instrumento. El puntaje se compone de nueve respuestas reales y una imputada.</p>
+
+    <p class="cs-body" data-en><strong>The two tracks weren't equivalent.</strong> The mobile app track was real execution: nine tasks, one per checkpoint, with over a hundred data points to verify and complete, scanning and printing included. The web platform track was a guided walkthrough. Participants didn't have the same level of autonomy on both surfaces &mdash; and the lowest-rated item on the whole scale was precisely feeling confident using the system.</p>
+    <p class="cs-body" data-es><strong>Los dos tracks no eran equivalentes.</strong> El de la app m&oacute;vil fue ejecuci&oacute;n real: nueve tareas, una por checkpoint, con m&aacute;s de cien datos que verificar y completar, escaneo e impresi&oacute;n incluidos. El de la plataforma web fue un recorrido guiado. Los participantes no tuvieron el mismo nivel de autonom&iacute;a en ambas superficies &mdash; y el &iacute;tem con menor valoraci&oacute;n de toda la escala fue justamente el de sentirse confiado usando el sistema.</p>
+
+    <p class="cs-body" data-en>The SUS wasn't discarded. It was <strong>interpreted in context.</strong></p>
+    <p class="cs-body" data-es>El SUS no se descart&oacute;. Se <strong>interpret&oacute; en contexto.</strong></p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Diagnosis</div><div class="cs-tag" data-es>Diagn&oacute;stico</div>
+
+    <h2 class="cs-title" data-en>The international standard didn't speak the plant's language</h2>
+    <h2 class="cs-title" data-es>El est&aacute;ndar internacional no hablaba el idioma de la planta</h2>
+
+    <p class="cs-body" data-en>Technical execution was successful: all nine checkpoints ran, with complete success in scanning and printing. The friction was somewhere else. The interface used nomenclature derived from the global traceability standard, while users employ terms from their own operation: <em>merma</em> instead of &ldquo;fabric waste,&rdquo; <em>rumas</em> instead of &ldquo;bags,&rdquo; different names for orders and processes.</p>
+    <p class="cs-body" data-es>La ejecuci&oacute;n t&eacute;cnica fue exitosa: los nueve checkpoints se ejecutaron, con &eacute;xito completo en escaneo e impresi&oacute;n. La fricci&oacute;n estaba en otro lugar. La interfaz usaba nomenclatura derivada del est&aacute;ndar global de trazabilidad, mientras los usuarios emplean t&eacute;rminos propios de la operaci&oacute;n: <em>merma</em> en lugar de &ldquo;residuo de tela&rdquo;, <em>rumas</em> en lugar de &ldquo;bolsas&rdquo;, denominaciones distintas para &oacute;rdenes y procesos.</p>
+
+    <p class="cs-body" data-en>It wasn't a cosmetic copy problem. It was a difference between the <strong>system's conceptual model</strong> and the user's mental model.</p>
+    <p class="cs-body" data-es>No era un problema cosm&eacute;tico de copy. Era una diferencia entre el <strong>modelo conceptual del sistema</strong> y el modelo mental del usuario.</p>
+
+    <p class="cs-body" data-en>Other frictions pointed the same way: the environmental module was partly in English because it was designed for the buying brands and not for the people operating it; validations were missing that would have prevented recording impossible quantities; test data mixed with real data without it being obvious which was which; and some system assumptions didn't match the real plant sequence, like when the quality audit actually happens.</p>
+    <p class="cs-body" data-es>Aparecieron otras fricciones en la misma direcci&oacute;n: el m&oacute;dulo ambiental estaba parcialmente en ingl&eacute;s porque se pens&oacute; para las marcas compradoras y no para quienes lo operan; faltaban validaciones que impidieran registrar cantidades imposibles; los datos de prueba se mezclaban con los reales sin que fuera evidente cu&aacute;l era cu&aacute;l; y algunos supuestos del sistema no coincid&iacute;an con la secuencia real de planta, como el momento en que ocurre la auditor&iacute;a de calidad.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Impact</div><div class="cs-tag" data-es>Impacto</div>
+
+    <h2 class="cs-title" data-en>Research didn't end in recommendations. Eight functional changes shipped.</h2>
+    <h2 class="cs-title" data-es>El research no termin&oacute; en recomendaciones. Se implementaron ocho cambios funcionales.</h2>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>01</strong>Energy and water fields coming from sensors became <strong style='display:inline'>read-only</strong>.</p>
+        <p class="finding-text" data-es><strong>01</strong>Los campos de energ&iacute;a y agua provenientes de sensores pasaron a <strong style='display:inline'>solo lectura</strong>.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>02</strong>Real production data replaced test data.</p>
+        <p class="finding-text" data-es><strong>02</strong>Se incorporaron datos productivos reales en lugar de datos de prueba.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>03</strong>The environmental impact module was fully translated into Spanish.</p>
+        <p class="finding-text" data-es><strong>03</strong>Se tradujo completamente al espa&ntilde;ol el m&oacute;dulo de impacto ambiental.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>04</strong>A duplicated benchmark indicator was removed.</p>
+        <p class="finding-text" data-es><strong>04</strong>Se elimin&oacute; un indicador de benchmark duplicado.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>05</strong>Raw material capture was simplified, making explicit when a methodology default is used.</p>
+        <p class="finding-text" data-es><strong>05</strong>Se simplific&oacute; la captura de materias primas, explicitando cu&aacute;ndo se usa un valor est&aacute;ndar de la metodolog&iacute;a.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>06</strong>Per-colour detail views were added to traceability and environmental impact.</p>
+        <p class="finding-text" data-es><strong>06</strong>Se incorporaron vistas de detalle por color en trazabilidad e impacto ambiental.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>07</strong>The fibre composition screen in the first checkpoint was simplified.</p>
+        <p class="finding-text" data-es><strong>07</strong>Se simplific&oacute; la pantalla de composici&oacute;n de fibra del primer checkpoint.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>08</strong>Packaging fields were removed from that checkpoint and moved to the waste module.</p>
+        <p class="finding-text" data-es><strong>08</strong>Se retiraron los campos de embalaje de ese checkpoint y se trasladaron al m&oacute;dulo de residuos.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The first one is the most revealing. Sensor data could be edited manually &mdash; and being editable was what made nobody trust it.</p>
+    <p class="cs-body" data-es>El primero es el m&aacute;s revelador. Los datos de sensores pod&iacute;an editarse manualmente, y poder editarlos hac&iacute;a que nadie confiara en ellos.</p>
+
+    <div class="callout">
+      <p class="callout-text" data-en>&ldquo;A field you can modify <em>stops being perceived as a measurement.</em>&rdquo;</p>
+      <p class="callout-text" data-es>&ldquo;Un campo que se puede modificar <em>deja de percibirse como una medici&oacute;n.</em>&rdquo;</p>
+    </div>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Data integrity</div><div class="cs-tag" data-es>Integridad del dato</div>
+
+    <h2 class="cs-title" data-en>If the business sells verifiable data, distinguishing measured from estimated <em>is</em> the product</h2>
+    <h2 class="cs-title" data-es>Si el negocio vende informaci&oacute;n verificable, distinguir lo medido de lo estimado <em>es</em> el producto</h2>
+
+    <p class="cs-body" data-en>It isn't methodological fussiness. <strong>Data you can't defend in front of a verifier is worth nothing.</strong></p>
+    <p class="cs-body" data-es>No es una escrupulosidad metodol&oacute;gica. <strong>Un dato que no se puede defender ante un verificador no vale nada.</strong></p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>PRIMARY VS. ESTIMATED</strong>Stages happening in the plant are fed by measured data; the rest use parametric estimates from the methodology, declared as such.</p>
+        <p class="finding-text" data-es><strong>PRIMARIO VS. ESTIMADO</strong>Las etapas que ocurren en planta se alimentan de dato medido; las dem&aacute;s usan estimaciones param&eacute;tricas de la metodolog&iacute;a, declaradas como tales.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>THE DASHBOARD MEASURES ITSELF</strong>An indicator showing what percentage of capture is automatic.</p>
+        <p class="finding-text" data-es><strong>EL DASHBOARD SE MIDE A S&Iacute; MISMO</strong>Un indicador de qu&eacute; porcentaje de la captura es autom&aacute;tica.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>THREE SEPARATE VIEWS</strong>Internal production, suppliers and consolidated &mdash; so the origin of each figure is never confused.</p>
+        <p class="finding-text" data-es><strong>TRES VISTAS SEPARADAS</strong>Producci&oacute;n interna, proveedores y consolidado &mdash; para que nunca se confunda de d&oacute;nde viene cada cifra.</p>
+      </div>
+      <div class="finding-card">
+        <p class="finding-text" data-en><strong>A DECLARED GAP</strong>One emission factor was marked as a data gap: we found no citable public source, and it was documented as such instead of being quietly replaced with a convenient approximation.</p>
+        <p class="finding-text" data-es><strong>UN VAC&Iacute;O DECLARADO</strong>Un factor de emisi&oacute;n qued&oacute; marcado como vac&iacute;o de dato: no encontramos fuente p&uacute;blica citable y se document&oacute; como tal, en lugar de reemplazarlo en silencio por una aproximaci&oacute;n conveniente.</p>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The footprint deliverable was sent for <strong>verification by an independent third party</strong> &mdash; the acid test for everything above.</p>
+    <p class="cs-body" data-es>El entregable de huella se envi&oacute; a <strong>verificaci&oacute;n por un tercero independiente</strong>, que es la prueba de fuego de todo lo anterior.</p>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/ftl-dashboard.jpg" alt="Consolidated dashboard" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>The consolidated dashboard &mdash; note the &ldquo;% complete data&rdquo; indicator: the system reports on the quality of its own data</p>
+    <p class="img-caption" data-es>El dashboard consolidado &mdash; n&oacute;tese el indicador de &ldquo;% datos completos&rdquo;: el sistema reporta sobre la calidad de su propio dato</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>What I flagged</div><div class="cs-tag" data-es>Lo que advert&iacute;</div>
+
+    <h2 class="cs-title" data-en>A validation I called critical was deferred &mdash; and documented as risk rather than dropped</h2>
+    <h2 class="cs-title" data-es>Una validaci&oacute;n que califiqu&eacute; de cr&iacute;tica se difiri&oacute; &mdash; y qued&oacute; documentada como riesgo</h2>
+
+    <p class="cs-body" data-en>Functional validation identified one specific check as critical: <strong>preventing more finished units from being recorded than had entered the batch.</strong> It wasn't an interface improvement. In a system whose output goes to external verification, allowing an impossible record is allowing the data to be born wrong.</p>
+    <p class="cs-body" data-es>La validaci&oacute;n funcional identific&oacute; como cr&iacute;tica una validaci&oacute;n espec&iacute;fica: <strong>impedir registrar m&aacute;s unidades terminadas de las que hab&iacute;an ingresado al lote.</strong> No era una mejora de interfaz. En un sistema cuya salida va a verificaci&oacute;n externa, permitir un registro imposible es permitir que el dato nazca mal.</p>
+
+    <p class="cs-body" data-en>When closing the stage, it was agreed to leave complex validations out due to schedule constraints. There was no disagreement on the merits; there was date pressure. <strong>The risk was documented as pending rather than disappearing from the assessment.</strong></p>
+    <p class="cs-body" data-es>Al definir el cierre de la etapa se acord&oacute; dejar fuera las validaciones complejas por restricci&oacute;n de cronograma. No hubo desacuerdo de criterio; hubo presi&oacute;n de fecha. <strong>El riesgo qued&oacute; documentado como pendiente en lugar de desaparecer de la evaluaci&oacute;n.</strong></p>
+
+    <p class="cs-body" data-en>Alongside it, other recommendations were formalised for the next phase: formal user training before production rollout, a bridge glossary between the standard's terminology and operational language, formal registration with the standards body, incorporation of the missing links in the chain, and repeating the SUS measurement once the deferred functionality is implemented.</p>
+    <p class="cs-body" data-es>Junto con esa, quedaron formalizadas otras recomendaciones para la fase siguiente: entrenamiento formal de usuarios antes del despliegue, un glosario puente entre la terminolog&iacute;a del est&aacute;ndar y el lenguaje operativo, el registro formal ante el organismo de est&aacute;ndares, la incorporaci&oacute;n de los eslabones faltantes de la cadena, y la repetici&oacute;n de la medici&oacute;n SUS una vez implementadas las funcionalidades diferidas.</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>Results</div><div class="cs-tag" data-es>Resultados</div>
+
+    <h2 class="cs-title" data-en>The pilot proved viability. It didn't yet prove scale.</h2>
+    <h2 class="cs-title" data-es>El piloto demostr&oacute; viabilidad. Todav&iacute;a no demostr&oacute; el escalamiento.</h2>
+
+    <p class="cs-body" data-en>The pilot ran with <strong>real production data</strong> on a defined line, in three modes: accompanied, semi-accompanied and <strong>fully autonomous sessions.</strong> That last one is the adoption evidence no survey replaces.</p>
+    <p class="cs-body" data-es>El piloto se ejecut&oacute; con <strong>datos reales de producci&oacute;n</strong> sobre una l&iacute;nea acotada, en tres modalidades: sesiones acompa&ntilde;adas, semiacompa&ntilde;adas y <strong>totalmente aut&oacute;nomas.</strong> Esa &uacute;ltima es la evidencia de adopci&oacute;n que ninguna encuesta reemplaza.</p>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <span class="result-num">9/9</span>
+        <span class="result-label" data-en>Checkpoints running end to end</span>
+        <span class="result-label" data-es>Checkpoints de punta a punta</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">3</span>
+        <span class="result-label" data-en>Suppliers live on the portal</span>
+        <span class="result-label" data-es>Proveedores en el portal</span>
+      </div>
+      <div class="result-card">
+        <span class="result-num">60&ndash;70%</span>
+        <span class="result-label" data-en>Of required DPP fields covered</span>
+        <span class="result-label" data-es>De campos DPP cubiertos</span>
+      </div>
+    </div>
+
+    <p class="cs-body" data-en>The rest depended on upstream links not yet incorporated. <strong>What didn't happen:</strong> there was no formal scaling decision at the close of the pilot. Possible growth routes were formulated, but none as a decision taken. The recommended second measurement wasn't run either.</p>
+    <p class="cs-body" data-es>El resto depend&iacute;a de eslabones aguas arriba que todav&iacute;a no estaban incorporados. <strong>Lo que no ocurri&oacute;:</strong> no hubo decisi&oacute;n formal de escalamiento al cierre del piloto. Se dejaron formuladas rutas posibles de crecimiento, pero ninguna como decisi&oacute;n tomada. Tampoco se ejecut&oacute; la segunda medici&oacute;n recomendada.</p>
+
+    <div class="img-slot img-has-photo reveal">
+      <img src="img/ftl-entregables-mvp.jpg" alt="MVP deliverables" loading="lazy">
+    </div>
+    <p class="img-caption" data-en>The twelve final MVP deliverables</p>
+    <p class="img-caption" data-es>Los doce entregables finales del MVP</p>
+  </div>
+
+  <div class="cs-divider"></div>
+
+  <div class="cs-section reveal">
+    <div class="cs-tag" data-en>What I learned</div><div class="cs-tag" data-es>Lo que aprend&iacute;</div>
+
+    <h2 class="cs-title" data-en>A data product is worth what the traceability of its data is worth</h2>
+    <h2 class="cs-title" data-es>Un producto de datos vale lo que vale la trazabilidad de sus datos</h2>
+
+    <p class="cs-body" data-en><strong>A regulation is also a scope problem.</strong> When a standard phases in over time, the challenge isn't just interpreting it &mdash; it's turning it into a sequence of decisions: what's mandatory, what has to be captured, who generates it, where it's captured, what we build now and what comes later. The scoping instrument is what turned that complexity into a defensible roadmap.</p>
+    <p class="cs-body" data-es><strong>Una regulaci&oacute;n tambi&eacute;n es un problema de alcance.</strong> Cuando una norma entra en vigor por etapas, el reto no es solo interpretarla: es convertirla en una secuencia de decisiones &mdash;qu&eacute; es obligatorio, qu&eacute; hay que capturar, qui&eacute;n lo genera, d&oacute;nde se captura, qu&eacute; construimos ahora y qu&eacute; despu&eacute;s. El instrumento de dimensionamiento fue lo que volvi&oacute; esa complejidad un roadmap defendible.</p>
+
+    <p class="cs-body" data-en><strong>Research can become architecture.</strong> The actor map didn't end as a Discovery deliverable: it became the logic of responsibility and capture that structured the nine checkpoints. Its value was in changing the shape of the product, not in documenting it.</p>
+    <p class="cs-body" data-es><strong>El research puede convertirse en arquitectura.</strong> El mapa de actores no termin&oacute; como entregable de Discovery: se convirti&oacute; en la l&oacute;gica de responsabilidades y captura que estructur&oacute; los nueve checkpoints. Su valor estuvo en cambiar la forma del producto, no en documentarlo.</p>
+
+    <p class="cs-body" data-en>Distinguishing measured from estimated, declaring the gaps, showing the missing links, flagging the item we never got to ask &mdash; none of those decisions makes a presentation look better. All of them make the product <strong>defensible in front of whoever has to verify the evidence.</strong></p>
+    <p class="cs-body" data-es>Distinguir lo medido de lo estimado, declarar los vac&iacute;os, mostrar los eslabones que faltaban, se&ntilde;alar el &iacute;tem que no llegamos a preguntar &mdash; ninguna de esas decisiones hace que una presentaci&oacute;n se vea mejor. Todas hacen que el producto sea <strong>defendible frente a quien tiene que verificar la evidencia.</strong></p>
+
+    <div class="confidential-note">
+      <span>&#128274;</span>
+      <p class="confidential-text" data-en><strong>Note on confidentiality:</strong> This case omits contract figures, carbon footprint values, detailed production data and pricing model. Product screenshots use sample data.</p>
+      <p class="confidential-text" data-es><strong>Nota de confidencialidad:</strong> Este caso omite cifras de contrato, valores de huella de carbono, datos detallados de producci&oacute;n y modelo de precios. Las capturas de producto utilizan datos de ejemplo.</p>
+    </div>
+  </div>
+</div>
+<div class="next-case">
+  <div>
+    <div class="next-label" data-en>Next case</div>
+    <div class="next-label" data-es>Siguiente caso</div>
+    <div class="next-title" data-en>Banco Pichincha &mdash; Of 100 prospects, three reached the product</div>
+    <div class="next-title" data-es>Banco Pichincha &mdash; De 100 prospectos, tres llegaban al producto</div>
+  </div>
+  <a href="pichincha.html" class="next-arrow" data-en>Read case study &rarr;</a>
+  <a href="pichincha.html" class="next-arrow" data-es>Ver caso completo &rarr;</a>
+</div>
+<script>
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+</script>
+</body>
+</html>
