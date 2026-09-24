@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — L'Elisette Rivadeneira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #1B6EF3; --blue-soft: #E8F0FE; --green: #1DBF73;
+    --ink: #0A0E1A; --ink-mid: #3D4259; --ink-soft: #5F6580; --blue-text: #1860D6; --green-text: #0B7A48; --blue-on-dark: #7AA7FF;
+    --bg: #F7F9FF; --white: #FFFFFF; --border: #E2E8F8;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+  html { scroll-behavior: smooth; min-height: 100%; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--ink); line-height: 1.6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 48px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--font-display); font-size: 18px; color: var(--ink); text-decoration: none; }
+  .nav-logo span { color: var(--blue); }
+  .nav-right { display: flex; align-items: center; gap: 24px; }
+  .nav-back { font-size: 13px; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-back:hover { color: var(--blue); }
+  .lang-toggle { display: flex; align-items: center; gap: 2px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 3px; }
+  .lang-btn { font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 16px; border: none; background: transparent; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; }
+  .lang-btn.active { background: var(--blue); color: white; }
+
+  /* LAYOUT */
+  .contact-page { flex: 1; display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+
+  /* LEFT — dark side */
+  .contact-left {
+    background: var(--ink); padding: 120px 64px 80px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .contact-left::before { content: ''; position: absolute; top: -200px; left: -100px; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(27,110,243,0.12) 0%, transparent 65%); pointer-events: none; }
+  .contact-left::after { content: ''; position: absolute; bottom: -100px; right: -50px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(29,191,115,0.08) 0%, transparent 65%); pointer-events: none; }
+  .contact-left-inner { position: relative; z-index: 1; max-width: 420px; }
+
+  .contact-tag { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 24px; }
+  .contact-tag::before { content: ''; display: block; width: 20px; height: 1px; background: var(--green); }
+
+  .contact-title { font-family: var(--font-display); font-size: clamp(36px, 4vw, 60px); color: white; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px; }
+  .contact-title em { color: var(--blue); font-style: italic; }
+
+  .contact-sub { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.75; margin-bottom: 48px; }
+  .contact-sub strong { color: rgba(255,255,255,0.8); font-weight: 500; }
+
+  /* AVAILABILITY BADGE */
+  .availability { display: inline-flex; align-items: center; gap: 10px; background: rgba(29,191,115,0.1); border: 1px solid rgba(29,191,115,0.25); border-radius: 24px; padding: 10px 20px; margin-bottom: 40px; }
+  .avail-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; flex-shrink: 0; }
+  @keyframes pulse { 0%,100%{opacity:1;}50%{opacity:0.3;} }
+  .avail-text { font-family: var(--font-mono); font-size: 12px; color: var(--green); letter-spacing: 0.06em; }
+
+  /* LOCATION TAGS */
+  .locations { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 48px; }
+  .loc-tag { font-family: var(--font-mono); font-size: 11px; padding: 5px 12px; border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); letter-spacing: 0.04em; }
+  .loc-tag.active { background: rgba(27,110,243,0.15); border-color: rgba(27,110,243,0.3); color: rgba(255,255,255,0.7); }
+
+  /* QUOTE */
+  .contact-quote { border-left: 2px solid var(--blue); padding-left: 20px; }
+  .contact-quote p { font-family: var(--font-display); font-style: italic; font-size: 17px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+  /* RIGHT — form side */
+  .contact-right { background: var(--bg); padding: 120px 64px 80px; display: flex; flex-direction: column; justify-content: center; }
+  .contact-right-inner { max-width: 420px; }
+
+  .form-title { font-family: var(--font-display); font-size: 28px; color: var(--ink); margin-bottom: 8px; }
+  .form-sub { font-size: 14px; color: var(--ink-soft); margin-bottom: 36px; line-height: 1.6; }
+
+  /* FORM */
+  .form-group { margin-bottom: 20px; }
+  .form-label { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; display: block; }
+  .form-input { width: 100%; padding: 14px 16px; background: white; border: 1px solid #8B90A7; border-radius: 4px; font-family: var(--font-body); font-size: 15px; color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; }
+  .form-input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(27,110,243,0.15); }
+  .form-input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .form-input[aria-invalid="true"] { border-color: #B42318; }
+  .form-hint { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mid); letter-spacing: 0.04em; margin-bottom: 20px; }
+  .form-label .optional { text-transform: none; letter-spacing: 0; }
+  .form-error { font-size: 13px; color: #B42318; margin-top: 6px; }
+  .form-error:empty { display: none; }
+  .form-error::before { content: '⚠ '; }
+  .form-success:focus { outline: 2px solid var(--blue); outline-offset: 3px; }
+  .form-input::placeholder { color: #6E738A; font-style: italic; }
+  textarea.form-input { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+  .form-submit { width: 100%; padding: 16px; background: var(--blue); color: white; border: none; border-radius: 4px; font-family: var(--font-body); font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.2s; letter-spacing: 0.02em; position: relative; overflow: hidden; }
+  .form-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(27,110,243,0.3); }
+  .form-submit:active { transform: translateY(0); }
+
+  .form-success { display: none; text-align: center; padding: 32px 24px; background: white; border: 1px solid var(--border); border-radius: 8px; }
+  .form-success.show { display: block; }
+  .success-icon { font-size: 32px; margin-bottom: 12px; }
+  .success-title { font-family: var(--font-display); font-size: 22px; color: var(--ink); margin-bottom: 8px; }
+  .success-sub { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* DIRECT LINKS */
+  .or-divider { display: flex; align-items: center; gap: 12px; margin: 28px 0; }
+  .or-line { flex: 1; height: 1px; background: var(--border); }
+  .or-text { font-family: var(--font-mono); font-size: 11px; color: var(--ink-soft); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .direct-links { display: flex; flex-direction: column; gap: 10px; }
+  .direct-btn { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: white; border: 1px solid var(--border); border-radius: 4px; text-decoration: none; color: var(--ink); font-size: 14px; transition: all 0.2s; cursor: pointer; width: 100%; font-family: var(--font-body); }
+  .direct-btn:hover { border-color: var(--blue); color: var(--blue); transform: translateX(4px); }
+  .direct-btn-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .direct-btn-icon.email { background: var(--blue-soft); }
+  .direct-btn-icon.wa { background: rgba(37,211,102,0.12); }
+  .direct-btn-icon.li { background: rgba(10,102,194,0.1); }
+  .direct-btn-label { font-size: 12px; color: var(--ink-soft); margin-top: 1px; }
+
+  /* PRIVACY NOTE */
+  .privacy-note { font-size: 12px; color: var(--ink-soft); margin-top: 20px; line-height: 1.6; display: flex; gap: 8px; align-items: flex-start; }
+  
+
+  /* REVEAL */
+  .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .js .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* LANG */
+  .lang-es [data-en] { display: none; }
+  .lang-en [data-es] { display: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .contact-page { grid-template-columns: 1fr; }
+    .contact-left { padding: 100px 24px 60px; }
+    .contact-left-inner { max-width: 100%; }
+    .contact-right { padding: 56px 24px 80px; }
+    .contact-right-inner { max-width: 100%; }
+  }
+
+  /* ── ACCESIBILIDAD (WCAG 2.2 AA) ── */
+  [hidden] { display: none !important; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .skip-link { position: absolute; left: 16px; top: -100px; z-index: 200; background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 4px; font-family: var(--font-body); font-size: 14px; font-weight: 500; text-decoration: none; }
+  .skip-link:focus { top: 12px; }
+  /* El nav fijo mide 64px: evita que tape anclas y elementos enfocados (2.4.11) */
+  html { scroll-padding-top: 72px; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  main:focus { outline: none; }
+  /* Botones de idioma: área táctil ≥ 24px (2.5.8) */
+  .lang-btn { padding: 6px 10px; min-height: 24px; }
+  /* Animaciones decorativas: se detienen antes de 5 s (2.2.2) */
+  .status-dot, .avail-dot, .scroll-line::after { animation-iteration-count: 2 !important; }
+  /* Reveal en ambas direcciones (motion.js) */
+  .js .reveal.from-above { transform: translateY(-24px); }
+  .js .reveal.visible { opacity: 1; transform: none; }
+  /* Si algo recibe el foco antes de aparecer, se muestra de inmediato */
+  .js .reveal:focus-within, .js .reveal:focus-visible { opacity: 1; transform: none; transition-delay: 0s; }
+  /* Parallax (motion.js actualiza --p) */
+  .contact-left::before { transform: translateY(calc(var(--p, 0) * 0.3px)); }
+  .contact-left::after { transform: translateY(calc(var(--p, 0) * -0.2px)); }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+    .js .reveal, .js .reveal.from-above { opacity: 1 !important; transform: none !important; }
+    [data-parallax], [data-parallax] * { --p: 0 !important; }
+  }
+</style>
+</head>
+<body class="lang-en">
+<script src="lang.js"></script>
+<a class="skip-link" href="#main"><span data-en>Skip to content</span><span data-es>Saltar al contenido</span></a>
+
+<nav aria-label="Main / Principal">
+  <a href="index.html" class="nav-logo">L<span>'</span>Elisette</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-back" data-en><span aria-hidden="true">←</span> Back home</a>
+    <a href="index.html" class="nav-back" data-es><span aria-hidden="true">←</span> Inicio</a>
+    <div class="lang-toggle" role="group" aria-label="Language / Idioma">
+      <button type="button" class="lang-btn active" data-lang="en" lang="en" aria-pressed="true">EN<span class="sr-only"> · English</span></button>
+      <button type="button" class="lang-btn" data-lang="es" lang="es" aria-pressed="false">ES<span class="sr-only"> · Español</span></button>
+    </div>
+  </div>
+</nav>
+
+<main id="main" tabindex="-1">
+<div class="contact-page">
+
+  <!-- LEFT -->
+  <div class="contact-left" data-parallax>
+    <div class="contact-left-inner">
+
+      <div class="contact-tag reveal" data-en>Let's talk</div>
+      <div class="contact-tag reveal" data-es>Hablemos</div>
+
+      <h1 class="contact-title reveal reveal-delay-1" data-en>
+        Open to the<br><em>right</em> opportunity.
+      </h1>
+      <h1 class="contact-title reveal reveal-delay-1" data-es>
+        Abierta a la<br>oportunidad <em>correcta.</em>
+      </h1>
+
+      <div class="availability reveal reveal-delay-2">
+        <div class="avail-dot"></div>
+        <span class="avail-text" data-en>Available for new projects</span>
+        <span class="avail-text" data-es>Disponible para nuevos proyectos</span>
+      </div>
+
+      <p class="contact-sub reveal reveal-delay-2" data-en>
+        Looking for <strong>senior UX or design strategy roles</strong> — remote global, USA, or on-site in Peru, Ecuador, or Colombia. If you're building something that needs to fit and grow, I want to hear about it.
+      </p>
+      <p class="contact-sub reveal reveal-delay-2" data-es>
+        Buscando <strong>roles senior de UX o design strategy</strong> — remoto global, USA, o presencial en Perú, Ecuador o Colombia. Si estás construyendo algo que necesita encajar y crecer, quiero escucharlo.
+      </p>
+
+      <div class="locations reveal reveal-delay-3" role="list" aria-label="Locations / Ubicaciones">
+        <span class="loc-tag active" role="listitem"><span aria-hidden="true">🌎</span> <span data-en>Remote · Global</span><span data-es>Remoto · Global</span></span>
+        <span class="loc-tag active" role="listitem"><span aria-hidden="true">🇺🇸</span> USA</span>
+        <span class="loc-tag active" role="listitem"><span aria-hidden="true">🇵🇪</span> <span data-en>Peru</span><span data-es>Perú</span></span>
+        <span class="loc-tag active" role="listitem"><span aria-hidden="true">🇪🇨</span> Ecuador</span>
+        <span class="loc-tag active" role="listitem"><span aria-hidden="true">🇨🇴</span> Colombia</span>
+      </div>
+
+      <div class="contact-quote reveal reveal-delay-3">
+        <p data-en>"I don't just design how things look or flow. I figure out why they're broken and what it takes to fix them at scale."</p>
+        <p data-es>"No diseño solo cómo se ve o cómo fluye algo. Entiendo por qué está roto y qué hace falta para arreglarlo a escala."</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="contact-right">
+    <div class="contact-right-inner">
+
+      <h2 class="form-title reveal" data-en>Send me a message</h2>
+      <h2 class="form-title reveal" data-es>Escríbeme</h2>
+      <p class="form-sub reveal" data-en>I read everything. If it's relevant, I'll reply within 48 hours.</p>
+      <p class="form-sub reveal" data-es>Leo todo. Si es relevante, respondo en menos de 48 horas.</p>
+
+      <!-- FORM -->
+      <form id="contact-form" class="reveal reveal-delay-1" novalidate>
+        <p class="form-hint"><span data-en>Fields marked * are required.</span><span data-es>Los campos con * son obligatorios.</span></p>
+        <div class="form-group">
+          <label class="form-label" for="f-name"><span data-en>Your name</span><span data-es>Tu nombre</span> <span aria-hidden="true">*</span></label>
+          <input type="text" class="form-input" id="f-name" name="name" autocomplete="name" required aria-describedby="f-name-err">
+          <p class="form-error" id="f-name-err"></p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-email"><span data-en>Your email</span><span data-es>Tu email</span> <span aria-hidden="true">*</span></label>
+          <input type="email" class="form-input" id="f-email" name="email" autocomplete="email" required aria-describedby="f-email-err" placeholder="email@company.com" data-ph-en="email@company.com" data-ph-es="email@empresa.com">
+          <p class="form-error" id="f-email-err"></p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-subject"><span data-en>What's this about?</span><span data-es>¿De qué se trata?</span> <span class="optional"><span data-en>(optional)</span><span data-es>(opcional)</span></span></label>
+          <input type="text" class="form-input" id="f-subject" name="subject" placeholder="Job opportunity / Freelance / Collab..." data-ph-en="Job opportunity / Freelance / Collab..." data-ph-es="Oportunidad laboral / Freelance / Colaboración...">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-message"><span data-en>Message</span><span data-es>Mensaje</span> <span aria-hidden="true">*</span></label>
+          <textarea class="form-input" id="f-message" name="message" required aria-describedby="f-message-err" placeholder="Tell me about the project, role, or idea..." data-ph-en="Tell me about the project, role, or idea..." data-ph-es="Cuéntame sobre el proyecto, el rol o la idea..."></textarea>
+          <p class="form-error" id="f-message-err"></p>
+        </div>
+        <button type="submit" class="form-submit"><span data-en>Send message</span><span data-es>Enviar mensaje</span> <span aria-hidden="true">→</span></button>
+      </form>
+
+      <!-- SUCCESS STATE -->
+      <div class="form-success" id="form-success" role="status" tabindex="-1">
+        <div class="success-icon" aria-hidden="true">✉️</div>
+        <h3 class="success-title" data-en>Your email is ready</h3>
+        <h3 class="success-title" data-es>Tu email está listo</h3>
+        <p class="success-sub" data-en>Your email app opened with the message filled in. Send it from there and I'll reply within 48 hours. If nothing opened, use the email button below.</p>
+        <p class="success-sub" data-es>Se abrió tu aplicación de correo con el mensaje listo. Envíalo desde ahí y te respondo en menos de 48 horas. Si no se abrió nada, usa el botón de email de abajo.</p>
+      </div>
+
+      <!-- OR DIVIDER -->
+      <div class="or-divider reveal reveal-delay-2">
+        <div class="or-line"></div>
+        <span class="or-text" data-en>Or reach me directly</span>
+        <span class="or-text" data-es>O escríbeme directo</span>
+        <div class="or-line"></div>
+      </div>
+
+      <!-- DIRECT LINKS — email/WA/LinkedIn obfuscated -->
+      <div class="direct-links reveal reveal-delay-3">
+
+        <button type="button" class="direct-btn" id="btn-email">
+          <div class="direct-btn-icon email" aria-hidden="true">✉️</div>
+          <div>
+            <div data-en>Send email</div>
+            <div data-es>Enviar email</div>
+            <div class="direct-btn-label" id="email-display">···</div>
+          </div>
+        </button>
+
+        <button type="button" class="direct-btn" id="btn-wa">
+          <div class="direct-btn-icon wa" aria-hidden="true">💬</div>
+          <div>
+            <div>WhatsApp</div>
+            <div class="direct-btn-label" id="wa-display">···</div>
+            <span data-en><span class="sr-only"> (opens in a new tab)</span></span><span data-es><span class="sr-only"> (se abre en una pestaña nueva)</span></span>
+          </div>
+        </button>
+
+        <a href="https://www.linkedin.com/in/leli-rivadeneira/" target="_blank" rel="noopener" class="direct-btn">
+          <div class="direct-btn-icon li" aria-hidden="true">in</div>
+          <div>
+            <div>LinkedIn</div>
+            <div class="direct-btn-label">leli-rivadeneira</div>
+          </div>
+        <span data-en><span class="sr-only"> (opens in a new tab)</span></span><span data-es><span class="sr-only"> (se abre en una pestaña nueva)</span></span></a>
+
+      </div>
+
+      <p class="privacy-note reveal" data-en><span aria-hidden="true">🔒</span>Your contact details are never shown in plain text on this page to reduce spam. They're only revealed when you interact with the buttons above.</p>
+      <p class="privacy-note reveal" data-es><span aria-hidden="true">🔒</span>Los datos de contacto no se muestran en texto plano en esta página para reducir el spam. Solo se revelan cuando interactúas con los botones de arriba.</p>
+
+    </div>
+  </div>
+
+</div>
+</main>
+
+
+<script>
+  /* ── REVEAL ── */
+
+  /* ── CONTACT OBFUSCATION ──
+     Email and WhatsApp are assembled at runtime from parts.
+     Bots reading static HTML won't find them.
+  */
+  const _e = ['lelirb', '@', 'gmail', '.', 'com'];
+  const _w = ['+51', '968', '790', '640'];
+
+  function getEmail() { return _e.join(''); }
+  function getWA()    { return _w.join(''); }
+
+  /* Reveal partial info on load (shows domain only) */
+  window.addEventListener('load', () => {
+    document.getElementById('email-display').textContent = '···@gmail.com';
+    document.getElementById('wa-display').textContent = '+51 ··· ··· ···';
+  });
+
+  /* Revela el dato completo con ratón o con teclado */
+  const btnEmail = document.getElementById('btn-email');
+  const btnWa = document.getElementById('btn-wa');
+  function revealEmail() { document.getElementById('email-display').textContent = getEmail(); }
+  function revealWa() { document.getElementById('wa-display').textContent = getWA(); }
+  ['mouseenter', 'focus'].forEach(ev => {
+    btnEmail.addEventListener(ev, revealEmail);
+    btnWa.addEventListener(ev, revealWa);
+  });
+  btnEmail.addEventListener('click', openEmail);
+  btnWa.addEventListener('click', openWhatsApp);
+
+  function openEmail() {
+    window.location.href = 'mailto:' + getEmail();
+  }
+
+  function openWhatsApp() {
+    const num = getWA().replace(/\D/g,'');
+    const msg = encodeURIComponent('Hola Elisette, te contacto desde tu portfolio.');
+    window.open('https://wa.me/' + num + '?text=' + msg, '_blank', 'noopener');
+  }
+
+  /* ── FORM SEND ──
+     Valida con mensajes junto a cada campo y arma un mailto (sin backend).
+  */
+  const MSG = {
+    en: { name: 'Enter your name.', emailEmpty: 'Enter your email.', emailBad: 'Enter a valid email, like name@company.com.', message: 'Write a message.' },
+    es: { name: 'Escribe tu nombre.', emailEmpty: 'Escribe tu email.', emailBad: 'Escribe un email válido, por ejemplo nombre@empresa.com.', message: 'Escribe un mensaje.' }
+  };
+  const form = document.getElementById('contact-form');
+  const fields = ['f-name', 'f-email', 'f-message'];
+
+  function setError(id, text) {
+    const input = document.getElementById(id);
+    document.getElementById(id + '-err').textContent = text || '';
+    if (text) input.setAttribute('aria-invalid', 'true');
+    else input.removeAttribute('aria-invalid');
+  }
+
+  function validate() {
+    const t = MSG[window.getLang ? getLang() : 'en'];
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const message = document.getElementById('f-message').value.trim();
+    setError('f-name', name ? '' : t.name);
+    setError('f-email', !email ? t.emailEmpty : (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : t.emailBad));
+    setError('f-message', message ? '' : t.message);
+    return fields.find(id => document.getElementById(id).getAttribute('aria-invalid') === 'true');
+  }
+
+  // Si cambia el idioma con errores visibles, se traducen
+  document.addEventListener('langchange', () => {
+    if (fields.some(id => document.getElementById(id).hasAttribute('aria-invalid'))) validate();
+  });
+  // Al corregir un campo, su error desaparece
+  fields.forEach(id => document.getElementById(id).addEventListener('input', () => {
+    if (document.getElementById(id).hasAttribute('aria-invalid')) validate();
+  }));
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const firstInvalid = validate();
+    if (firstInvalid) { document.getElementById(firstInvalid).focus(); return; }
+
+    const name    = document.getElementById('f-name').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const subject = document.getElementById('f-subject').value.trim();
+    const message = document.getElementById('f-message').value.trim();
+
+    const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+    window.location.href = `mailto:${getEmail()}?subject=${encodeURIComponent(subject || 'Portfolio contact')}&body=${encodeURIComponent(body)}`;
+
+    setTimeout(() => {
+      form.style.display = 'none';
+      const ok = document.getElementById('form-success');
+      ok.classList.add('show');
+      ok.focus();
+    }, 800);
+  });
+</script>
+<script src="motion.js"></script>
+</body>
+</html>
