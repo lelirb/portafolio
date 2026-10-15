@@ -804,9 +804,14 @@
   .lab-grid { gap: 24px; align-items: stretch; }
   .lab-card { border-radius: 20px; display: flex; flex-direction: column; background: linear-gradient(160deg, rgba(27,110,243,0.10), rgba(255,255,255,0.03) 45%, rgba(29,191,115,0.06)); }
   .lab-card .lab-desc { margin-bottom: 24px; }
-  .lab-visual { margin: 0 0 28px; border-radius: 14px; overflow: hidden; position: relative; z-index: 0; }
+  .lab-visual { margin: 0 0 28px; border-radius: 14px; overflow: hidden; position: relative; }
   .lab-visual-shot img { display: block; width: 100%; height: auto; }
   .lab-visual-music { border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); padding: 28px 28px 18px; }
+  .wave-play { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; color: white; font-size: 14px; font-weight: 500; text-decoration: none; }
+  .wave-play-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--green); display: inline-grid; place-items: center; transition: transform 0.2s; }
+  .wave-play-btn::before { content: ''; border-left: 12px solid #0A0E1A; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
+  .wave-play:hover .wave-play-btn, .wave-play:focus-visible .wave-play-btn { transform: scale(1.08); }
+  .wave-play:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; border-radius: 24px; }
   .wave { display: flex; align-items: center; gap: 6px; height: 96px; }
   .wave span { flex: 1; border-radius: 3px; background: linear-gradient(var(--green), var(--blue)); opacity: 0.85; }
   .wave-meta { display: flex; justify-content: space-between; margin-top: 16px; font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; }
@@ -1288,9 +1293,11 @@
       <h3 class="lab-title" data-es>Canciones que suenan como si siempre hubieran existido</h3>
       <p class="lab-desc" data-en>Electronic, Andean-pop hybrids, reggaeton-pop — all with a commercial edge. My most-listened track: a song about a woman who witnesses her best friend's husband cheating. Ironic intro, empowerment arc, urban pop payoff.</p>
       <p class="lab-desc" data-es>Electrónica, fusiones andino-pop, reggaeton-pop — todas con un matiz comercial. Mi canción más escuchada: sobre una mujer que ve al esposo de su amiga siendo infiel. Intro irónica, arco de empoderamiento, remate urban pop.</p>
-      <div class="lab-visual lab-visual-music" aria-hidden="true">
-        <div class="wave"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:80%"></span><span style="height:60%"></span><span style="height:95%"></span><span style="height:70%"></span><span style="height:45%"></span><span style="height:85%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:35%"></span><span style="height:75%"></span><span style="height:40%"></span><span style="height:25%"></span></div>
-        <div class="wave-meta"><span>@GardenJx</span><span>Suno</span></div>
+      <div class="lab-visual lab-visual-music">
+        <a href="https://suno.com/playlist/734fca88-c1e9-45aa-9b3e-505074a988f7" target="_blank" rel="noopener" class="wave-play" data-en><span class="wave-play-btn" aria-hidden="true"></span>Play the playlist<span class="sr-only"> on Suno (opens in a new tab)</span></a>
+        <a href="https://suno.com/playlist/734fca88-c1e9-45aa-9b3e-505074a988f7" target="_blank" rel="noopener" class="wave-play" data-es><span class="wave-play-btn" aria-hidden="true"></span>Escuchar la playlist<span class="sr-only"> en Suno (se abre en una pestaña nueva)</span></a>
+        <div class="wave" aria-hidden="true"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:80%"></span><span style="height:60%"></span><span style="height:95%"></span><span style="height:70%"></span><span style="height:45%"></span><span style="height:85%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:35%"></span><span style="height:75%"></span><span style="height:40%"></span><span style="height:25%"></span></div>
+        <div class="wave-meta"><span>GardenJx · Suno</span><span data-en>21 public songs</span><span data-es>21 canciones publicadas</span></div>
       </div>
       <div class="lab-status">
         <div class="status-dot"></div>
