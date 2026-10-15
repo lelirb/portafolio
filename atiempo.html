@@ -153,6 +153,8 @@
     .case-hero-title { font-size: clamp(40px, 4.2vw, 62px); }
   }
   @media (max-width: 600px) { .case-hero-visual { height: 84vw; } .pw { width: 76%; } .pw-2 { left: 12%; } .pw-3 { left: 24%; } .pw-bar { padding: 5px 7px; } .pw-bar span { width: 5px; height: 5px; } }
+  .img-zoom { display: block; position: relative; cursor: zoom-in; }
+  .img-zoom-hint { position: absolute; right: 12px; bottom: 12px; padding: 6px 12px; border-radius: 20px; background: rgba(10,14,26,0.82); color: #fff; font-size: 12px; font-weight: 500; }
 </style>
 </head>
 <body class="lang-en">
@@ -323,7 +325,7 @@
     <p class="cs-body" data-es>Mape&eacute; el recorrido completo de un env&iacute;o y encontr&eacute; <strong>diez quiebres de informaci&oacute;n</strong>. La causa ra&iacute;z no era el tracking en s&iacute;: el estado de &ldquo;salida&rdquo; se <strong>registraba manualmente cada ma&ntilde;ana</strong>, as&iacute; que la informaci&oacute;n que ve&iacute;a el cliente ya nac&iacute;a desfasada. Nadie era due&ntilde;o de la exactitud de ese dato &mdash; viv&iacute;a fuera del sistema, en personas y en WhatsApp. No por falta de tecnolog&iacute;a, sino porque nadie respond&iacute;a por esa integraci&oacute;n.</p>
 
     <div class="img-slot img-has-photo reveal img-full">
-      <img src="img/atiempo-journey-asis.jpg" alt="Journey map of one shipment showing ten information breaks" data-alt-en="Journey map of one shipment showing ten information breaks" data-alt-es="Journey map de un envío con diez quiebres de información" loading="lazy">
+      <a href="img/atiempo-journey-asis.jpg" target="_blank" rel="noopener" class="img-zoom"><img width="1800" height="1059" src="img/atiempo-journey-asis.jpg" alt="Journey map of one shipment showing ten information breaks" data-alt-en="Journey map of one shipment showing ten information breaks" data-alt-es="Journey map de un envío con diez quiebres de información" loading="lazy"><span class="img-zoom-hint" data-en>Open full size ↗</span><span class="img-zoom-hint" data-es>Ver en grande ↗</span></a>
     </div>
     <p class="img-caption" data-en>The journey of one shipment today &mdash; ten information breaks across a single trip</p>
     <p class="img-caption" data-es>El recorrido de un env&iacute;o hoy &mdash; diez quiebres de informaci&oacute;n en un solo viaje</p>
