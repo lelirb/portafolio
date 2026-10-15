@@ -176,6 +176,15 @@
     [data-parallax], [data-parallax] * { --p: 0 !important; }
   }
   .exp-wake { font-size: 12px; color: rgba(255,255,255,0.55); margin: 10px 0 24px; }
+  /* ── Estilo alineado con la portada ── */
+  .exp-visual, .honest-block, .exp-shot { border-radius: 20px; }
+  .exp-visual { background: linear-gradient(160deg, rgba(27,110,243,0.10), rgba(255,255,255,0.03) 45%, rgba(29,191,115,0.06)); }
+  .exp-shot { margin: 0 0 24px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+  .exp-shot img { display: block; width: 100%; height: auto; }
+  .track { border-radius: 10px; }
+  .track:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); } /* sin efecto: las filas no son cliqueables */
+  .exp-status { display: flex; width: fit-content; margin-bottom: 16px; }
+  .exp-num { margin-bottom: 10px; color: rgba(255,255,255,0.10); font-size: 48px; }
 </style>
 </head>
 <body class="lang-en">
@@ -264,65 +273,38 @@
             <div class="track" role="listitem">
               <span class="track-num">01</span>
               <div class="track-info">
-                <div class="track-name" data-en>La que sabe (The one who knows)</div>
-                <div class="track-name" data-es>La que sabe</div>
-                <div class="track-genre" data-en>Electronic · Empowerment</div>
-                <div class="track-genre" data-es>Electrónica · Empoderamiento</div>
+                <div class="track-name">Se lo diré a tu esposa</div>
+                <div class="track-genre" data-en>Most played · 2:59</div>
+                <div class="track-genre" data-es>La más escuchada · 2:59</div>
               </div>
-              <div class="track-bar" aria-hidden="true">
-                <div class="bar" style="height:14px;opacity:0.9;"></div>
-                <div class="bar" style="height:8px;opacity:0.6;"></div>
-                <div class="bar" style="height:20px;opacity:0.9;"></div>
-                <div class="bar" style="height:10px;opacity:0.7;"></div>
-                <div class="bar" style="height:16px;opacity:0.8;"></div>
-              </div>
+              <div class="track-bar" aria-hidden="true"><div class="bar" style="height:14px;opacity:0.9;"></div><div class="bar" style="height:8px;opacity:0.6;"></div><div class="bar" style="height:20px;opacity:0.9;"></div><div class="bar" style="height:10px;opacity:0.7;"></div><div class="bar" style="height:16px;opacity:0.8;"></div></div>
             </div>
             <div class="track" role="listitem">
               <span class="track-num">02</span>
               <div class="track-info">
-                <div class="track-name" data-en>Camino de piedra (Stone path)</div>
-                <div class="track-name" data-es>Camino de piedra</div>
-                <div class="track-genre" data-en>Andean-Pop fusion</div>
-                <div class="track-genre" data-es>Fusión andino-pop</div>
+                <div class="track-name">Yo soy la fuente de la riqueza</div>
+                <div class="track-genre" data-en>2:34</div>
+                <div class="track-genre" data-es>2:34</div>
               </div>
-              <div class="track-bar" aria-hidden="true">
-                <div class="bar" style="height:10px;opacity:0.6;"></div>
-                <div class="bar" style="height:18px;opacity:0.8;"></div>
-                <div class="bar" style="height:12px;opacity:0.7;"></div>
-                <div class="bar" style="height:20px;opacity:0.9;"></div>
-                <div class="bar" style="height:8px;opacity:0.5;"></div>
-              </div>
+              <div class="track-bar" aria-hidden="true"><div class="bar" style="height:14px;opacity:0.9;"></div><div class="bar" style="height:8px;opacity:0.6;"></div><div class="bar" style="height:20px;opacity:0.9;"></div><div class="bar" style="height:10px;opacity:0.7;"></div><div class="bar" style="height:16px;opacity:0.8;"></div></div>
             </div>
             <div class="track" role="listitem">
               <span class="track-num">03</span>
               <div class="track-info">
-                <div class="track-name" data-en>Sin señal (No signal)</div>
-                <div class="track-name" data-es>Sin señal</div>
-                <div class="track-genre">Reggaeton-Pop</div>
+                <div class="track-name">Gracias</div>
+                <div class="track-genre" data-en>2:39</div>
+                <div class="track-genre" data-es>2:39</div>
               </div>
-              <div class="track-bar" aria-hidden="true">
-                <div class="bar" style="height:20px;opacity:0.9;"></div>
-                <div class="bar" style="height:12px;opacity:0.7;"></div>
-                <div class="bar" style="height:16px;opacity:0.8;"></div>
-                <div class="bar" style="height:8px;opacity:0.5;"></div>
-                <div class="bar" style="height:14px;opacity:0.7;"></div>
-              </div>
+              <div class="track-bar" aria-hidden="true"><div class="bar" style="height:14px;opacity:0.9;"></div><div class="bar" style="height:8px;opacity:0.6;"></div><div class="bar" style="height:20px;opacity:0.9;"></div><div class="bar" style="height:10px;opacity:0.7;"></div><div class="bar" style="height:16px;opacity:0.8;"></div></div>
             </div>
             <div class="track" role="listitem">
               <span class="track-num">04</span>
               <div class="track-info">
-                <div class="track-name" data-en>Marea alta (High tide)</div>
-                <div class="track-name" data-es>Marea alta</div>
-                <div class="track-genre" data-en>Electronic · Dramatic</div>
-                <div class="track-genre" data-es>Electrónica · Dramática</div>
+                <div class="track-name">Sin miedo VOY</div>
+                <div class="track-genre" data-en>1:49</div>
+                <div class="track-genre" data-es>1:49</div>
               </div>
-              <div class="track-bar" aria-hidden="true">
-                <div class="bar" style="height:8px;opacity:0.5;"></div>
-                <div class="bar" style="height:20px;opacity:0.9;"></div>
-                <div class="bar" style="height:10px;opacity:0.6;"></div>
-                <div class="bar" style="height:18px;opacity:0.85;"></div>
-                <div class="bar" style="height:14px;opacity:0.7;"></div>
-              </div>
+              <div class="track-bar" aria-hidden="true"><div class="bar" style="height:14px;opacity:0.9;"></div><div class="bar" style="height:8px;opacity:0.6;"></div><div class="bar" style="height:20px;opacity:0.9;"></div><div class="bar" style="height:10px;opacity:0.7;"></div><div class="bar" style="height:16px;opacity:0.8;"></div></div>
             </div>
           </div>
           <div class="music-footer">
@@ -395,6 +377,9 @@
     </div>
 
     <div class="exp-right reveal reveal-delay-1">
+      <figure class="exp-shot">
+        <img src="img/lab-agentic-ds.jpg" width="1100" height="578" loading="lazy" alt="Portada de la app Agentic DS: un campo para pegar la URL de un Design System y evaluarlo" data-alt-en="Agentic DS home page: a field to paste a Design System URL and evaluate it" data-alt-es="Portada de la app Agentic DS: un campo para pegar la URL de un Design System y evaluarlo">
+      </figure>
       <div class="exp-visual">
         <div class="music-visual">
           <div class="music-tracks" role="list">
