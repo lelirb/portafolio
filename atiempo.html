@@ -155,6 +155,10 @@
   @media (max-width: 600px) { .case-hero-visual { height: 84vw; } .pw { width: 76%; } .pw-2 { left: 12%; } .pw-3 { left: 24%; } .pw-bar { padding: 5px 7px; } .pw-bar span { width: 5px; height: 5px; } }
   .img-zoom { display: block; position: relative; cursor: zoom-in; }
   .img-zoom-hint { position: absolute; right: 12px; bottom: 12px; padding: 6px 12px; border-radius: 20px; background: rgba(10,14,26,0.82); color: #fff; font-size: 12px; font-weight: 500; }
+  .img-pair-proto { grid-template-columns: 2.6fr 1fr; align-items: center; }
+  .img-pair-proto .img-slot { background: var(--bg); }
+  .img-phone { padding: 12px !important; }
+  .img-phone img { border-radius: 14px; }
 </style>
 </head>
 <body class="lang-en">
@@ -531,18 +535,17 @@
     </div>
 
     <div class="img-slot img-has-photo reveal">
-      <img src="img/atiempo-admin.jpg" alt="Administration screen of the functional HTML prototype" data-alt-en="Administration screen of the functional HTML prototype" data-alt-es="Pantalla de administración del prototipo funcional en HTML" loading="lazy">
+      <img src="img/atiempo-proto-admin.jpg" width="1100" height="688" alt="Admin dashboard prototype: operations, exceptions and recent orders" data-alt-en="Admin dashboard prototype: operations, exceptions and recent orders" data-alt-es="Prototipo del dashboard de administración: operación, excepciones y pedidos recientes" loading="lazy">
     </div>
     <p class="img-caption" data-en>Functional HTML prototypes built as research instruments &mdash; not demos</p>
     <p class="img-caption" data-es>Prototipos funcionales en HTML construidos como instrumentos de investigaci&oacute;n &mdash; no como demos</p>
 
-    <!-- Placeholder oculto hasta que exista la imagen: cuando la tengas, reemplaza este bloque por <div class="img-slot img-has-photo"><img ...></div> -->
-    <div class="img-slot reveal" hidden>
-      <div class="img-slot-icon" aria-hidden="true">&#128241;</div>
-      <div class="img-slot-label" data-en>Customer web and driver app &mdash; export from the prototype</div>
-      <div class="img-slot-label" data-es>Web del cliente y app del conductor &mdash; exportar del prototipo</div>
-      <div class="img-slot-hint">img/atiempo-web-cliente.jpg &middot; img/atiempo-app-chofer.jpg</div>
+    <div class="img-pair img-pair-proto reveal">
+      <div class="img-slot img-has-photo"><img src="img/atiempo-proto-intranet.jpg" width="1100" height="688" loading="lazy" alt="Customer intranet prototype: shipments that need the customer's action" data-alt-en="Customer intranet prototype: shipments that need the customer's action" data-alt-es="Prototipo de la intranet del cliente: envíos que requieren su acción"></div>
+      <div class="img-slot img-has-photo img-phone"><img src="img/atiempo-proto-chofer.jpg" width="420" height="1073" loading="lazy" alt="Driver app prototype: the day's pickups" data-alt-en="Driver app prototype: the day's pickups" data-alt-es="Prototipo de la app del conductor: los recojos del día"></div>
     </div>
+    <p class="img-caption" data-en>The same shipment seen from two ends &mdash; the customer's intranet and the driver's app</p>
+    <p class="img-caption" data-es>El mismo envío visto desde dos extremos &mdash; la intranet del cliente y la app del conductor</p>
 
     <p class="cs-body" data-en>The shipment the customer creates is the same one the driver picks up, the same one administration monitors, and the same one that obeys the back office rules. <strong>The first mile stopped being the end of a form and became the place where the service's digital data is born.</strong> The HTML files weren't the visual deliverable &mdash; they were functional validation artefacts, and the base the UX/UI team continued from towards the final execution in Figma.</p>
     <p class="cs-body" data-es>El env&iacute;o que crea el cliente es el mismo que recoge el conductor, el mismo que monitorea administraci&oacute;n y el mismo que obedece las reglas del back office. <strong>La primera milla dej&oacute; de ser el final de un formulario y pas&oacute; a ser el lugar donde nace el dato digital del servicio.</strong> Los HTML no eran el entregable visual: eran artefactos funcionales de validaci&oacute;n y la base sobre la cual el equipo de UX/UI continu&oacute; hacia la ejecuci&oacute;n final en Figma.</p>
@@ -644,6 +647,8 @@
 
     <p class="cs-body" data-en><strong>14+ executive and operational stakeholders aligned in a 4-week Discovery.</strong> The change happened across four layers &mdash; <strong>product</strong> (tracking, notifications, quoting, statuses, operational flows), <strong>service</strong> (handoffs, responsibilities, exceptions, providers), <strong>business</strong> (value proposition, adoption levers, B2B credit, provider model) and <strong>governance</strong> (ownership of integrations, parameters and critical processes). The main result wasn't an interface. It was a clearer definition of how the service had to work before building it.</p>
     <p class="cs-body" data-es><strong>14+ stakeholders ejecutivos y operativos alineados en un Discovery de 4 semanas.</strong> El cambio ocurri&oacute; en cuatro capas &mdash; <strong>producto</strong> (tracking, notificaciones, cotizaci&oacute;n, estados y flujos operativos), <strong>servicio</strong> (handoffs, responsabilidades, excepciones y proveedores), <strong>negocio</strong> (propuesta de valor, palancas de adopci&oacute;n, cr&eacute;dito B2B y modelo de proveedores) y <strong>gobernanza</strong> (ownership de integraciones, par&aacute;metros y procesos cr&iacute;ticos). El resultado principal no fue una interfaz. Fue una definici&oacute;n m&aacute;s clara de c&oacute;mo deb&iacute;a funcionar el servicio antes de construirlo.</p>
+    <p class="cs-body" data-en>In parallel, another UX designer worked on the service's WhatsApp chatbot. The workshop fed into its MVP &mdash; service rating entered the scope &mdash; and quoting was solved by sending users to the customer web.</p>
+    <p class="cs-body" data-es>En paralelo, otro diseñador UX trabajó el chatbot del servicio en WhatsApp. El workshop alimentó su MVP &mdash;la valoración del servicio entró al alcance&mdash; y la cotización se resolvió derivando a la web del cliente.</p>
   </div>
 
   <div class="cs-divider"></div>
