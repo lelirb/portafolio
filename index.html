@@ -800,8 +800,21 @@
   .lab-link:hover { gap: 12px; }
 
 
+  /* ── LAB: tarjetas con imagen, misma altura, enlaces abajo ── */
+  .lab-grid { gap: 24px; align-items: stretch; }
+  .lab-card { border-radius: 20px; display: flex; flex-direction: column; background: linear-gradient(160deg, rgba(27,110,243,0.10), rgba(255,255,255,0.03) 45%, rgba(29,191,115,0.06)); }
+  .lab-card .lab-desc { margin-bottom: 24px; }
+  .lab-visual { margin: 0 0 28px; border-radius: 14px; overflow: hidden; position: relative; z-index: 0; }
+  .lab-visual-shot img { display: block; width: 100%; height: auto; }
+  .lab-visual-music { border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); padding: 28px 28px 18px; }
+  .wave { display: flex; align-items: center; gap: 6px; height: 96px; }
+  .wave span { flex: 1; border-radius: 3px; background: linear-gradient(var(--green), var(--blue)); opacity: 0.85; }
+  .wave-meta { display: flex; justify-content: space-between; margin-top: 16px; font-family: var(--font-mono); font-size: 11px; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; }
+  .lab-card .lab-status { display: flex; margin-top: auto; }
+  .lab-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; margin-top: 14px; }
+  .lab-card .lab-links .lab-link { margin-top: 0; }
   /* segundo enlace (externo): por encima del área cliqueable de la tarjeta */
-  .lab-card .lab-link-ext { position: relative; z-index: 2; margin-left: 20px; color: rgba(255,255,255,0.75); }
+  .lab-card .lab-link-ext { position: relative; z-index: 2; margin-left: 0; color: rgba(255,255,255,0.75); }
   .lab-card .lab-link.lab-link-ext::after { content: none; }
   /* Toda la tarjeta del Lab abre su experimento (el enlace se estira sobre la tarjeta) */
   .lab-card { cursor: pointer; }
@@ -1275,13 +1288,19 @@
       <h3 class="lab-title" data-es>Canciones que suenan como si siempre hubieran existido</h3>
       <p class="lab-desc" data-en>Electronic, Andean-pop hybrids, reggaeton-pop — all with a commercial edge. My most-listened track: a song about a woman who witnesses her best friend's husband cheating. Ironic intro, empowerment arc, urban pop payoff.</p>
       <p class="lab-desc" data-es>Electrónica, fusiones andino-pop, reggaeton-pop — todas con un matiz comercial. Mi canción más escuchada: sobre una mujer que ve al esposo de su amiga siendo infiel. Intro irónica, arco de empoderamiento, remate urban pop.</p>
+      <div class="lab-visual lab-visual-music" aria-hidden="true">
+        <div class="wave"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:80%"></span><span style="height:60%"></span><span style="height:95%"></span><span style="height:70%"></span><span style="height:45%"></span><span style="height:85%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:35%"></span><span style="height:75%"></span><span style="height:40%"></span><span style="height:25%"></span></div>
+        <div class="wave-meta"><span>@GardenJx</span><span>Suno</span></div>
+      </div>
       <div class="lab-status">
         <div class="status-dot"></div>
         <span data-en>Active · Publishing on Suno</span>
         <span data-es>Activo · Publicando en Suno</span>
       </div>
+      <div class="lab-links">
       <a href="lab.html#music" class="lab-link" data-en>See full experiment <span aria-hidden="true">→</span></a>
       <a href="lab.html#music" class="lab-link" data-es>Ver experimento completo <span aria-hidden="true">→</span></a>
+      </div>
     </div>
 
     <!-- Agentic DS -->
@@ -1292,15 +1311,20 @@
       <h3 class="lab-title" data-es>¿Está tu Design System listo para un agente de IA?</h3>
       <p class="lab-desc" data-en>Design Systems are written for people; an agent has to find components, tokens and usage rules on its own. I built a tool that measures that readiness across six dimensions — access, tokens, components and API, semantics, patterns and documentation. The score comes from fixed rules, no AI involved. And a page that can't be read doesn't count as zero: it's marked as not evaluable.</p>
       <p class="lab-desc" data-es>Los Design Systems se escriben para personas; un agente necesita encontrar por su cuenta componentes, tokens y reglas de uso. Construí una herramienta que mide esa preparación en seis dimensiones: acceso, tokens, componentes y API, semántica, patrones y documentación. El puntaje sale de reglas fijas, sin IA de por medio. Y si una página no se puede leer, no cuenta como cero: queda como "no evaluable".</p>
+      <figure class="lab-visual lab-visual-shot">
+        <img src="img/lab-agentic-ds.jpg" width="1100" height="578" loading="lazy" alt="Portada de la app Agentic DS: un campo para pegar la URL de un Design System y evaluarlo" data-alt-en="Agentic DS home page: a field to paste a Design System URL and evaluate it" data-alt-es="Portada de la app Agentic DS: un campo para pegar la URL de un Design System y evaluarlo">
+      </figure>
       <div class="lab-status">
         <div class="status-dot"></div>
         <span data-en>Live · Phase 1</span>
         <span data-es>En vivo · Fase 1</span>
       </div>
+      <div class="lab-links">
       <a href="lab.html#agentic-ds" class="lab-link" data-en>See full experiment <span aria-hidden="true">→</span></a>
       <a href="lab.html#agentic-ds" class="lab-link" data-es>Ver experimento completo <span aria-hidden="true">→</span></a>
       <a href="https://agentic-ds.onrender.com" target="_blank" rel="noopener" class="lab-link lab-link-ext" data-en>Try the tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
       <a href="https://agentic-ds.onrender.com" target="_blank" rel="noopener" class="lab-link lab-link-ext" data-es>Probar la herramienta <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+      </div>
     </div>
   </div>
 </section>
