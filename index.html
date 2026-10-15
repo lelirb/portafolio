@@ -798,6 +798,13 @@
   }
   .lab-link:hover { gap: 12px; }
 
+
+  /* Toda la tarjeta del Lab abre su experimento (el enlace se estira sobre la tarjeta) */
+  .lab-card { cursor: pointer; }
+  .lab-card .lab-link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+  .lab-card .lab-link:focus-visible { outline: none; }
+  .lab-card:has(.lab-link:focus-visible) { outline: 2px solid var(--green); outline-offset: 2px; }
+
   /* ── CONTACT ── */
   .contact {
     background: var(--bg);
