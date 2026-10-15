@@ -674,7 +674,6 @@
 
   .case-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; position: relative; z-index: 1; }
   .case-head .case-number { margin: 0; font-size: 13px; transition: color 0.4s ease; }
-  .case-icon { width: 24px; height: 24px; fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .case-company, .case-title, .case-desc, .case-metrics, .case-tags, .case-arrow { position: relative; z-index: 1; }
   .case-title { font-size: 30px; }
   .case-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
@@ -697,9 +696,6 @@
   .case-card:hover .case-blob, .case-card:focus-visible .case-blob, .case-card.is-on .case-blob { transform: rotate(18deg); }
   .case-card:hover .case-number, .case-card:focus-visible .case-number, .case-card.is-on .case-number { color: var(--accent-text); }
   .case-card.is-on .case-arrow { gap: 10px; }
-
-  /* versión sin íconos (para comparar) */
-  .no-case-icons .case-icon { display: none; }
 
   @media (max-width: 900px) {
     .cases-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -1112,7 +1108,7 @@
   <div class="cases-grid">
     <a href="atiempo.html" class="case-card reveal">
       <span class="case-blob" aria-hidden="true"></span>
-      <div class="case-head"><span class="case-number">01</span><svg class="case-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 3 3 10.5l7 2.5 2.5 7L21 3Z"/><path d="M10 13l5-5"/></svg></div>
+      <div class="case-head"><span class="case-number">01</span></div>
       <div class="case-company" data-en>ATiempo &middot; Logistics &middot; Peru</div>
       <div class="case-company" data-es>ATiempo &middot; Log&iacute;stica &middot; Per&uacute;</div>
       <h3 class="case-title" data-en>Designing the conditions of a service, not just its interface</h3>
@@ -1147,7 +1143,7 @@
 
     <a href="ftl.html" class="case-card reveal reveal-delay-1">
       <span class="case-blob" aria-hidden="true"></span>
-      <div class="case-head"><span class="case-number">02</span><svg class="case-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 6h10a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h12"/><circle cx="20" cy="18" r="1.4"/><circle cx="4" cy="6" r="1.4"/></svg></div>
+      <div class="case-head"><span class="case-number">02</span></div>
       <div class="case-company" data-en>FTL TRACE TX &middot; Textile &middot; Peru</div>
       <div class="case-company" data-es>FTL TRACE TX &middot; Textil &middot; Per&uacute;</div>
       <h3 class="case-title" data-en>Turning a European regulation into a Latin American product</h3>
@@ -1182,7 +1178,7 @@
 
     <a href="pichincha.html" class="case-card reveal reveal-delay-2">
       <span class="case-blob" aria-hidden="true"></span>
-      <div class="case-head"><span class="case-number">03</span><svg class="case-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 4h18l-7 8v6l-4 2v-8L3 4Z"/></svg></div>
+      <div class="case-head"><span class="case-number">03</span></div>
       <div class="case-company" data-en>Banco Pichincha &middot; Ecuador</div>
       <div class="case-company" data-es>Banco Pichincha &middot; Ecuador</div>
       <h3 class="case-title" data-en>Of 100 prospects, three reached the product</h3>
@@ -1217,7 +1213,7 @@
 
     <a href="movistar.html" class="case-card reveal reveal-delay-3">
       <span class="case-blob" aria-hidden="true"></span>
-      <div class="case-head"><span class="case-number">04</span><svg class="case-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="6" height="6" rx="1.5"/><rect x="15" y="4" width="6" height="6" rx="1.5"/><rect x="9" y="15" width="6" height="6" rx="1.5"/><path d="M9 7h6M7 10l4 5M17 10l-4 5"/></svg></div>
+      <div class="case-head"><span class="case-number">04</span></div>
       <div class="case-company" data-en>Movistar Total &middot; Telecom &middot; Peru</div>
       <div class="case-company" data-es>Movistar Total &middot; Telecomunicaciones &middot; Per&uacute;</div>
       <h3 class="case-title" data-en>Fixing a product without being allowed to touch the systems breaking it</h3>
