@@ -738,6 +738,7 @@
     background: linear-gradient(to top, rgba(29,191,115,0.08), transparent);
     transition: height 0.4s;
   }
+  .lab-card::after { pointer-events: none; } /* el brillo es decorativo: nunca debe tapar el enlace */
   .lab-card:hover::after { height: 100%; }
   .lab-card:hover { border-color: rgba(29,191,115,0.3); }
 
