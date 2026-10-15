@@ -175,6 +175,7 @@
     .js .reveal, .js .reveal.from-above { opacity: 1 !important; transform: none !important; }
     [data-parallax], [data-parallax] * { --p: 0 !important; }
   }
+  .exp-wake { font-size: 12px; color: rgba(255,255,255,0.55); margin: 10px 0 24px; }
 </style>
 </head>
 <body class="lang-en">
@@ -346,114 +347,129 @@
   </div>
 </div>
 
-<!-- EXPERIMENT 2: PRESCRIPTIONS -->
-<div class="experiment" id="prescriptions">
+<!-- EXPERIMENT 2: AGENTIC DS -->
+<div class="experiment" id="agentic-ds">
   <div class="experiment-inner reverse">
     <div class="exp-left reveal">
       <span class="exp-num" aria-hidden="true" data-num="02"></span>
-      <div class="exp-type" data-en>Tradoctor · AI · OCR · Healthcare</div>
-      <div class="exp-type" data-es>Tradoctor · IA · OCR · Salud</div>
-      <h2 class="exp-title" data-en><strong style="font-weight:inherit">Tradoctor</strong> — a tool to read what <em>doctors write.</em></h2>
-      <h2 class="exp-title" data-es><strong style="font-weight:inherit">Tradoctor</strong> — para leer lo que <em>escriben los médicos.</em></h2>
+      <div class="exp-type" data-en>Agentic DS · AI · Design Systems</div>
+      <div class="exp-type" data-es>Agentic DS · IA · Design Systems</div>
+      <h2 class="exp-title" data-en><strong style="font-weight:inherit">Agentic DS</strong> — is your Design System ready for <em>an AI agent?</em></h2>
+      <h2 class="exp-title" data-es><strong style="font-weight:inherit">Agentic DS</strong> — ¿está tu Design System listo para <em>un agente de IA?</em></h2>
       <p class="exp-body" data-en>
-        In Peru's provinces, doctors still handwrite prescriptions. Pharmacists become cryptographers. Patients leave the clinic with a piece of paper they can't read — and if they don't buy immediately, they forget what was prescribed.
+        Design Systems are written for people: guidelines, visual examples, natural language. An AI agent needs something else — to find components, tokens and the rules for when (and when not) to use each piece on its own.
       </p>
       <p class="exp-body" data-es>
-        En las provincias del Perú, los médicos aún recetan a mano. El farmacéutico descifra. El paciente sale del consultorio con un papel que no entiende — y si no compra de inmediato, olvida qué le recetaron.
+        Los Design Systems se escriben para personas: guías, ejemplos visuales, lenguaje natural. Un agente de IA necesita otra cosa: encontrar por su cuenta los componentes, los tokens y las reglas de cuándo usar —y cuándo no— cada pieza.
       </p>
       <p class="exp-body" data-en>
-        I built a basic OCR tool that reads handwritten medical prescriptions. It currently reads <strong>amoxicillin, ibuprofen, and paracetamol</strong> — trained on a small dataset I built myself.
+        I built a tool that evaluates that readiness from a Design System's URL. It reviews <strong>six dimensions</strong> and places the result on four levels: Opaque, Readable, Interpretable or Operable. I've tested it with Carbon, Fluent 2 and Material 3.
       </p>
       <p class="exp-body" data-es>
-        Construí un OCR básico que lee recetas médicas manuscritas. Actualmente lee <strong>amoxicilina, ibuprofeno y paracetamol</strong> — entrenado sobre un dataset pequeño que armé yo misma.
+        Construí una herramienta que evalúa esa preparación a partir de la URL de un Design System. Revisa <strong>seis dimensiones</strong> y ubica el resultado en cuatro niveles: Opaco, Legible, Interpretable u Operable. La probé con Carbon, Fluent 2 y Material 3.
       </p>
       <p class="exp-body" data-en>
-        Then I stopped. <strong>Lima solved this on its own</strong> — everything comes printed now. The problem survives where money doesn't: provinces and low-income areas, where doctors still write everything by hand. That's a real problem attached to a population that can't sustain a paid product. Knowing when to stop is also part of the process.
+        The score comes from fixed rules — no AI in the engine. <strong>A page that can't be read doesn't count as zero:</strong> it's marked as not evaluable. If less than half could be reviewed, the report shows the number with a notice and assigns no level.
       </p>
       <p class="exp-body" data-es>
-        Luego lo pausé. <strong>Lima ya lo resolvió sola</strong> — ahora todo te lo dan impreso. El problema sobrevive donde no hay plata: provincia y zonas pobres, donde el médico sigue escribiendo todo a mano. Es un problema real pegado a una población que no puede sostener un producto de pago. Saber cuándo parar también es parte del proceso.
+        El puntaje sale de reglas fijas, sin IA en el motor. <strong>Si una página no se puede leer, no cuenta como cero:</strong> queda como no evaluable. Si se pudo revisar menos de la mitad, el informe muestra el número con un aviso y no asigna nivel.
       </p>
 
       <div class="exp-status">
-        <div class="status-dot paused"></div>
-        <span data-en>Prototype · Paused intentionally</span>
-        <span data-es>Prototipo · Pausado intencionalmente</span>
+        <div class="status-dot"></div>
+        <span data-en>Live · Phase 1</span>
+        <span data-es>En vivo · Fase 1</span>
       </div>
+      <a href="https://agentic-ds.onrender.com" target="_blank" rel="noopener" class="exp-link" data-en>Try the tool <span aria-hidden="true">→</span><span class="sr-only"> (opens in a new tab)</span></a>
+      <a href="https://agentic-ds.onrender.com" target="_blank" rel="noopener" class="exp-link" data-es>Probar la herramienta <span aria-hidden="true">→</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>
+      <p class="exp-wake" data-en>The first load can take up to a minute while the server wakes up.</p>
+      <p class="exp-wake" data-es>La primera carga puede tardar hasta un minuto mientras el servidor despierta.</p>
 
       <div class="exp-tags">
-        <span class="exp-tag">OCR</span>
-        <span class="exp-tag" data-en>Healthcare</span><span class="exp-tag" data-es>Salud</span>
-        <span class="exp-tag">Python</span>
-        <span class="exp-tag" data-en>Peru · Provinces</span><span class="exp-tag" data-es>Perú · Provincias</span>
-        <span class="exp-tag" data-en>Stopped for a reason</span><span class="exp-tag" data-es>Pausado con criterio</span>
+        <span class="exp-tag">Design Systems</span>
+        <span class="exp-tag" data-en>Agentic AI</span><span class="exp-tag" data-es>IA agéntica</span>
+        <span class="exp-tag" data-en>Evaluation</span><span class="exp-tag" data-es>Evaluación</span>
+        <span class="exp-tag">Node.js</span>
+        <span class="exp-tag" data-en>Phase 1</span><span class="exp-tag" data-es>Fase 1</span>
       </div>
     </div>
 
     <div class="exp-right reveal reveal-delay-1">
       <div class="exp-visual">
-        <div class="rx-visual">
-          <div class="rx-card">
-            <div class="rx-header">
-              <div>
-                <div class="rx-logo" style="color:#333;">Dr. M. Quispe C.</div>
-                <div style="font-size:11px;color:#666;margin-top:2px;" data-en>General Medicine · Puno</div>
-                <div style="font-size:11px;color:#666;margin-top:2px;" data-es>Medicina General · Puno</div>
+        <div class="music-visual">
+          <div class="music-tracks" role="list">
+            <div class="track" role="listitem">
+              <span class="track-num">D1</span>
+              <div class="track-info">
+                <div class="track-name" data-en>Access</div>
+                <div class="track-name" data-es>Acceso</div>
+                <div class="track-genre" data-en>Can an agent reach the docs, components and tokens on its own?</div>
+                <div class="track-genre" data-es>¿Puede un agente llegar por su cuenta a la documentación, componentes y tokens?</div>
               </div>
-              <div class="rx-date">14/03/2024</div>
             </div>
-            <div class="rx-handwriting" lang="es">
-              <div class="rx-line">
-                <span class="rx-num">Rx1</span>
-                <span class="rx-text scrawl" style="font-size:15px;color:#333;">Amoxicilina 500mg</span>
+            <div class="track" role="listitem">
+              <span class="track-num">D2</span>
+              <div class="track-info">
+                <div class="track-name" data-en>Tokens</div>
+                <div class="track-name" data-es>Tokens</div>
+                <div class="track-genre" data-en>Can it discover and interpret design decisions encoded as tokens?</div>
+                <div class="track-genre" data-es>¿Puede descubrir e interpretar las decisiones de diseño codificadas como tokens?</div>
               </div>
-              <div style="font-size:12px;color:#666;margin-left:28px;margin-bottom:12px;">c/8h x 7 días</div>
-              <div class="rx-line">
-                <span class="rx-num">Rx2</span>
-                <span class="rx-text" style="font-size:13px;color:#555;transform:rotate(0.8deg);display:inline-block;">Ibuprofeno 400mg</span>
-              </div>
-              <div style="font-size:12px;color:#666;margin-left:28px;margin-bottom:12px;">c/12h con alimentos</div>
-              <div class="rx-line">
-                <span class="rx-num">Rx3</span>
-                <span class="rx-text" style="font-size:14px;color:#444;transform:rotate(-0.3deg);display:inline-block;">Paracetamol 1g</span>
-              </div>
-              <div style="font-size:12px;color:#666;margin-left:28px;">SOS - dolor</div>
             </div>
-            <div class="rx-ai-overlay">
-              <div style="flex:1;">
-                <div class="rx-ai-label" data-en>AI reading</div>
-                <div class="rx-ai-label" data-es>Lectura IA</div>
-                <div class="rx-ai-result" data-en>
-                  <strong>1.</strong> Amoxicillin 500mg — every 8h, 7 days<br>
-                  <strong>2.</strong> Ibuprofen 400mg — every 12h with food<br>
-                  <strong>3.</strong> Paracetamol 1g — as needed for pain
-                </div>
-                <div class="rx-ai-result" data-es>
-                  <strong>1.</strong> Amoxicilina 500mg — c/8h, 7 días<br>
-                  <strong>2.</strong> Ibuprofeno 400mg — c/12h con alimentos<br>
-                  <strong>3.</strong> Paracetamol 1g — SOS dolor
-                </div>
-                <div class="rx-confidence" data-en>Confidence: 94% · 3/3 medicines recognized</div>
-                <div class="rx-confidence" data-es>Confianza: 94% · 3/3 medicamentos reconocidos</div>
+            <div class="track" role="listitem">
+              <span class="track-num">D3</span>
+              <div class="track-info">
+                <div class="track-name" data-en>Components & API</div>
+                <div class="track-name" data-es>Componentes y API</div>
+                <div class="track-genre" data-en>Can it identify components and understand how they are configured?</div>
+                <div class="track-genre" data-es>¿Puede identificar los componentes y entender cómo se configuran?</div>
+              </div>
+            </div>
+            <div class="track" role="listitem">
+              <span class="track-num">D4</span>
+              <div class="track-info">
+                <div class="track-name" data-en>Semantics</div>
+                <div class="track-name" data-es>Semántica</div>
+                <div class="track-genre" data-en>Can it understand when, why and when not to use something?</div>
+                <div class="track-genre" data-es>¿Puede entender cuándo, por qué y cuándo no usar algo?</div>
+              </div>
+            </div>
+            <div class="track" role="listitem">
+              <span class="track-num">D5</span>
+              <div class="track-info">
+                <div class="track-name" data-en>Patterns</div>
+                <div class="track-name" data-es>Patrones</div>
+                <div class="track-genre" data-en>Can it understand how components combine into larger patterns?</div>
+                <div class="track-genre" data-es>¿Puede entender cómo se combinan los componentes en patrones más grandes?</div>
+              </div>
+            </div>
+            <div class="track" role="listitem">
+              <span class="track-num">D6</span>
+              <div class="track-info">
+                <div class="track-name" data-en>Documentation</div>
+                <div class="track-name" data-es>Documentación</div>
+                <div class="track-genre" data-en>Is there enough retrievable documentation for real context?</div>
+                <div class="track-genre" data-es>¿Hay suficiente documentación recuperable para tener contexto real?</div>
               </div>
             </div>
           </div>
-          <div class="rx-footer">
-            <span class="rx-footer-note" data-en>Dataset: 3 medicines · handwritten samples</span>
-            <span class="rx-footer-note" data-es>Dataset: 3 medicamentos · muestras manuscritas</span>
-            <span class="rx-footer-status" data-en>Paused</span>
-            <span class="rx-footer-status" data-es>Pausado</span>
+          <div class="music-footer">
+            <span class="music-platform" data-en>Levels</span>
+            <span class="music-platform" data-es>Niveles</span>
+            <span class="music-user" data-en>Opaque · Readable · Interpretable · Operable</span>
+            <span class="music-user" data-es>Opaco · Legible · Interpretable · Operable</span>
           </div>
         </div>
       </div>
 
       <div class="honest-block">
-        <div class="honest-label" data-en>Why I stopped</div>
-        <div class="honest-label" data-es>Por qué lo pausé</div>
+        <div class="honest-label" data-en>What it doesn't do yet</div>
+        <div class="honest-label" data-es>Lo que todavía no hace</div>
         <p class="honest-text" data-en>
-          "Lima solved this. Provinces need it but can't pay for it. <em>Identifying the market wall is part of product thinking.</em>"
+          Phase 2 — agents testing the Design System on real tasks — doesn't exist yet. Storybook, code repositories, login-protected pages and Figma files <em>are detected but not read.</em>
         </p>
         <p class="honest-text" data-es>
-          "Lima ya lo resolvió. Las provincias lo necesitan pero no pueden pagarlo. <em>Identificar el techo del mercado es parte del pensamiento de producto.</em>"
+          La Fase 2 —agentes probando el Design System en tareas reales— todavía no existe. Storybook, repositorios de código, páginas con login y archivos de Figma <em>se detectan, pero aún no se leen.</em>
         </p>
       </div>
     </div>

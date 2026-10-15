@@ -800,6 +800,9 @@
   .lab-link:hover { gap: 12px; }
 
 
+  /* segundo enlace (externo): por encima del área cliqueable de la tarjeta */
+  .lab-card .lab-link-ext { position: relative; z-index: 2; margin-left: 20px; color: rgba(255,255,255,0.75); }
+  .lab-card .lab-link.lab-link-ext::after { content: none; }
   /* Toda la tarjeta del Lab abre su experimento (el enlace se estira sobre la tarjeta) */
   .lab-card { cursor: pointer; }
   .lab-card .lab-link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
@@ -1281,21 +1284,23 @@
       <a href="lab.html#music" class="lab-link" data-es>Ver experimento completo <span aria-hidden="true">→</span></a>
     </div>
 
-    <!-- Prescriptions -->
+    <!-- Agentic DS -->
     <div class="lab-card reveal reveal-delay-1">
-      <div class="lab-type" data-en>AI · OCR · Healthcare</div>
-      <div class="lab-type" data-es>IA · OCR · Salud</div>
-      <h3 class="lab-title" data-en>A tool to read what doctors write</h3>
-      <h3 class="lab-title" data-es>Una herramienta para leer lo que escriben los médicos</h3>
-      <p class="lab-desc" data-en>In Peru's provinces, doctors still handwrite prescriptions. Pharmacists become cryptographers. Patients forget what was prescribed. I built a basic OCR tool that reads handwritten medical prescriptions — then identified exactly why it wouldn't scale. Lima solved it another way. Provinces can't pay for it yet. Knowing when to stop is part of the process.</p>
-      <p class="lab-desc" data-es>En las provincias del Perú, los médicos aún recetan a mano. El farmacéutico descifra. El paciente olvida. Construí un OCR básico para leer recetas manuscritas — y luego identifiqué exactamente por qué no escala. Lima ya lo resolvió de otra forma. Las provincias no pueden pagarlo todavía. Saber cuándo parar también es parte del proceso.</p>
+      <div class="lab-type" data-en>AI · Design Systems · Tool</div>
+      <div class="lab-type" data-es>IA · Design Systems · Herramienta</div>
+      <h3 class="lab-title" data-en>Is your Design System ready for an AI agent?</h3>
+      <h3 class="lab-title" data-es>¿Está tu Design System listo para un agente de IA?</h3>
+      <p class="lab-desc" data-en>Design Systems are written for people; an agent has to find components, tokens and usage rules on its own. I built a tool that measures that readiness across six dimensions — access, tokens, components and API, semantics, patterns and documentation. The score comes from fixed rules, no AI involved. And a page that can't be read doesn't count as zero: it's marked as not evaluable.</p>
+      <p class="lab-desc" data-es>Los Design Systems se escriben para personas; un agente necesita encontrar por su cuenta componentes, tokens y reglas de uso. Construí una herramienta que mide esa preparación en seis dimensiones: acceso, tokens, componentes y API, semántica, patrones y documentación. El puntaje sale de reglas fijas, sin IA de por medio. Y si una página no se puede leer, no cuenta como cero: queda como "no evaluable".</p>
       <div class="lab-status">
-        <div class="status-dot" style="background:var(--blue);animation:none;"></div>
-        <span data-en>Prototype · Paused intentionally</span>
-        <span data-es>Prototipo · Pausado intencionalmente</span>
+        <div class="status-dot"></div>
+        <span data-en>Live · Phase 1</span>
+        <span data-es>En vivo · Fase 1</span>
       </div>
-      <a href="lab.html#prescriptions" class="lab-link" data-en>See full experiment <span aria-hidden="true">→</span></a>
-      <a href="lab.html#prescriptions" class="lab-link" data-es>Ver experimento completo <span aria-hidden="true">→</span></a>
+      <a href="lab.html#agentic-ds" class="lab-link" data-en>See full experiment <span aria-hidden="true">→</span></a>
+      <a href="lab.html#agentic-ds" class="lab-link" data-es>Ver experimento completo <span aria-hidden="true">→</span></a>
+      <a href="https://agentic-ds.onrender.com" target="_blank" rel="noopener" class="lab-link lab-link-ext" data-en>Try the tool <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+      <a href="https://agentic-ds.onrender.com" target="_blank" rel="noopener" class="lab-link lab-link-ext" data-es>Probar la herramienta <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>
     </div>
   </div>
 </section>
