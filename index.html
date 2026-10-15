@@ -807,8 +807,15 @@
   .lab-visual { margin: 0 0 28px; border-radius: 14px; overflow: hidden; position: relative; }
   .lab-visual-shot img { display: block; width: 100%; height: auto; }
   .lab-visual-music { border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03); padding: 28px 28px 18px; }
+  .lab-visual-music { display: flex; align-items: center; gap: 24px; padding: 20px; }
+  .player-cover { width: 132px; height: 132px; flex-shrink: 0; border-radius: 12px; object-fit: cover; box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+  .player-body { flex: 1; min-width: 0; }
+  .player-body .wave { height: 56px; gap: 4px; }
+  .player-body .wave-play { margin-bottom: 12px; }
+  .player-body .wave-meta { margin-top: 10px; gap: 12px; flex-wrap: wrap; }
+  @media (max-width: 480px) { .lab-visual-music { gap: 16px; padding: 16px; } .player-cover { width: 96px; height: 96px; } .player-body .wave { height: 40px; } }
   .wave-play { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 12px; margin-bottom: 18px; color: white; font-size: 14px; font-weight: 500; text-decoration: none; }
-  .wave-play-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--green); display: inline-grid; place-items: center; transition: transform 0.2s; }
+  .wave-play-btn { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--green); display: inline-grid; place-items: center; transition: transform 0.2s; }
   .wave-play-btn::before { content: ''; border-left: 12px solid #0A0E1A; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
   .wave-play:hover .wave-play-btn, .wave-play:focus-visible .wave-play-btn { transform: scale(1.08); }
   .wave-play:focus-visible { outline: 2px solid var(--green); outline-offset: 4px; border-radius: 24px; }
@@ -1294,10 +1301,13 @@
       <p class="lab-desc" data-en>Electronic, Andean-pop hybrids, reggaeton-pop — all with a commercial edge. My most-listened track: a song about a woman who witnesses her best friend's husband cheating. Ironic intro, empowerment arc, urban pop payoff.</p>
       <p class="lab-desc" data-es>Electrónica, fusiones andino-pop, reggaeton-pop — todas con un matiz comercial. Mi canción más escuchada: sobre una mujer que ve al esposo de su amiga siendo infiel. Intro irónica, arco de empoderamiento, remate urban pop.</p>
       <div class="lab-visual lab-visual-music">
-        <a href="https://suno.com/playlist/734fca88-c1e9-45aa-9b3e-505074a988f7" target="_blank" rel="noopener" class="wave-play" data-en><span class="wave-play-btn" aria-hidden="true"></span>Play the playlist<span class="sr-only"> on Suno (opens in a new tab)</span></a>
-        <a href="https://suno.com/playlist/734fca88-c1e9-45aa-9b3e-505074a988f7" target="_blank" rel="noopener" class="wave-play" data-es><span class="wave-play-btn" aria-hidden="true"></span>Escuchar la playlist<span class="sr-only"> en Suno (se abre en una pestaña nueva)</span></a>
-        <div class="wave" aria-hidden="true"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:80%"></span><span style="height:60%"></span><span style="height:95%"></span><span style="height:70%"></span><span style="height:45%"></span><span style="height:85%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:35%"></span><span style="height:75%"></span><span style="height:40%"></span><span style="height:25%"></span></div>
-        <div class="wave-meta"><span>GardenJx · Suno</span><span data-en>21 public songs</span><span data-es>21 canciones publicadas</span></div>
+        <img class="player-cover" src="img/lab-playlist.jpg" width="480" height="480" loading="lazy" alt="Portada de la playlist: una rosa de cintas de luz multicolor" data-alt-en="Playlist cover: a rose of multicolored ribbons of light" data-alt-es="Portada de la playlist: una rosa de cintas de luz multicolor">
+        <div class="player-body">
+          <a href="https://suno.com/playlist/734fca88-c1e9-45aa-9b3e-505074a988f7" target="_blank" rel="noopener" class="wave-play" data-en><span class="wave-play-btn" aria-hidden="true"></span>Play the playlist<span class="sr-only"> on Suno (opens in a new tab)</span></a>
+          <a href="https://suno.com/playlist/734fca88-c1e9-45aa-9b3e-505074a988f7" target="_blank" rel="noopener" class="wave-play" data-es><span class="wave-play-btn" aria-hidden="true"></span>Escuchar la playlist<span class="sr-only"> en Suno (se abre en una pestaña nueva)</span></a>
+          <div class="wave" aria-hidden="true"><span style="height:30%"></span><span style="height:55%"></span><span style="height:40%"></span><span style="height:80%"></span><span style="height:60%"></span><span style="height:95%"></span><span style="height:70%"></span><span style="height:45%"></span><span style="height:85%"></span><span style="height:50%"></span><span style="height:65%"></span><span style="height:35%"></span><span style="height:75%"></span><span style="height:40%"></span><span style="height:25%"></span></div>
+          <div class="wave-meta"><span>GardenJx · Suno</span><span data-en>21 public songs</span><span data-es>21 canciones publicadas</span></div>
+        </div>
       </div>
       <div class="lab-status">
         <div class="status-dot"></div>
