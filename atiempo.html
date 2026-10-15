@@ -143,6 +143,9 @@
   .pw-1 { top: 0; left: 0; }
   .pw-2 { top: 18%; left: 13%; }
   .pw-3 { top: 36%; left: 26%; }
+  .pp { position: absolute; z-index: 2; left: 0; bottom: 2%; width: 23%; margin: 0; padding: 6px; border-radius: 26px; background: #0b1020; box-shadow: 0 24px 60px rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.15); }
+  .pp img { display: block; width: 100%; height: auto; border-radius: 20px; }
+  @media (max-width: 600px) { .pp { width: 26%; bottom: 9%; padding: 4px; border-radius: 16px; } .pp img { border-radius: 12px; } }
   .pw-caption { position: absolute; left: 0; bottom: -30px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); margin: 0; }
   @media (min-width: 1100px) {
     .case-hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; align-items: center; }
@@ -183,12 +186,13 @@
       <div><div class="case-meta-label" data-en>Methods</div><div class="case-meta-label" data-es>M&eacute;todos</div><div class="case-meta-value" data-en>Atomic Research &middot; Shadowing &middot; Ride-along &middot; Mystery shopping &middot; Concept testing &middot; HTML prototyping</div><div class="case-meta-value" data-es>Atomic Research &middot; Shadowing &middot; Ride along &middot; Mystery shopping &middot; Concept testing &middot; Prototipado en HTML</div></div>
     </div>
   </div>
-  <div class="case-hero-visual" aria-label="Prototipos funcionales en HTML">
+  <div class="case-hero-visual">
     <figure class="pw pw-1"><div class="pw-bar" aria-hidden="true"><span></span><span></span><span></span></div><img src="img/atiempo-proto-cliente.jpg" width="1100" height="688" alt="Customer website prototype: quote and tracking" data-alt-en="Customer website prototype: quote and tracking" data-alt-es="Prototipo de la web del cliente: cotización y seguimiento"></figure>
     <figure class="pw pw-2"><div class="pw-bar" aria-hidden="true"><span></span><span></span><span></span></div><img src="img/atiempo-proto-intranet.jpg" width="1100" height="688" alt="Customer intranet prototype: shipments that need attention" data-alt-en="Customer intranet prototype: shipments that need attention" data-alt-es="Prototipo de la intranet del cliente: envíos que requieren acción"></figure>
     <figure class="pw pw-3"><div class="pw-bar" aria-hidden="true"><span></span><span></span><span></span></div><img src="img/atiempo-proto-admin.jpg" width="1100" height="688" alt="Admin dashboard prototype: operations and exceptions" data-alt-en="Admin dashboard prototype: operations and exceptions" data-alt-es="Prototipo del dashboard de administración: operación y excepciones"></figure>
-    <p class="pw-caption" data-en>Functional HTML prototypes &mdash; customer web, intranet and admin</p>
-    <p class="pw-caption" data-es>Prototipos funcionales en HTML &mdash; web del cliente, intranet y administración</p>
+    <figure class="pp"><img src="img/atiempo-proto-chofer.jpg" width="420" height="1073" alt="Driver app prototype: today's pickups" data-alt-en="Driver app prototype: today's pickups" data-alt-es="Prototipo de la app del conductor: los recojos del día"></figure>
+    <p class="pw-caption" data-en>Functional HTML prototypes &mdash; customer web, intranet, admin and driver app</p>
+    <p class="pw-caption" data-es>Prototipos funcionales en HTML &mdash; web del cliente, intranet, administración y app del conductor</p>
   </div>
 </div>
 <div class="metrics-strip">
